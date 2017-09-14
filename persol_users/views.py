@@ -1,3 +1,27 @@
-from django.shortcuts import render
+from django.shortcuts import get_object_or_404, render
+from django.http import HttpResponseRedirect, HttpResponse
+from django.core.urlresolvers import reverse
 
 # Create your views here.
+from .models import PersolUser
+from .forms import user_add_Form
+
+def index(request):
+    user_list = PersolUser.objects.order_by('Name')
+    context = {'user_list': user_list}
+    return render(request, 'persol_users/index.html', context)
+    
+def detail(request, user_id):
+    User = get_object_or_404(PersolUser, pk=user_id)
+    return render(request, 'persol_users/detail.html', {'User': User})
+    
+def user_add(request):
+    f = user_add_Form()
+    return render(request, 'persol_users/user_add.html', {'form1': f})
+    
+def user_add_operation(request):
+    
+    q = PersolUser(employee_number = request.POST['employee_number'], Surname =  request.POST['Surname'], Name =  request.POST['Name'], mail_address =  request.POST['mail_address'], Self_introduction_text =  request.POST['Self_introduction_text'])
+    q.save()
+    return HttpResponseRedirect(reverse('persol_users:index'))
+        
