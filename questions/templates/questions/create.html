@@ -1,0 +1,16 @@
+<form action="{% url 'questions:registration' %}" method="post">
+{% csrf_token %}
+    <div>
+        <label for="questionnaire_title">質問名:</label>
+        <input type="text" name="questionnaire_title" id="questionnaire_title" />
+    </div>
+    <div>
+        <label for="question_text">質問:</label>
+        <input type="text" name="question_text" id="question_text" />
+    </div>
+    <div>
+        <label for="choice_text">選択肢:</label>
+        <textarea name="choice_text"  id="choice_text" rows="4" cols="40">ここに日付を記入してください。</textarea>
+    </div>
+<input type="submit" value="送信" />
+</form>

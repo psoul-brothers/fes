@@ -1,0 +1,28 @@
+{% if latest_question_list %}
+    <ul>
+    {% for question in latest_question_list %}
+        <li><a href="{% url 'questions:detail' question.id %}">{{ question.id }}:{{ question.question_text }}</a></li>
+    {% endfor %}
+    <table border="1">
+      <thead>
+        <tr>
+　        <th>ユーザー</th>
+        {% for choice in question.choice_set.all %}
+          <th>{{ choice.choice_text }}</th>
+        {% endfor %}
+        </tr>
+      </thead>
+      <tbody>
+          <tr>
+            <td>テストユーザー</td>
+            <td>参加可否</td>
+            <td>参加可否</td>
+          </tr>
+      </tbody>
+    <!--<input type="radio" name="choice" id="choice{{ forloop.counter }}" value="{{ choice.id }}" />-->
+    <!--<label for="choice{{ forloop.counter }}">{{ choice.choice_text }}</label><br />-->
+</table>
+    </ul>
+{% else %}
+    <p>No questions are available.</p>
+{% endif %}
