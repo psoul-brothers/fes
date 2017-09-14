@@ -1,0 +1,15 @@
+<html>
+<head>
+     <title>ユーザー追加フォーム</title>
+</head>
+<body>
+<h1>ユーザー追加フォーム</h1>
+<form action="{% url 'persol_users:user_add_operation'%}" method="post">
+     {% csrf_token %}
+     <table>
+          {{form1.as_table}}
+          <tr><td colspan='2'><input type="submit" value="Submit"></td></tr>
+     </table>
+</form>
+</body>
+</html>

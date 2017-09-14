@@ -1,0 +1,9 @@
+<h1>{{ question.question_text }}についての回答</h1>
+<form action="{% url 'questions:answerRegistration' question.id %}" method="post">
+{% csrf_token %}    
+    <div>
+        <label for="answer_text">回答:</label>
+        <input type="text" name="answer_text" id="answer_text" />
+    </div>
+<input type="submit" value="送信" />
+</form>

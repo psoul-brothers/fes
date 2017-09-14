@@ -1,0 +1,27 @@
+<h1>{{ question.question_text }}</h1>
+
+{% if error_message %}<p><strong>{{ error_message }}</strong></p>{% endif %}
+
+{% for answer in question.answer_set.all %}
+    <label>{{ answer.answer_text }}</label><br />
+{% endfor %}
+<table border="1">
+      <thead>
+        <tr>
+　        <th>ユーザー</th>
+        {% for choice in question.choice_set.all %}
+          <th>{{ choice.choice_text }}</th>
+        {% endfor %}
+        </tr>
+      </thead>
+      <tbody>
+          <tr>
+            <td>テストユーザー</td>
+            <td>参加可否</td>
+            <td>参加可否</td>
+          </tr>
+      </tbody>
+    <!--<input type="radio" name="choice" id="choice{{ forloop.counter }}" value="{{ choice.id }}" />-->
+    <!--<label for="choice{{ forloop.counter }}">{{ choice.choice_text }}</label><br />-->
+</table>
+<a href="{% url 'questions:answer' question.id %}">回答</a>

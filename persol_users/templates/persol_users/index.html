@@ -1,0 +1,13 @@
+{% if user_list %}
+    <ul>
+    {% for user in user_list %}
+        <li><a href="/persol_users/{{ user.id }}/">{{ user.Name }}</a></li>
+    {% endfor %}
+    </ul>
+{% else %}
+    <p>No itfes are available.</p>
+{% endif %}
+<form action="{% url 'persol_users:user_add'%}" method="post">
+     {% csrf_token %}
+    <input type="submit" value="Submit">
+</form>
