@@ -1,0 +1,20 @@
+<head>
+    <tr>
+    　　<form action="{% url 'event:create_user' %}">
+　　    {% csrf_token %}
+　　    <input type="submit" value="New person" />
+　　    </form>
+　　</tr>
+    <td>
+        <form action="{% url 'event:contact' %}">
+        {% csrf_token %}
+　　    <input type="submit" value="New Event" />
+　　    </form>
+　　</td>
+</head>
+<body>
+{% block contents %}
+    hogehoge
+{% endblock %}
+</body>
+
