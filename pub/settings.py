@@ -32,7 +32,9 @@ ALLOWED_HOSTS = []
 
 INSTALLED_APPS = [
     'events.apps.EventsConfig',
+    'questions.apps.QuestionsConfig',
     'persol_users.apps.PersolUsersConfig',
+    'misc_models.apps.MiscModelsConfig',
     'django.contrib.admin',
     'django.contrib.auth',
     'django.contrib.contenttypes',
@@ -121,3 +123,7 @@ USE_TZ = True
 # https://docs.djangoproject.com/en/1.9/howto/static-files/
 
 STATIC_URL = '/static/'
+
+
+MEDIA_ROOT = "/home/ubuntu/workspace/persol_users/media"
+MEDIA_URL = '/image/'
