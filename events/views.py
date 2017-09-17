@@ -4,6 +4,7 @@ from django.shortcuts import get_object_or_404, render, render_to_response
 from django.http import HttpResponseRedirect, HttpResponse
 from django.core.urlresolvers import reverse
 from .models import Event, Person
+from persol_users.models import PersolUser
 from .forms import CreateForm,CreateUserForm, EventForm, SelectUserForm
 
 def event_index(request):
