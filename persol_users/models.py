@@ -11,4 +11,4 @@ class PersolUser(models.Model):
     Name = models.CharField(max_length=200)
     mail_address = models.EmailField(max_length=75)
     Self_introduction_text = models.CharField(max_length=200)
-    
+    data = models.ImageField(upload_to='image')

@@ -2,10 +2,10 @@ from django import forms
 
 class user_add_Form(forms.Form):
     employee_number = forms.CharField()
-    Surname = forms.CharField()
-    Name = forms.CharField()
+    surname = forms.CharField()
+    name = forms.CharField()
     mail_address = forms.EmailField()
-    Self_introduction_text = forms.CharField()
-    
+    self_introduction_text = forms.CharField()
+    image = forms.FileField()
     
     
