@@ -32,7 +32,9 @@ ALLOWED_HOSTS = []
 
 INSTALLED_APPS = [
     'events.apps.EventsConfig',
+    'questions.apps.QuestionsConfig',
     'persol_users.apps.PersolUsersConfig',
+    'misc_models.apps.MiscModelsConfig',
     'django.contrib.admin',
     'django.contrib.auth',
     'django.contrib.contenttypes',
