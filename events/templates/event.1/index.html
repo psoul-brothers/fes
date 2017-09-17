@@ -1,0 +1,34 @@
+{% extends 'event/base.html' %}
+{% block contents %}
+
+<h3>イベント一覧</h3>
+    <div>
+        <table>
+            <thead>
+                <tr>
+                    <th>イベント名</th>
+                    
+                </tr>
+            </thead>
+            <tbody>
+        {% if latest_event_list %}
+        {% for event in latest_event_list %}
+                <tr>
+                    <td><a href="{% url 'event:detail' event.id %}">{{ event.event_name }}</a></td>
+                    <td><form action="{% url 'event:event_join' event.id %}" method="post"></td>
+                    <td>{{ form.as_p }}</td>
+                        {% csrf_token %}
+                    <td><input value="イベントに参加する" type="submit"/></td>
+                    </form>
+                    
+        {% endfor %}
+        </tbody>
+    {% else %}
+    <p>No event are available.</p>
+    {% endif %}
+
+        </table>
+    </div>
+{% endblock %}
+
+

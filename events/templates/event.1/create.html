@@ -1,0 +1,19 @@
+<h1>{{ event.event_name }}</h1>
+
+{% if error_message %}<p><strong>{{ error_message }}</strong></p>{% endif %}
+
+<form action="{% url 'event:create' event.id %}" method="post">
+{% csrf_token %}
+<label for="name{{ id }}">イベント名</label>
+    <input type="text" name="create" id="name{{ id }}" value="{{ event.event_name }}" /><br/>
+<label for="time{{ id }}">開催時間</label>
+    <input type="text" name="create" id="time{{ id }}" value="{{ event.event_time }}" /><br />
+<label for="location{{ id }}">場所</label>
+    <input type="text" name="create" id="location{{ id }}" value="{{ event.event_location }}" /><br />
+<label for="">会費</label>
+    <input type="text" name="create" id="location{{ id }}" value="{{ event.fee }}" /><br />
+<label for="">人数</label>
+    <input type="text" name="create" id="location{{ id }}" value="{{ event.quota }}" /><br />
+
+<input type="submit" value="更新" />
+</form>

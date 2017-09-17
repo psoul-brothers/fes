@@ -1,0 +1,10 @@
+{{ event.event_name }}
+<h3>現在の参加者</h3>
+{% for members in memberslist %}
+<td>
+    {{ members.name }}
+</td>
+{% endfor %}
+
+<form action="{% url 'events:event_edit' event.id %}">
+<input type="submit" value="イベント更新" />
