@@ -8,7 +8,7 @@ from .models import PersolUser
 from .forms import user_add_Form
 
 def index(request):
-    user_list = PersolUser.objects.order_by('Name')
+    user_list = PersolUser.objects.order_by('name')
     context = {'user_list': user_list}
     return render(request, 'persol_users/index.html', context)
     
