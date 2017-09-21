@@ -6,6 +6,6 @@ class user_add_Form(forms.Form):
     name = forms.CharField()
     mail_address = forms.EmailField()
     self_introduction_text = forms.CharField()
-    image = forms.FileField()
+    #image = forms.FileField()
     
     
