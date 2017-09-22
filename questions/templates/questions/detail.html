@@ -1,10 +1,7 @@
-<h1>{{ question.question_text }}</h1>
+<h1>{{ question.question_text }}についての回答</h1>
 
 {% if error_message %}<p><strong>{{ error_message }}</strong></p>{% endif %}
 
-{% for answer in question.answer_set.all %}
-    <label>{{ answer.answer_text }}</label><br />
-{% endfor %}
 <table border="1">
       <thead>
         <tr>
@@ -17,11 +14,41 @@
       <tbody>
           <tr>
             <td>テストユーザー</td>
-            <td>参加可否</td>
-            <td>参加可否</td>
+            {% for answer in question.answer_set.all %}
+                <td>{{ answer.answer_text }}</td>
+            {% endfor %}
           </tr>
       </tbody>
     <!--<input type="radio" name="choice" id="choice{{ forloop.counter }}" value="{{ choice.id }}" />-->
     <!--<label for="choice{{ forloop.counter }}">{{ choice.choice_text }}</label><br />-->
 </table>
-<a href="{% url 'questions:answer' question.id %}">回答</a>
+<form action="{% url 'questions:answerRegistration' question.id %}" method="post">
+{% csrf_token %}
+<table border="1">
+      <thead>
+        <tr>
+　        <th>ユーザー</th>
+        {% for choice in question.choice_set.all %}
+          <th>{{ choice.choice_text }}</th>
+        {% endfor %}
+        </tr>
+      </thead>
+      <tbody>
+          <tr>
+            <td>
+              ユーザー名
+            </td>
+            {% for choice in question.choice_set.all %}
+            <td>
+              <div>
+                <input type="hidden" name="choiceId" value="{{choice.id}}"/>
+                <label for="answer_text">回答:</label>
+                <input type="text" name="answer_text_{{choice.id}}" id="answer_text" />
+              </div>
+            </td>
+            {% endfor %}
+          </tr>
+      </tbody>
+</table>
+<input type="submit" value="送信" />
+</form>

@@ -1,5 +1,5 @@
 #coding: utf-8
-from django.shortcuts import get_object_or_404, render
+from django.shortcuts import get_list_or_404,get_object_or_404, render
 from django.shortcuts import render
 from django.http import HttpResponseRedirect, HttpResponse
 from .models import Question,Choice,Answer
@@ -16,7 +16,8 @@ def registration(request):
         q.save()
         choiceText = request.POST['choice_text']
         for choice in choiceText.splitlines():
-            c = q.choice_set.create(choice_text=choice)        
+            c = q.choice_set.create(choice_text=choice)
+            
     except :
         response = "DBエラーにより保存できませんでした。"
         traceback.format_exc()
@@ -38,9 +39,15 @@ def answer(request, question_id):
     return render(request, 'questions/answer.html', {'question': question})
     
 def answerRegistration(request, question_id):
+    print request.POST.getlist('choiceId')
     question = get_object_or_404(Question, pk=question_id)
+    # choices = question.choice_set.all
+    # choices = get_list_or_404(Choice, pk__in=request.POST.getlist('choiceId'))
+    print question
     try:
-        question.answer_set.create(answer_text=request.POST['answer_text'])
+        for choice in question.choice_set.all() :
+            choice.answer_set.create(question_id=question_id,answer_text=request.POST['answer_text_%d' %choice.id])
+        # question.answer_set.create(answer_text=request.POST['answer_text'])
     except :
         response = "DBエラーにより保存できませんでした。"
         traceback.format_exc()
