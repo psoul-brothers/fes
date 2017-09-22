@@ -4,11 +4,12 @@ from django.shortcuts import get_object_or_404, render, render_to_response
 from django.http import HttpResponseRedirect, HttpResponse
 from django.core.urlresolvers import reverse
 from .models import Event, Person
+from persol_users.models import PersolUser
 from .forms import CreateForm,CreateUserForm, EventForm, SelectUserForm
 
 def event_index(request):
     latest_event_list = Event.objects.order_by('id')
-    member_list = Person.objects.order_by('id')
+    member_list = PersolUser.objects.order_by('id')
     form = SelectUserForm()
     context = {
         'latest_event_list': latest_event_list,
@@ -68,7 +69,7 @@ def event_edit(request, event_id):
 
 def event_join(request, event_id):
     target_event = get_object_or_404(Event, id=event_id)
-    new_member = get_object_or_404(Person, id=request.POST['new_members'],)
+    new_member = get_object_or_404(PersolUser, id=request.POST['new_members'])
     target_event.members.add(new_member)
     return HttpResponseRedirect('/events/')
     

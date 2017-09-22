@@ -34,6 +34,7 @@ INSTALLED_APPS = [
     'events.apps.EventsConfig',
     'questions.apps.QuestionsConfig',
     'persol_users.apps.PersolUsersConfig',
+    'misc_models.apps.MiscModelsConfig',
     'django.contrib.admin',
     'django.contrib.auth',
     'django.contrib.contenttypes',
@@ -107,9 +108,9 @@ AUTH_PASSWORD_VALIDATORS = [
 # Internationalization
 # https://docs.djangoproject.com/en/1.9/topics/i18n/
 
-LANGUAGE_CODE = 'en-us'
-
-TIME_ZONE = 'UTC'
+LANGUAGE_CODE = 'ja'
+ 
+TIME_ZONE = 'Asia/Tokyo'
 
 USE_I18N = True
 
@@ -122,3 +123,7 @@ USE_TZ = True
 # https://docs.djangoproject.com/en/1.9/howto/static-files/
 
 STATIC_URL = '/static/'
+
+
+MEDIA_ROOT = "/home/ubuntu/workspace/persol_users/media"
+MEDIA_URL = '/image/'

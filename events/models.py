@@ -6,6 +6,7 @@ import datetime
 from django.db import models
 from django.utils.encoding import python_2_unicode_compatible
 from django.utils import timezone
+from persol_users.models import PersolUser
 
 @python_2_unicode_compatible
 class Person(models.Model):
@@ -25,8 +26,10 @@ class Event(models.Model):
     dead_line = models.DateField('募集締切日')
     overview = models.TextField('概要')
 #    comment = models.ManyToManyField(Comment)
-#    like = models.ManyToManyField(Person)
-    members = models.ManyToManyField(Person)
+    like = models.ManyToManyField(PersolUser,verbose_name='いいね', related_name='like')
+#    like = models.ManyToManyField(Person,verbose_name='いいね', related_name='like')
+    members = models.ManyToManyField(PersolUser)
+#    members = models.ManyToManyField(Person)
 #    tag = models.ManyToManyField(Tag)
 #    event = models.OneToOneField(Status)
     
