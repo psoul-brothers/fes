@@ -24,7 +24,7 @@ class CreateForm(forms.Form):
     event_location = forms.CharField(max_length=200, label='開催場所')
     num_of_members = forms.CharField(max_length=200, label='募集人数')
     dead_line = forms.DateField(label='募集締切日')
-    overview = forms.CharField(max_length=2000, label='概要')
+    overview = forms.CharField(max_length=2000, label='概要',widget=forms.Textarea)
 
 class CreateUserForm(forms.Form):
     name = forms.CharField(max_length=100, label='ユーザ名')
@@ -38,7 +38,7 @@ class CustomChoiceField(forms.ModelChoiceField):
 class SelectUserForm(forms.Form):
     new_members = CustomChoiceField(
         queryset= usermodels.PersolUser.objects.all(),
-        label='メンバー',
+        label='メンバー※後で消す',
         empty_label='選択してください',
         to_field_name='id',
         required=False
@@ -47,7 +47,7 @@ class SelectUserForm(forms.Form):
 class LikeUserForm(forms.Form):
     new_like = CustomChoiceField(
         queryset= usermodels.PersolUser.objects.all(),
-        label='いいね',
+        label='いいね※後で消す',
         empty_label='選択してください',
         to_field_name='id',
         required=False
@@ -55,3 +55,4 @@ class LikeUserForm(forms.Form):
 
 class EventsSearchForm(forms.Form):
     word = forms.CharField()
+    
