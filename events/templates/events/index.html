@@ -17,7 +17,13 @@
 <td><form action="{% url 'events:event_join' event.id %}" method="post"></td>
 <td>{{ form.as_p }}</td>
 {% csrf_token %}
-<td><input value="イベントに参加する" type="submit"/></td>
+<td><input value="このイベントに参加する" type="submit"/></td>
+</form>
+
+<td><form action="{% url 'events:event_like' event.id %}" method="post"></td>
+<td>{{ like_form.as_p }}</td>
+{% csrf_token %}
+<td><input value="いいね" type="submit"/></td>
 </form>
 {% endfor %}
 </tbody>

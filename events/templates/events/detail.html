@@ -1,10 +1,23 @@
-{{ event.event_name }}
+{% extends 'events/base.html' %}
+{% block contents %}
+
+<h1>{{ event.event_name }}</h1>
 <h3>現在の参加者</h3>
 {% for members in memberslist %}
 <td>
+<h3>参加者</h3>
     {{ members.name }}
+</td>
+{% endfor %}
+
+<h3>イイネした人達</h3>
+{% for like_members in like_list %}
+<td>
+    {{ like_members.name }}
 </td>
 {% endfor %}
 
 <form action="{% url 'events:event_edit' event.id %}">
 <input type="submit" value="イベント更新" />
+
+{% endblock %}

@@ -43,3 +43,15 @@ class SelectUserForm(forms.Form):
         to_field_name='id',
         required=False
         )
+
+class LikeUserForm(forms.Form):
+    new_like = CustomChoiceField(
+        queryset= usermodels.PersolUser.objects.all(),
+        label='いいね',
+        empty_label='選択してください',
+        to_field_name='id',
+        required=False
+        )
+
+class EventsSearchForm(forms.Form):
+    word = forms.CharField()

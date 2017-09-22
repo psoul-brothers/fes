@@ -30,7 +30,8 @@ def user_add_operation(request):
                 , name =  request.POST['name']
                 , mail_address =  request.POST['mail_address']
                 , self_introduction_text =  request.POST['self_introduction_text']
-                , data = request.FILES['image'])
+                , data = request.FILES['image']
+                )
             q.save()
             return HttpResponseRedirect(reverse('persol_users:index'))
             
