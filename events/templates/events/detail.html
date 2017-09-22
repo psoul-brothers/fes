@@ -2,11 +2,17 @@
 {% block contents %}
 
 <h1>{{ event.event_name }}</h1>
-<h3>現在の参加者</h3>
-{% for members in memberslist %}
+<p>{{ event.event_datetime }}</p>
+<p>{{ event.event_location }}</p>
+
+概要<br>
+<TEXTAREA cols="40" rows="5" readonly>
+{{ event.overview }}
+</TEXTAREA>
 <td>
 <h3>参加者</h3>
-    {{ members.name }}
+{% for members in memberslist %}
+    {{ members.surname }} {{ members.name }}
 </td>
 {% endfor %}
 
@@ -18,10 +24,7 @@
 {% endfor %}
 <p>
 <td>
-概要<br>
-<TEXTAREA cols="40" rows="5" readonly>
-{{ event.overview }}
-</TEXTAREA>
+
 </td>
 
 <form action="{% url 'events:event_edit' event.id %}">
