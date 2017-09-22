@@ -5,7 +5,7 @@ class user_add_Form(forms.Form):
     surname = forms.CharField()
     name = forms.CharField()
     mail_address = forms.EmailField()
-    self_introduction_text = forms.CharField()
-    image = forms.FileField()
+    self_introduction_text = forms.CharField(widget=forms.Textarea)
+    image = forms.FileField(required=False)
     
     
