@@ -1,0 +1,7 @@
+<form action="{% url 'miscs:comment_create' %}" method="POST">
+{% csrf_token %}
+<table>
+{{ form.as_table }}
+</table>
+<input type="submit" value="Create Comment" />
+</form>
