@@ -16,6 +16,13 @@
     {{ like_members.name }}
 </td>
 {% endfor %}
+<p>
+<td>
+概要<br>
+<TEXTAREA cols="40" rows="5" readonly>
+{{ event.overview }}
+</TEXTAREA>
+</td>
 
 <form action="{% url 'events:event_edit' event.id %}">
 <input type="submit" value="イベント更新" />

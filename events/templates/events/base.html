@@ -3,13 +3,11 @@
 <table>
 <tr>
 <td>
-  <form action="{% url 'events:event_search' %}">
-  {% csrf_token %}
-  <li class="search">
-    <input id="searchKeyword" type="text" name="search" value="search" onblur="if (this.value == '') this.value = 'search';" onfocus="if (this.value == 'search') this.value = '';"/>
-    <input value="検索" id="keywordSearchSubmit" class="searchBtn" name="searchsubmit" type="button">
-  </li>
-  </form>
+<form action="{% url 'events:event_search' %}" method="POST">
+{% csrf_token %}
+<input type="text" name='word'/>
+<input type="submit" value="search">
+</form>
 </td>
 <td>
   <form action="{% url 'persol_users:user_add' %}">
