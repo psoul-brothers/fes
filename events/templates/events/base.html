@@ -1,16 +1,20 @@
 <head>
-    <tr>
-    　　<form action="{% url 'events:create_user' %}">
-　　    {% csrf_token %}
-　　    <input type="submit" value="New person" />
-　　    </form>
-　　</tr>
-    <td>
-        <form action="{% url 'events:event_create' %}">
-        {% csrf_token %}
-　　    <input type="submit" value="New Event" />
-　　    </form>
-　　</td>
+<table>
+<tr>
+<td>
+  <form action="{% url 'persol_users:user_add' %}">
+  {% csrf_token %}
+  <button type="submit" value="New person">UserAdd</button>
+  </form>
+</td>
+<td>
+  <form action="{% url 'events:event_create' %}">
+  {% csrf_token %}
+  <button type="submit" value="New Event">EventAdd</button>
+</form>
+</td>
+</tr>
+</table>
 </head>
 <body>
 {% block contents %}

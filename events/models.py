@@ -26,9 +26,10 @@ class Event(models.Model):
     dead_line = models.DateField('募集締切日')
     overview = models.TextField('概要')
 #    comment = models.ManyToManyField(Comment)
-    like = models.ManyToManyField(Person,verbose_name='いいね', related_name='like')
-#    members = models.ManyToManyField(PersolUser)
-    members = models.ManyToManyField(Person)
+    like = models.ManyToManyField(PersolUser,verbose_name='いいね', related_name='like')
+#    like = models.ManyToManyField(Person,verbose_name='いいね', related_name='like')
+    members = models.ManyToManyField(PersolUser)
+#    members = models.ManyToManyField(Person)
 #    tag = models.ManyToManyField(Tag)
 #    event = models.OneToOneField(Status)
     
