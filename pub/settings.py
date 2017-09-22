@@ -125,5 +125,5 @@ USE_TZ = True
 STATIC_URL = '/static/'
 
 
-MEDIA_ROOT = "/home/ubuntu/workspace/persol_users/media"
+MEDIA_ROOT = "/home/ubuntu/workspace/media"
 MEDIA_URL = '/image/'
