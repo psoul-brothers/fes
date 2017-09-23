@@ -21,9 +21,23 @@ def user_add(request):
     return render(request, 'persol_users/user_add.html', {'form1': f})
     
 def user_add_operation(request):
-    
-    q = PersolUser(employee_number = request.POST['employee_number'], surname =  request.POST['surname'], name =  request.POST['name'], mail_address =  request.POST['mail_address'], self_introduction_text =  request.POST['self_introduction_text'], data = request.FILES['image'])
-    q.save()
-    return HttpResponseRedirect(reverse('persol_users:index'))
+    if request.method == 'POST':
+        form = user_add_Form(request.POST)
+        if form.is_valid():
+            q = PersolUser(
+                employee_number = request.POST['employee_number']
+                , surname =  request.POST['surname']
+                , name =  request.POST['name']
+                , mail_address =  request.POST['mail_address']
+                , self_introduction_text =  request.POST['self_introduction_text']
+                , data = request.FILES['image']
+                )
+            q.save()
+            return HttpResponseRedirect(reverse('persol_users:index'))
+            
+    else:
+        form = user_add_Form()
+        
+    return render(request, 'persol_users/user_add.html', {'form1': form})
 
         
