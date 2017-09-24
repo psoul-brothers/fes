@@ -16,7 +16,7 @@ class PersolUser(AbstractBaseUser):
     name = models.CharField(max_length=200)
     mail_address = models.EmailField(max_length=75)
     self_introduction_text = models.CharField(max_length=200)
-    data = models.ImageField(upload_to='image')
+    data = models.ImageField(upload_to='user_image')
     
     
     # for authentication by tnk

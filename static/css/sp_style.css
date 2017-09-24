@@ -1,0 +1,126 @@
+/* スマホ用スタイルシート */
+ 
+@charset "utf-8";
+ 
+/*----------------------------------------------------*/
+/* element reset
+------------------------------------------------------*/
+ 
+html, body, div, span, object, iframe, h1, h2, h3, h4, h5, h6, p, blockquote, pre, abbr, address, cite, code, del, dfn, em, img, ins, kbd, q, samp, small, strong, sub, sup, var, b, i, dl, dt, dd, ol, ul, li, fieldset, form, label, legend, table, caption, tbody, tfoot, thead, tr, th, td, article, aside, canvas, details, figcaption, figure, footer, header, hgroup, menu, nav, section, summary, time, mark, audio, video, a, input {
+    margin:0;
+    padding:0;
+    border:0;
+    outline:0;
+    background:transparent;
+}
+body { line-height:1; position:relative;}
+article, aside, details, figcaption, figure, footer, header, hgroup, menu, nav, section { display:block; }
+ul, ol, dl { list-style:none; }
+del { text-decoration: line-through; }
+table { border-collapse:collapse;   border-spacing:0;   empty-cells:show;   font-size:inherit;  font:100%;}
+th,td,img { border:0;}
+caption, th {   text-align:left;}
+img,a img{  background:transparent; vertical-align:top;}
+address {   font-style:normal;}
+hr { display:none;}
+input, select { vertical-align:middle; }
+input[type=text],input[type=submit]{
+    -webkit-appearance:none;
+}
+ 
+ 
+ 
+/*----------------------------------------------------*/
+/* link
+-----------------------------------------------------*/
+ 
+a:link {    color:#458CDD; text-decoration:none;}
+a:visited { color:#458CDD;  text-decoration:none;}
+a:hover {   color:#458CDD;  text-decoration:underline;}
+a:active {  color:#458CDD;  text-decoration:none;}
+ 
+#course-nav-sp a img:hover,.nbp_contents a img:hover {opacity: 0.8}
+ 
+/*----------------------------------------------------*/
+/* text
+------------------------------------------------------*/
+ 
+body {
+    background:#FFF;
+    color:#333;
+    font: 16px "メイリオ", "Hiragino Kaku Gothic ProN","ヒラギノ角ゴ ProN W3","ＭＳ Ｐゴシック",Helvetica,Arial,sans-serif;
+}
+ 
+p,dt,dd,li,th,td,address {
+    line-height:1.5;
+}
+ 
+p,dt,dd,li,th,td,input,textarea,address {
+    font-size:100%;
+}
+ 
+img {
+    vertical-align:bottom;
+}
+ 
+ 
+body {
+    padding: 0 2%;
+}
+ 
+header {
+    margin:10px 0 ;
+ 
+}
+ 
+header ul li.search {
+    display: inline-block;
+    width: 65%;
+    font-size: 3vw;
+}
+ 
+header div.select {
+    width: 100%;
+    margin-top: 10px;
+}
+header div.select p {
+    font-size: 80%;
+}
+ 
+header ul li #searchKeyword {
+    width: 60%;
+    padding: 3px;
+    border:1px solid #a9a9a9;
+}
+ 
+header ul li.search input.searchBtn {
+    border:1px solid #a9a9a9;
+    background-color: #a9a9a9;
+    color:#ffffff;
+    display: inline-block;
+}
+header ul li.makeEvent {
+    width: 30%;
+    display: inline-block;
+    font-size: 3vw;
+}
+ 
+header ul li.makeEvent a {
+    padding: 2px 0;
+    display: block;
+    background-color: #FF0000;
+    color: #ffffff;
+    border-radius: 2px;
+    text-align: center;
+    font-weight: bold;
+}
+article {
+    width: 100%;
+}
+ 
+ 
+.clearfix:after {
+    content:" ";
+    display:block;
+    clear:both;
+}
