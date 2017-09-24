@@ -65,7 +65,7 @@ def event_edit(request, event_id):
         form = EventForm(request.POST, instance=event)
         if form.is_valid(): # バリデーションを通った
             form.save()
-            return HttpResponseRedirect('/events/') # POST 後のリダイレクト
+            return HttpResponseRedirect('/events/' + event_id) # POST 後のリダイレクト
     else:
         form = EventForm(instance=event) # 非束縛フォーム
 
@@ -110,23 +110,32 @@ def event_search(request):
     if request.method == 'POST':
         form = EventsSearchForm(request.POST)
         if form.is_valid():
-            tpl      = loader.get_template('/events/index.html')
+            tpl      = loader.get_template('events/index.html')
             word     = form.cleaned_data['word']
+            print word
             search_results = Event.objects.filter(
                 Q(event_name__contains = word) | 
                 Q(overview__contains = word)
             )
+            context = {
+                'form'     : SelectUserForm(),
+                'like_form':LikeUserForm(),
+                'latest_event_list' : search_results
+            }
+            return render(request, 'events/index.html', context)
+            """
             return HttpResponse(
                 tpl.render(
                     RequestContext(
                         request,
                             {
                             'form'     : form,
-                            'search_results' : search_results
+                            'latest_event_list' : search_results
                             }
                     )
                 )
             )
+            """
     else:
         form = EventsSearchForm()
     tpl = loader.get_template('events/index.html')

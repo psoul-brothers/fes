@@ -32,6 +32,11 @@ def user_add_operation(request):
                 , self_introduction_text =  request.POST['self_introduction_text']
                 , data = request.FILES['image']
                 )
+            
+            # for auth by tanaka
+            q.set_password('pass-123')
+            
+            
             q.save()
             return HttpResponseRedirect(reverse('persol_users:index'))
             
