@@ -40,4 +40,9 @@ def user_add_operation(request):
         
     return render(request, 'persol_users/user_add.html', {'form1': form})
 
-        
+    
+def user_modify(request, user_id):
+    user = get_object_or_404(PersolUser, pk=user_id)
+    
+    f = user_modify_Form(instance=user)
+    return render(request, 'persol_users/user_modify.html', {'from1': f})
