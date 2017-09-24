@@ -17,7 +17,11 @@ Including another URLconf
 from django.conf.urls import include,url
 from django.contrib import admin
 
+import events.views
+
 urlpatterns = [
+    url(r'^$', events.views.event_index, name='portal'),
+    url(r'^log', include('my_auth.urls')),
     url(r'^admin/', admin.site.urls),
     url(r'^events/', include('events.urls')),
     url(r'^persol_users/', include('persol_users.urls')),

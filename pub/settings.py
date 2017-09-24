@@ -35,6 +35,7 @@ INSTALLED_APPS = [
     'questions.apps.QuestionsConfig',
     'persol_users.apps.PersolUsersConfig',
     'misc_models.apps.MiscModelsConfig',
+    'my_auth.apps.MyAuthConfig',
     'django.contrib.admin',
     'django.contrib.auth',
     'django.contrib.contenttypes',
@@ -127,3 +128,8 @@ STATIC_URL = '/static/'
 
 MEDIA_ROOT = os.path.join(BASE_DIR, 'media')
 MEDIA_URL = 'files/'
+
+AUTH_USER_MODEL = 'persol_users.PersolUser'
+LOGIN_URL = 'my_auth:login'
+LOGIN_REDIRECT_URL = 'portal'
+LOGOUT_REDIRECT_URL = 'my_auth:logout'
