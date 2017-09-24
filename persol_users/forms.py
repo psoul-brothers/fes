@@ -4,14 +4,13 @@ from django import forms
 from django.forms import ModelForm
 from .models import PersolUser
 
+#
+
+
+
 class user_add_Form(forms.Form):
-    employee_number = forms.CharField(
-            attrs={
-             'value': "IDを入力してください",
-             'onblur': "if (this.value == '') this.value = 'IDを入力してください';",
-             'onfocus': "if (this.value == 'IDを入力してください') this.value = '';",
-            }
-        )
+    employee_number = forms.CharField()
+    password = forms.CharField()
     surname = forms.CharField()
     name = forms.CharField()
     mail_address = forms.EmailField()
