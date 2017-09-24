@@ -9,6 +9,9 @@ from persol_users.models import PersolUser
 from django.db.models import Q
 from .forms import CreateForm,CreateUserForm, EventForm, SelectUserForm, LikeUserForm, EventsSearchForm
 
+from django.contrib.auth.decorators import login_required
+
+@login_required
 def event_index(request):
     latest_event_list = Event.objects.order_by('id')
     member_list = PersolUser.objects.order_by('id')
