@@ -1,0 +1,44 @@
+/* トップページ用スタイルシート */
+@charset "utf-8";
+#login {padding: 0 13vw;}
+ 
+#topLogin input {
+    border:1px solid #a9a9a9;
+    background-color: #ffffff;
+    font-size: 90%;
+    margin: 5px 0;
+    width:69vw;
+}
+
+#topLogin li.pw,#topLogin li.btn {
+    float: left;
+}
+ 
+#topLogin li.pw {
+    width: 75%
+}
+#topLogin li.id input{
+    font-size:60%;
+    padding:5px 2px;
+}
+
+#topLogin li.pw input{
+    width: 90%;
+    font-size:60%;
+    padding:5px 2px;
+}
+#topLogin li.btn{
+    width: 20%
+}
+#topLogin li.btn input{
+    width: 100%;
+    border-radius:3px;
+    color:#ffffff;
+    background-color:#333333;
+    font-size:70%;
+    padding:3px 0;
+    }
+ 
+#topLogin .signUpText {
+    font-size: 80%;
+}
