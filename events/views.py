@@ -13,15 +13,30 @@ from django.contrib.auth.decorators import login_required
 
 @login_required
 def event_index(request):
-    latest_event_list = Event.objects.order_by('id')
     member_list = PersolUser.objects.order_by('id')
     form = SelectUserForm()
     like_form = LikeUserForm()
+
+    # get each event
+    latest_events   = Event.objects.order_by('id')
+    print(Event.objects.all())
+    """if Event.objects.all() == 0:
+        joing_events    = []
+        watching_events = []
+        organized_events= []
+    else:
+    """
+    joing_events    = Event.objects.filter(Q(members = request.user.id))
+    watching_events = Event.objects.filter(Q(watch   = request.user.id))
+    organized_events= Event.objects.filter(Q(author  = request.user.id))
     context = {
-        'latest_event_list': latest_event_list,
-        'member_list': member_list,
-        'form': form,
-        'like_form':like_form
+        'member_list'      : member_list,
+        'form'             : form,
+        'like_form'        : like_form,
+        'latest_event_list': latest_events,
+        'joing_events'     : joing_events,
+        'watching_events'  : watching_events,
+        'organized_events' : organized_events
     }
     return render(request, 'events/index.html', context)
     
@@ -56,11 +71,13 @@ def event_detail(request, event_id):
     event = get_object_or_404(Event, pk=event_id)
     members_list = event.members.all()
     like_list = event.like.all()
+    watcher_list = event.watch.all()
     print(event.author.name)
     context = {
         'event': event,
         'memberslist':members_list,
-        'like_list':like_list
+        'like_list':like_list,
+        'watcher_list':watcher_list
     }
     return render(request, 'events/detail.html', context)
 
@@ -92,6 +109,12 @@ def event_like(request, event_id):
     target_event.like.add(new_like)
     return HttpResponseRedirect('/events/')
 
+def event_watch(request, event_id):
+    target_event = get_object_or_404(Event, id=event_id)
+    new_watch = get_object_or_404(PersolUser, id=request.user.id)
+    target_event.like.add(new_watch)
+    return HttpResponseRedirect('/events/')
+
 def event_leave(request, event_id):
     pass
 
@@ -118,7 +141,7 @@ def event_search(request):
     if request.method == 'POST':
         form = EventsSearchForm(request.POST)
         if form.is_valid():
-            tpl      = loader.get_template('events/index.html')
+#            tpl      = loader.get_template('events/index.html')
             word     = form.cleaned_data['word']
             print word
             search_results = Event.objects.filter(
@@ -133,10 +156,13 @@ def event_search(request):
             return render(request, 'events/index.html', context)
     else:
         form = EventsSearchForm()
-    tpl = loader.get_template('events/index.html')
-    return HttpResponse(tpl.render(RequestContext(
+#    tpl = loader.get_template('events/index.html')
+    return render(request, 'events/index.html', {'form' : form})
+
+"""    return HttpResponse(tpl.render(RequestContext(
         request,
         {
             'form' : form
         }
     )))
+"""

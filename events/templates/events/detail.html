@@ -25,10 +25,12 @@
     {{ like_members.name }}
 </td>
 {% endfor %}
-<p>
-<td>
 
-</td>
+イベントウォッチ中の人
+{% for watcher in event_watcher %}
+{{watcher.name}}
+
+{% endfor %}
 {{user.id}} {{ event.author }}
 {% if event.author != user %}
 <form action="{% url 'events:event_edit' event.id %}">

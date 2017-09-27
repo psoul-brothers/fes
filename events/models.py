@@ -28,6 +28,7 @@ class Event(models.Model):
     overview = models.TextField('概要')
 #    comment = models.ManyToManyField(Comment)
     like = models.ManyToManyField(PersolUser,verbose_name='いいね', related_name='like')
+    watch = models.ManyToManyField(PersolUser,verbose_name='ウォッチ', related_name='Watch')
     members = models.ManyToManyField(PersolUser)
 #    members = models.ManyToManyField(Person)
 #    tag = models.ManyToManyField(Tag)

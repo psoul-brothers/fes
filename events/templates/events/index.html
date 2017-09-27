@@ -11,14 +11,24 @@
 <TEXTAREA cols="40" rows="5" readonly>
 {{ event.overview }}
 </TEXTAREA><br>
+
 <form action="{% url 'events:event_join' event.id %}" method="post">
 {{ form }}
 <button type="submit" value="event join">このイベントに参加する</button>
 {% csrf_token %}
+</form>
+
 <form action="{% url 'events:event_like' event.id %}" method="post">
 {{ like_form }}
 {% csrf_token %}
-<input value="いいね" type="submit"/>
+<button type="submit" value="like">いいね</button>
+</form>
+
+<form action="{% url 'events:event_watch' event.id %}" method="post">
+{% csrf_token %}
+<input value="ウォッチ" type="submit"/>
+</form>
+
 {% endfor %}
 {% else %}
 <p>No event are available.</p>
