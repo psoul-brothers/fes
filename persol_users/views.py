@@ -6,6 +6,7 @@ from django.core.urlresolvers import reverse
 # Create your views here.
 from .models import PersolUser
 from .forms import user_add_Form
+from .forms import user_modify_Form
 
 def index(request):
     user_list = PersolUser.objects.order_by('name')
@@ -46,8 +47,19 @@ def user_add_operation(request):
     return render(request, 'persol_users/user_add.html', {'form1': form})
 
     
-#def user_modify(request, user_id):
-#    user = get_object_or_404(PersolUser, pk=user_id)
+def user_modify(request):
+   
+    req_employee_number = request.user.employee_number
+    user = get_object_or_404(PersolUser, employee_number=req_employee_number)
     
-#    f = user_modify_Form(instance=user)
-#    return render(request, 'persol_users/user_modify.html', {'from1': f})
+    if request.method == 'POST':
+        f = user_modify_Form(request.POST, instance=user)
+        if f.is_valid():
+            f.save()
+            return HttpResponseRedirect(reverse('persol_users:index'))
+
+    else:
+        f = user_modify_Form(instance=user)
+        
+    edit_context = {'form1': f, 'user': user}
+    return render(request, 'persol_users/user_modify.html', context=edit_context)
