@@ -17,7 +17,8 @@ class Person(models.Model):
         return self.name
 
 class Event(models.Model):
-    author = models.CharField('作成者', max_length=200)
+#    author = models.CharField('作成者', max_length=200)
+    author = models.OneToOneField(PersolUser,verbose_name='作成者', related_name='author')
     event_name = models.CharField('イベント名', max_length=200)
     event_image = models.ImageField('イメージ画像',blank=True)
     event_datetime = models.DateTimeField('日時',blank=True,null=True)
@@ -27,7 +28,6 @@ class Event(models.Model):
     overview = models.TextField('概要')
 #    comment = models.ManyToManyField(Comment)
     like = models.ManyToManyField(PersolUser,verbose_name='いいね', related_name='like')
-#    like = models.ManyToManyField(Person,verbose_name='いいね', related_name='like')
     members = models.ManyToManyField(PersolUser)
 #    members = models.ManyToManyField(Person)
 #    tag = models.ManyToManyField(Tag)
@@ -35,3 +35,7 @@ class Event(models.Model):
     
     def __str__(self):  
         return self.event_name
+"""
+python manage.py makemigrations
+python manage.py migrate
+"""

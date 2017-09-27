@@ -1,15 +1,18 @@
 {% extends 'events/base.html' %}
 {% block contents %}
 
-<h1>{{ event.event_name }}</h1>
-<p>{{ event.event_datetime }}</p>
-<p>{{ event.event_location }}</p>
-
+イベント作成者{{ event.author }}<br>
+{{ event.event_name }}<br>
+{{ event.event_image }}<br>
+{{ event.event_datetime }}<br>
+{{ event.event_location }}<br>
+{{ event.dead_line }}<br>
 概要<br>
 <TEXTAREA cols="40" rows="5" readonly>
 {{ event.overview }}
 </TEXTAREA>
 <td>
+    
 <h3>参加者</h3>
 {% for members in memberslist %}
     {{ members.surname }} {{ members.name }}
@@ -26,8 +29,11 @@
 <td>
 
 </td>
-
+{{user.id}} {{ event.author }}
+{% if event.author != user %}
 <form action="{% url 'events:event_edit' event.id %}">
 <input type="submit" value="イベント更新" />
+{% else %}
+{% endif %}
 
 {% endblock %}

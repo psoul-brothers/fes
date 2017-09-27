@@ -1,3 +1,4 @@
+# coding: utf-8
 from django.conf.urls import url
 
 from . import views
@@ -12,7 +13,7 @@ urlpatterns = [
     url(r'^(?P<event_id>[0-9]+)/like/$', views.event_like, name='event_like'),
     url(r'^(?P<event_id>[0-9]+)/leave/$', views.event_leave, name='event_leave'),
     url(r'^(?P<event_id>[0-9]+)/leave/$', views.event_delete, name='event_delete'),
-    url(r'^create_user/$', views.create_user, name='create_user'),
+#    url(r'^create_user/$', views.create_user, name='create_user'), #もう使わない。イベントアプリ単体テスト用
     url(r'^search/$', views.event_search, name='event_search'),
 #    url(r'^(?Pevent_id>[0-9]+)/vote/$', views.vote, name='vote'),
 ]

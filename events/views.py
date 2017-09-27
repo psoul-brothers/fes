@@ -32,8 +32,9 @@ def event_create(request):
         if form.is_valid(): # バリデーションを通った
             # form.cleaned_data を処理
             # ...
+            login_user = get_object_or_404(PersolUser, id=request.user.id)
             e = Event(
-                author=request.POST['author'],
+                author=login_user,
                 event_name=request.POST['event_name'], 
                 event_image=request.POST['event_image'], 
                 event_datetime=request.POST['event_datetime'], 
@@ -43,6 +44,7 @@ def event_create(request):
                 overview=request.POST['overview']
             )
             e.save()
+#per                e.author.add(login_user)
             return HttpResponseRedirect('/events/') # POST 後のリダイレクト
     else:
         form = CreateForm() # 非束縛フォーム
@@ -54,6 +56,7 @@ def event_detail(request, event_id):
     event = get_object_or_404(Event, pk=event_id)
     members_list = event.members.all()
     like_list = event.like.all()
+    print(event.author.name)
     context = {
         'event': event,
         'memberslist':members_list,
@@ -96,6 +99,7 @@ def event_leave(request, event_id):
 def event_delete(request, event_id):
     pass
 
+"""
 def create_user(request):
     if request.method == 'POST':
         form = CreateUserForm(request.POST)
@@ -108,6 +112,7 @@ def create_user(request):
     else:
         form = CreateUserForm() # 非束縛フォーム
     return render(request, 'events/create_user.html', {'form': form,})
+"""
 
 def event_search(request):
     if request.method == 'POST':
@@ -126,19 +131,6 @@ def event_search(request):
                 'latest_event_list' : search_results
             }
             return render(request, 'events/index.html', context)
-            """
-            return HttpResponse(
-                tpl.render(
-                    RequestContext(
-                        request,
-                            {
-                            'form'     : form,
-                            'latest_event_list' : search_results
-                            }
-                    )
-                )
-            )
-            """
     else:
         form = EventsSearchForm()
     tpl = loader.get_template('events/index.html')
