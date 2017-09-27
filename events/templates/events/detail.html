@@ -1,7 +1,7 @@
 {% extends 'events/base.html' %}
 {% block contents %}
 
-イベント作成者{{ event.author }}<br>
+イベント作成者{{ event.author.name }}<br>
 {{ event.event_name }}<br>
 {{ event.event_image }}<br>
 {{ event.event_datetime }}<br>
@@ -21,16 +21,16 @@
 
 <h3>イイネした人達</h3>
 {% for like_members in like_list %}
-<td>
-    {{ like_members.name }}
-</td>
+  {{ like_members.name }}
 {% endfor %}
+<br>
 
-イベントウォッチ中の人
+<h3>イベントウォッチ中の人</h3>
 {% for watcher in event_watcher %}
-{{watcher.name}}
-
+  {{watcher.name}}
 {% endfor %}
+<br>
+
 {{user.id}} {{ event.author }}
 {% if event.author != user %}
 <form action="{% url 'events:event_edit' event.id %}">

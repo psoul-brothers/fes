@@ -19,7 +19,7 @@ def event_index(request):
 
     # get each event
     latest_events   = Event.objects.order_by('id')
-    print(Event.objects.all())
+    print(Event.objects.filter(Q(watch = request.user.id)))
     """if Event.objects.all() == 0:
         joing_events    = []
         watching_events = []
@@ -112,7 +112,7 @@ def event_like(request, event_id):
 def event_watch(request, event_id):
     target_event = get_object_or_404(Event, id=event_id)
     new_watch = get_object_or_404(PersolUser, id=request.user.id)
-    target_event.like.add(new_watch)
+    target_event.watch.add(new_watch)
     return HttpResponseRedirect('/events/')
 
 def event_leave(request, event_id):
