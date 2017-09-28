@@ -3,10 +3,15 @@
 <table>
 <tr>
 <td>
-<form action="{% url 'events:event_search' %}" method="POST">
-{% csrf_token %}
-<input type="text" name='word'/>
-<input type="submit" value="search">
+  <form action="{% url 'events:event_index' %}" method="POST">
+  {% csrf_token %}
+  <input type="text" name='word'/>
+    <select id="sort_id" name="sort">
+    <option value="" selected="selected">Sort</option>
+    <option value="like">いいね数</option>
+    <option value="watch">ウォッチ数</option>
+  </select>
+  <input type="submit" value="search">
 </form>
 </td>
 <td>

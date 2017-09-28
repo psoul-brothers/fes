@@ -45,7 +45,7 @@ class SelectUserForm(forms.Form):
         )
 
 class LikeUserForm(forms.Form):
-    new_like = CustomChoiceField(
+    like = CustomChoiceField(
         queryset= usermodels.PersolUser.objects.all(),
         label='いいね※後で消す',
         empty_label='選択してください',

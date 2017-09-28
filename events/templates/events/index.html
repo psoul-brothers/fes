@@ -26,7 +26,7 @@
 
 <form action="{% url 'events:event_watch' event.id %}" method="post">
 {% csrf_token %}
-<input value="ウォッチ" type="submit"/>
+<input name="watch" value="ウォッチ" type="submit"/>
 </form>
 
 {% endfor %}

@@ -6,29 +6,37 @@ from django.http import HttpResponseRedirect, HttpResponse
 from django.core.urlresolvers import reverse
 from .models import Event, Person
 from persol_users.models import PersolUser
-from django.db.models import Q
+from django.db.models import Q, Count
 from .forms import CreateForm,CreateUserForm, EventForm, SelectUserForm, LikeUserForm, EventsSearchForm
 
 from django.contrib.auth.decorators import login_required
 
 @login_required
 def event_index(request):
+    if request.method == 'POST':
+        search_word = request.POST['word'] # 検索の値が空白でも大丈夫
+        search_results = Event.objects.filter(
+                Q(event_name__contains = search_word) | 
+                Q(overview__contains = search_word)
+            )
+        event_list = search_results
+        if request.POST['sort'] == 'like':
+            print("now!!!!!")
+            event_list = event_list.annotate(like_num = Count('like')).order_by('-like_num')
+        """降順指定したい場合
+        if request.POST['sort'] == "desc":
+            event_list = event_list.reverse()
+        """
+    else:
+        event_list = Event.objects.order_by('id')
     member_list = PersolUser.objects.order_by('id')
     form = SelectUserForm()
     like_form = LikeUserForm()
-
     # get each event
-    latest_events   = Event.objects.order_by('id')
-    print(Event.objects.filter(Q(watch = request.user.id)))
-    """if Event.objects.all() == 0:
-        joing_events    = []
-        watching_events = []
-        organized_events= []
-    else:
-    """
-    joing_events    = Event.objects.filter(Q(members = request.user.id))
-    watching_events = Event.objects.filter(Q(watch   = request.user.id))
-    organized_events= Event.objects.filter(Q(author  = request.user.id))
+    latest_events   = event_list
+    joing_events    = event_list.filter(Q(members = request.user.id))
+    watching_events = event_list.filter(Q(watch   = request.user.id))
+    organized_events= event_list.filter(Q(author  = request.user.id))
     context = {
         'member_list'      : member_list,
         'form'             : form,
@@ -71,14 +79,17 @@ def event_detail(request, event_id):
     event = get_object_or_404(Event, pk=event_id)
     members_list = event.members.all()
     like_list = event.like.all()
+    num_of_like = event.like.count()
+    print(num_of_like)
     watcher_list = event.watch.all()
-    print(event.author.name)
     context = {
-        'event': event,
-        'memberslist':members_list,
-        'like_list':like_list,
-        'watcher_list':watcher_list
+        'event'       : event,
+        'memberslist' : members_list,
+        'like_list'   : like_list,
+        'watcher_list': watcher_list,
+        'num_of_like' : num_of_like
     }
+    context.update({'contexts':context})
     return render(request, 'events/detail.html', context)
 
 
@@ -104,16 +115,32 @@ def event_join(request, event_id):
     
 
 def event_like(request, event_id):
-    target_event = get_object_or_404(Event, id=event_id)
-    new_like = get_object_or_404(PersolUser, id=request.POST['new_like'])
-    target_event.like.add(new_like)
-    return HttpResponseRedirect('/events/')
+    if request.POST['like'] == 'leave':
+        target_event = get_object_or_404(Event, id=event_id)
+        new_like = get_object_or_404(PersolUser, employee_number=request.user.id)
+        target_event.like.remove(new_like)
+# 後で消す。テスト用
+    elif request.POST['like'] == 'like':
+        target_event = get_object_or_404(Event, id=event_id)
+        new_like = get_object_or_404(PersolUser, id=request.POST['like'])
+        target_event.like.add(new_like)
+    else:
+        target_event = get_object_or_404(Event, id=event_id)
+        new_like = get_object_or_404(PersolUser, employee_number=request.user.id)
+        target_event.like.add(new_like)
+    return HttpResponseRedirect(request.META['HTTP_REFERER'])
 
 def event_watch(request, event_id):
-    target_event = get_object_or_404(Event, id=event_id)
-    new_watch = get_object_or_404(PersolUser, id=request.user.id)
-    target_event.watch.add(new_watch)
-    return HttpResponseRedirect('/events/')
+    if request.POST['watch'] == 'leave':
+        target_event = get_object_or_404(Event, id=event_id)
+        new_watch = get_object_or_404(PersolUser, employee_number=request.user.id)
+        target_event.watch.remove(new_watch)
+    else:
+        target_event = get_object_or_404(Event, id=event_id)
+        new_watch = get_object_or_404(PersolUser, employee_number=request.user.id)
+        target_event.watch.add(new_watch)
+        print(new_watch)
+    return HttpResponseRedirect(request.META['HTTP_REFERER']) # リクエスト先にリダイレクト
 
 def event_leave(request, event_id):
     pass
@@ -143,14 +170,13 @@ def event_search(request):
         if form.is_valid():
 #            tpl      = loader.get_template('events/index.html')
             word     = form.cleaned_data['word']
-            print word
             search_results = Event.objects.filter(
                 Q(event_name__contains = word) | 
                 Q(overview__contains = word)
             )
             context = {
                 'form'     : SelectUserForm(),
-                'like_form':LikeUserForm(),
+                'like_form': LikeUserForm(),
                 'latest_event_list' : search_results
             }
             return render(request, 'events/index.html', context)

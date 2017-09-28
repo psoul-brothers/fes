@@ -19,22 +19,47 @@
 </td>
 {% endfor %}
 
+
 <h3>イイネした人達</h3>
 {% for like_members in like_list %}
   {{ like_members.name }}
 {% endfor %}
 <br>
-
-<h3>イベントウォッチ中の人</h3>
-{% for watcher in event_watcher %}
-  {{watcher.name}}
-{% endfor %}
+いいね数:{{num_of_like}}名
+{% if user in like_list %}
+  <form action="{% url 'events:event_like' event.id %}" method="post">
+  {% csrf_token %}
+  <button name ="like" value="leave" type="submit">いいねを外す</button>
+  </form>
+{% else %}
+  <form action="{% url 'events:event_like' event.id %}" method="post">
+  {% csrf_token %}
+  <button name="like" value="add" type="submit">いいね</button>
+  </form>
+{% endif %}
 <br>
 
-{{user.id}} {{ event.author }}
+<h3>イベントウォッチ中の人</h3>
+{% for watcher in watcher_list %}
+  {{ watcher.name }}
+{% endfor %}
+{% if user in watcher_list %}
+  <form action="{% url 'events:event_watch' event.id %}" method="post">
+  {% csrf_token %}
+  <button name ="watch" value="leave" type="submit">ウォッチを外す</button>
+  </form>
+{% else %}
+  <form action="{% url 'events:event_watch' event.id %}" method="post">
+  {% csrf_token %}
+  <input name="watch" value="ウォッチ" type="submit"/>
+  </form>
+{% endif %}
+<br>
+
 {% if event.author != user %}
 <form action="{% url 'events:event_edit' event.id %}">
 <input type="submit" value="イベント更新" />
+</form>
 {% else %}
 {% endif %}
 

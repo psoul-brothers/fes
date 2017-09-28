@@ -18,7 +18,8 @@ class Person(models.Model):
 
 class Event(models.Model):
 #    author = models.CharField('作成者', max_length=200)
-    author = models.OneToOneField(PersolUser,verbose_name='作成者', related_name='author')
+#    author = models.OneToOneField(PersolUser,verbose_name='作成者', related_name='author')
+    author = models.ForeignKey(PersolUser,verbose_name='作成者',related_name='author')
     event_name = models.CharField('イベント名', max_length=200)
     event_image = models.ImageField('イメージ画像',blank=True)
     event_datetime = models.DateTimeField('日時',blank=True,null=True)
