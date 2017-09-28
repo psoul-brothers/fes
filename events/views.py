@@ -23,6 +23,9 @@ def event_index(request):
         if request.POST['sort'] == 'like':
             print("now!!!!!")
             event_list = event_list.annotate(like_num = Count('like')).order_by('-like_num')
+        if request.POST['sort'] == 'watch':
+            print("now!!!!!!!!!!!!!!!")
+            event_list = event_list.annotate(watch_num = Count('watch')).order_by('-watch_num')
         """降順指定したい場合
         if request.POST['sort'] == "desc":
             event_list = event_list.reverse()
