@@ -24,3 +24,6 @@ class user_modify_Form(ModelForm):
             'employee_number', 'surname', 'name', 'mail_address', 
             'self_introduction_text', 'data'
         ]
+
+    
+

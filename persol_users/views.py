@@ -1,6 +1,7 @@
 from django.shortcuts import get_object_or_404, render
 from django.http import HttpResponseRedirect, HttpResponse
-from django.core.urlresolvers import reverse
+from django.core.urlresolvers import reverse 
+import os
 
 
 # Create your views here.
@@ -53,9 +54,13 @@ def user_modify(request):
     user = get_object_or_404(PersolUser, employee_number=req_employee_number)
     
     if request.method == 'POST':
-        f = user_modify_Form(request.POST, instance=user)
+        f = user_modify_Form(request.POST)
         if f.is_valid():
+            tmp = user.data.path
+            
+            
             f.save()
+            os.remove(tmp)
             return HttpResponseRedirect(reverse('persol_users:index'))
 
     else:
@@ -63,3 +68,5 @@ def user_modify(request):
         
     edit_context = {'form1': f, 'user': user}
     return render(request, 'persol_users/user_modify.html', context=edit_context)
+
+
