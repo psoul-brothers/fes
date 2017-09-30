@@ -11,7 +11,7 @@ class EventForm(ModelForm):
     class Meta:
         model = Event
         fields = [
-            'author', 'event_name', 'event_image', 'event_datetime', 
+            'event_name', 'event_image', 'event_datetime', 
             'event_location', 'num_of_members', 'dead_line', 'overview', 
             'search_tag','event_status'
         ]

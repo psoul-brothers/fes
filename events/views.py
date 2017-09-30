@@ -61,19 +61,24 @@ def event_create(request):
             # form.cleaned_data を処理
             # ...
             login_user = get_object_or_404(PersolUser, id=request.user.id)
-            e = Event(
-                author         = login_user,
-                event_name     = request.POST['event_name'], 
-                event_image    = request.FILES['event_image'], 
-                event_datetime = request.POST['event_datetime'], 
-                event_location = request.POST['event_location'], 
-                num_of_members = request.POST['num_of_members'], 
-                dead_line      = request.POST['dead_line'],
-                overview       = request.POST['overview'],
-                search_tag     = request.POST['search_tag']
-            )
-            e.save()
-            return HttpResponseRedirect('/events/') # POST 後のリダイレクト
+            try:
+                image = request.FILES['event_image']
+            except:
+                image = ''
+            finally:
+                new_event = Event(
+                    author         = login_user,
+                    event_name     = request.POST['event_name'], 
+                    event_image    = image, 
+                    event_datetime = request.POST['event_datetime'], 
+                    event_location = request.POST['event_location'], 
+                    num_of_members = request.POST['num_of_members'], 
+                    dead_line      = request.POST['dead_line'],
+                    overview       = request.POST['overview'],
+                    search_tag     = request.POST['search_tag']
+                )
+                new_event.save()
+                return HttpResponseRedirect('/events/'+ str(new_event.id)) # 作成したイベントの詳細画面に
     else:
         form = CreateForm() # 非束縛フォーム
     return render(request, 'events/create.html', {'form': form,})
@@ -97,6 +102,8 @@ def event_detail(request, event_id):
 @login_required
 def event_edit(request, event_id):
     event = get_object_or_404(Event, pk=event_id)
+    if request.user != event.author: 
+        return HttpResponseRedirect('/events/')
     if request.method == 'POST':
         form = EventForm(request.POST, instance=event)
         if form.is_valid(): # バリデーションを通った
@@ -104,7 +111,6 @@ def event_edit(request, event_id):
             return HttpResponseRedirect('/events/' + event_id) # POST 後のリダイレクト
     else:
         form = EventForm(instance=event) # 非束縛フォーム
-
     edit_context = {
         'form'  : form,
         'event' : event
