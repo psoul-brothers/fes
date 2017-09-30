@@ -1,40 +1,84 @@
 {% extends 'events/base.html' %}
 {% block contents %}
 
-イベント作成者{{ event.author.name }}<br>
-{{ event.event_name }}<br>
-{{ event.event_image }}<br>
+
+<h2>{{ event.event_name }}</h2>
+{% if event.event_image %}
+  <img src="{{ BASE_DIR }}/{{ event.event_image.url }}" width="100" height="100" </img><br>
+{% else %}
+　<img src="{{ BASE_DIR }}/image.png" width="100" height="100" </img><br>
+{% endif %}
+イベント作成者:{{ event.author.fullname }}<br>
 {{ event.event_datetime }}<br>
 {{ event.event_location }}<br>
-{{ event.dead_line }}<br>
-概要<br>
+募集人数:{{ event.num_of_members}}名<br>
+募集締切:{{ event.dead_line }}<br>
+イベント概要<br>
 <TEXTAREA cols="40" rows="5" readonly>
 {{ event.overview }}
 </TEXTAREA>
-<td>
-    
-<h3>参加者</h3>
+<br>
+
+現在の参加者:{{ event.members.count }}人
 {% for members in memberslist %}
     {{ members.surname }} {{ members.name }}
-</td>
-{% endfor %}
-
-<h3>イイネした人達</h3>
-{% for like_members in like_list %}
-  {{ like_members.name }}
 {% endfor %}
 <br>
 
-<h3>イベントウォッチ中の人</h3>
-{% for watcher in event_watcher %}
-  {{watcher.name}}
-{% endfor %}
+{% if user in memberslist %}
+  <form action="{% url 'events:event_join' event.id %}" method="post">
+  {% csrf_token %}
+  <button name ="join" value="leave" type="submit">イベントから抜ける</button>
+  </form>
+{% else %}
+  <form action="{% url 'events:event_join' event.id %}" method="post">
+  {% csrf_token %}
+  <button name="join" value="add" type="submit">イベントに参加</button>
+  </form>
+{% endif %}
 <br>
 
-{{user.id}} {{ event.author }}
-{% if event.author != user %}
+いいね数:{{event.like.count}}
+{% for like_members in event.like.all %}
+  {{ like_members.fullname }},
+{% endfor %}
+<br>
+{% if user in event.like.all %}
+  <form action="{% url 'events:event_like' event.id %}" method="post">
+  {% csrf_token %}
+  <button name ="like" value="leave" type="submit">いいねを外す</button>
+  </form>
+{% else %}
+  <form action="{% url 'events:event_like' event.id %}" method="post">
+  {% csrf_token %}
+  <button name="like" value="add" type="submit">いいね</button>
+  </form>
+{% endif %}
+<br>
+
+<h3>イベントウォッチ中の人</h3>{{ event.watch.count }}人
+{% for watcher in event.watch.all %}
+  {{ watcher.name }}
+{% endfor %}
+{% if user in watcher_list %}
+  <form action="{% url 'events:event_watch' event.id %}" method="post">
+  {% csrf_token %}
+  <button name ="watch" value="leave" type="submit">ウォッチを外す</button>
+  </form>
+{% else %}
+  <form action="{% url 'events:event_watch' event.id %}" method="post">
+  {% csrf_token %}
+  <input name="watch" value="ウォッチ" type="submit"/>
+  </form>
+{% endif %}
+<br>
+
+{% if event.author == user %}
+検索用タグ(主催者しか見えません)<br>
+<TEXTAREA cols="40" rows="5" readonly>{{ event.overview }}</TEXTAREA>
 <form action="{% url 'events:event_edit' event.id %}">
 <input type="submit" value="イベント更新" />
+</form>
 {% else %}
 {% endif %}
 
