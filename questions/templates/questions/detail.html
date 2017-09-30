@@ -6,18 +6,30 @@
       <thead>
         <tr>
 　        <th>ユーザー</th>
-        {% for choice in question.choice_set.all %}
+        {% for choice in choices %}
           <th>{{ choice.choice_text }}</th>
         {% endfor %}
         </tr>
       </thead>
       <tbody>
+          {% if question.get_user_answers %}
+          {% for user in question.get_user_answers.keys() %}
           <tr>
-            <td>テストユーザー</td>
-            {% for answer in question.answer_set.all %}
-                <td>{{ answer.answer_text }}</td>
+            <td>{{ user.surname }}</td>
+            {% for choice_answer in question.get_user_answers.values() %}
+              {% for answer in choice_answer.values() %}
+                <td>{{ answer }}</td>
+              {% endfor %}
             {% endfor %}
+            <!--  https://qiita.com/tell-k/items/710c79ae9ab47f7a4f7c 
+                  Choice.objects.values('question').distinct()
+                  # answer.values("user").filter(question = id).distinct() とか？
+                  Answer.objects.values("user").filter(question = id).distinct() こんな？
+            -->
           </tr>
+          {% endfor %}
+          {% else %}
+          {% endif %}
       </tbody>
     <!--<input type="radio" name="choice" id="choice{{ forloop.counter }}" value="{{ choice.id }}" />-->
     <!--<label for="choice{{ forloop.counter }}">{{ choice.choice_text }}</label><br />-->
