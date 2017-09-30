@@ -32,7 +32,7 @@ def user_add_operation(request):
                 , name =  request.POST['name']
                 , mail_address =  request.POST['mail_address']
                 , self_introduction_text =  request.POST['self_introduction_text']
-                , data = request.FILES['image']
+                , data = request.FILES['data']
                 )
             
             # for auth by tanaka
@@ -54,13 +54,12 @@ def user_modify(request):
     user = get_object_or_404(PersolUser, employee_number=req_employee_number)
     
     if request.method == 'POST':
-        f = user_modify_Form(request.POST)
+        tmp = user.data.path
+        f = user_modify_Form(request.POST, instance = user)
         if f.is_valid():
-            tmp = user.data.path
-            
             
             f.save()
-            os.remove(tmp)
+            #os.remove(tmp)
             return HttpResponseRedirect(reverse('persol_users:index'))
 
     else:

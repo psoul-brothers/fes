@@ -23,12 +23,9 @@ class PersolUser(AbstractBaseUser):
     # for authentication by tnk
     USERNAME_FIELD = 'employee_number'
     objects = MyManager()
-<<<<<<< HEAD
 
 
 
-=======
-    
     def fullname(self):
         return self.surname + ' ' + self.name
->>>>>>> bb035ce27b9e196efcecb10dd88bfc14528c3b98
+
