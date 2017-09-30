@@ -1,6 +1,8 @@
 from __future__ import unicode_literals
 
 from django.db import models
+import uuid
+import os
 
 # for authentication by tnk
 from django.contrib.auth.models import AbstractBaseUser
@@ -21,6 +23,9 @@ class PersolUser(AbstractBaseUser):
     # for authentication by tnk
     USERNAME_FIELD = 'employee_number'
     objects = MyManager()
-    
+
+
+
     def fullname(self):
         return self.surname + ' ' + self.name
+
