@@ -6,16 +6,13 @@
 
 <body>
     <h3 >イベント作成画面</h3>
-<form action="{% url 'events:event_create' %}" method="POST">{% csrf_token %}
-<table>
-{{ form.as_table }}
-</table>
-<input type="submit" value="Submit" />
+<form enctype="multipart/form-data" action="{% url 'events:event_create' %}" method="POST">
+  {% csrf_token %}
+  <table>
+    {{ form.as_table }}
+    <tr><td colspan='2'><input type="submit" value="Submit"></td></tr>
+  </table>
 </form>
-<form action="{% url 'events:event_index' %}">
-<input type="submit" value="Back" />
-</form>
-
-
+<a href="/events/">イベント一覧に戻る</a>
 </body>
 </html>

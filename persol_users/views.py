@@ -1,11 +1,13 @@
 from django.shortcuts import get_object_or_404, render
 from django.http import HttpResponseRedirect, HttpResponse
-from django.core.urlresolvers import reverse
+from django.core.urlresolvers import reverse 
+import os
 
 
 # Create your views here.
 from .models import PersolUser
 from .forms import user_add_Form
+from .forms import user_modify_Form
 
 def index(request):
     user_list = PersolUser.objects.order_by('name')
@@ -30,7 +32,13 @@ def user_add_operation(request):
                 , name =  request.POST['name']
                 , mail_address =  request.POST['mail_address']
                 , self_introduction_text =  request.POST['self_introduction_text']
-                , data = request.FILES['image'])
+                , data = request.FILES['data']
+                )
+            
+            # for auth by tanaka
+            q.set_password(request.POST['password'])
+            
+            
             q.save()
             return HttpResponseRedirect(reverse('persol_users:index'))
             
@@ -39,4 +47,25 @@ def user_add_operation(request):
         
     return render(request, 'persol_users/user_add.html', {'form1': form})
 
+    
+def user_modify(request):
+   
+    req_employee_number = request.user.employee_number
+    user = get_object_or_404(PersolUser, employee_number=req_employee_number)
+    
+    if request.method == 'POST':
+        tmp = user.data.path
+        f = user_modify_Form(request.POST, instance = user)
+        if f.is_valid():
+            
+            f.save()
+            #os.remove(tmp)
+            return HttpResponseRedirect(reverse('persol_users:index'))
+
+    else:
+        f = user_modify_Form(instance=user)
         
+    edit_context = {'form1': f, 'user': user}
+    return render(request, 'persol_users/user_modify.html', context=edit_context)
+
+

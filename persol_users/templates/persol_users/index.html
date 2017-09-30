@@ -9,5 +9,10 @@
 {% endif %}
 <form action="{% url 'persol_users:user_add'%}" method="post">
      {% csrf_token %}
-    <input type="submit" value="Submit">
+    <input type="submit" value="追加">
+</form>
+
+<form action="{% url 'persol_users:user_modify'%}" method="post">
+     {% csrf_token %}
+    <input type="submit" value="修正">
 </form>

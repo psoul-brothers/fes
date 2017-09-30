@@ -1,17 +1,36 @@
+<html lang="ja">
 <head>
 <table>
 <tr>
 <td>
+  <form action="{% url 'events:event_index' %}" method="POST">
+  {% csrf_token %}
+  <input type="text" name='word'/>
+    <select id="sort_id" name="sort">
+    <option value="" selected="selected">Sort</option>
+    <option value="like">いいね数</option>
+    <option value="watch">ウォッチ数</option>
+    <option value="ascforday">開催日が近い順</option>
+  </select>
+  <input type="submit" value="search">
+</form>
+</td>
+<td>
   <form action="{% url 'persol_users:user_add' %}">
   {% csrf_token %}
-  <button type="submit" value="New person">UserAdd</button>
+  <button type="submit" value="New person">ユーザを作成する</button>
   </form>
 </td>
 <td>
   <form action="{% url 'events:event_create' %}">
   {% csrf_token %}
-  <button type="submit" value="New Event">EventAdd</button>
+  <button type="submit" value="New Event">イベントを作る</button>
 </form>
+</td>
+<td>
+  <form action="{% url 'persol_users:user_modify' %}" method="post">
+     {% csrf_token %}
+  <input type="submit" value="ユーザー情報修正">
 </td>
 </tr>
 </table>
@@ -21,4 +40,8 @@
     hogehoge
 {% endblock %}
 </body>
-
+<footer>
+  <a href="#" onclick="javascript:window.history.back(-1);return false;">Back</a>
+  <a href="/events/">イベント一覧に戻る</a>
+</footer>
+</html>

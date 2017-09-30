@@ -3,28 +3,138 @@
 
 <h3>イベント一覧</h3>
 <div>
-<table>
-<thead>
-<tr>
-<th>イベント名</th>
-</tr>
-</thead>
-<tbody>
 {% if latest_event_list %}
 {% for event in latest_event_list %}
-<tr>
-<td><a href="{% url 'events:event_detail' event.id %}">{{ event.event_name }}</a></td>
-<td><form action="{% url 'events:event_join' event.id %}" method="post"></td>
-<td>{{ form.as_p }}</td>
+<p><a href="{% url 'events:event_detail' event.id %}">{{ event.event_name }}</a></p>
+<img src="{{ BASE_DIR }}/{{ event.author.data.url }}" width="100" height="100" </img>
+主催者:{{ event.author.fullname}}
+<p>{{ event.event_datetime }} {{ event.event_location }}</p>
+<p>申込期限:{{ event.dead_line }}</p>
+<p>残り参加枠:{{ event.nokori }}/{{ event.num_of_members}}</p>
+
+<form action="{% url 'events:event_join' event.id %}" method="post">
+{{ form }}
+<button type="submit" value="event join">このイベントに参加する</button>
 {% csrf_token %}
-<td><input value="イベントに参加する" type="submit"/></td>
 </form>
+
+<form action="{% url 'events:event_like' event.id %}" method="post">
+{{ like_form }}
+{% csrf_token %}
+<button type="submit" value="like">いいね</button>
+</form>
+
+<form action="{% url 'events:event_watch' event.id %}" method="post">
+{% csrf_token %}
+<input name="watch" value="ウォッチ" type="submit"/>
+</form>
+
 {% endfor %}
-</tbody>
 {% else %}
 <p>No event are available.</p>
 {% endif %}
-</table>
+</div>
+
+<h3>参加中のイベント</h3>
+{% if joing_events %}
+{% for event in joing_events %}
+<p><a href="{% url 'events:event_detail' event.id %}">{{ event.event_name }}</a></p>
+<img src="{{ BASE_DIR }}/{{ event.author.data.url }}" width="100" height="100" </img>
+<p>{{ event.event_datetime }} {{ event.event_location }}</p>
+概要<br>
+<TEXTAREA cols="40" rows="5" readonly>
+{{ event.overview }}
+</TEXTAREA><br>
+
+<form action="{% url 'events:event_join' event.id %}" method="post">
+{{ form }}
+<button type="submit" value="event join">このイベントに参加する</button>
+{% csrf_token %}
+</form>
+
+<form action="{% url 'events:event_like' event.id %}" method="post">
+{{ like_form }}
+{% csrf_token %}
+<button type="submit" value="like">いいね</button>
+</form>
+
+<form action="{% url 'events:event_watch' event.id %}" method="post">
+{% csrf_token %}
+<input value="ウォッチ" type="submit"/>
+</form>
+
+{% endfor %}
+{% else %}
+<p>No event are available.</p>
+{% endif %}
+</div>
+
+<h3>ウォッチ中のイベント</h3>
+{% if watching_events %}
+{% for event in watching_events %}
+<p><a href="{% url 'events:event_detail' event.id %}">{{ event.event_name }}</a></p>
+<img src="{{ BASE_DIR }}/{{ event.author.data.url }}" width="100" height="100" </img>
+<p>{{ event.event_datetime }} {{ event.event_location }}</p>
+概要<br>
+<TEXTAREA cols="40" rows="5" readonly>
+{{ event.overview }}
+</TEXTAREA><br>
+
+<form action="{% url 'events:event_join' event.id %}" method="post">
+{{ form }}
+<button type="submit" value="event join">このイベントに参加する</button>
+{% csrf_token %}
+</form>
+
+<form action="{% url 'events:event_like' event.id %}" method="post">
+{{ like_form }}
+{% csrf_token %}
+<button type="submit" value="like">いいね</button>
+</form>
+
+<form action="{% url 'events:event_watch' event.id %}" method="post">
+{% csrf_token %}
+<input value="ウォッチ" type="submit"/>
+</form>
+
+{% endfor %}
+{% else %}
+<p>No event are available.</p>
+{% endif %}
+</div>
+
+<h3>自分が主催者のイベント</h3>
+{% if organized_events %}
+  {% for event in organized_events %}
+<p><a href="{% url 'events:event_detail' event.id %}">{{ event.event_name }}</a></p>
+<img src="{{ BASE_DIR }}/{{ event.author.data.url }}" width="100" height="100" </img>
+<p>{{ event.event_datetime }} {{ event.event_location }}</p>
+概要<br>
+<TEXTAREA cols="40" rows="5" readonly>
+{{ event.overview }}
+</TEXTAREA><br>
+
+<form action="{% url 'events:event_join' event.id %}" method="post">
+{{ form }}
+<button type="submit" value="event join">このイベントに参加する</button>
+{% csrf_token %}
+</form>
+
+<form action="{% url 'events:event_like' event.id %}" method="post">
+{{ like_form }}
+{% csrf_token %}
+<button type="submit" value="like">いいね</button>
+</form>
+
+<form action="{% url 'events:event_watch' event.id %}" method="post">
+{% csrf_token %}
+<input value="ウォッチ" type="submit"/>
+</form>
+
+  {% endfor %}
+{% else %}
+<p>No event are available.</p>
+{% endif %}
 </div>
 
 {% endblock %}

@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html lang="ja">
+  <head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>トップページ</title>
+    <!-- css -->
+    <link href="/static/css/sp_style.css" rel="stylesheet">
+    <link href="/static/css/topStyle.css" rel="stylesheet">
+    <!-- jQuery -->
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/2.2.4/jquery.min.js"></script>
+    <!--[if lt IE 9]>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/html5shiv/3.7.3/html5shiv.js"></script>
+<![endif]-->
+    <!-- <link rel="stylesheet" href="http://maxcdn.bootstrapcdn.com/font-awesome/4.3.0/css/font-awesome.min.css"> -
+>
+  </style>
+  
+  </head>
+  
+  <body>
+    <article>
+      <!-- <header></header> -->
+      <div id="login">
+      	<!--<h1 style="color: #ffffff;background-color: #333333;font-size: 160%;height:70vw;width:70vw;margin: 10px auto;text-align: center; ">psoul</h1>-->
+      	<h1 style="margin: 10px auto;width:70vw;text-align:center;background-color:#d4ce68"><img src="/static/images/logo.png" style="width:194px;"></h1>
+        <ul class="clearfix">
+          <form id="topLogin" method='post' action='{% url 'my_auth:login' %}'>
+            {% csrf_token %}
+            <li class="id">{{ form.username }}</li>
+            <li class="pw">{{ form.password }}</li>
+            <li class="btn"><input type='submit' value='login' /></li>
+            <input type='hidden' name='next' value='{{ next }}' />
+          </form>
+        </ul>
+        <p class="signUpText"><a href="{% url 'persol_users:user_add' %}">新規ユーザー登録はこちら</a></p>
+      </div>
+    </article>
+
+
+  </body>
+</html>
+
+
+
+
+
+
+
