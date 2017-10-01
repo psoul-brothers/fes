@@ -34,7 +34,7 @@ INSTALLED_APPS = [
     'events.apps.EventsConfig',
     'questions.apps.QuestionsConfig',
     'persol_users.apps.PersolUsersConfig',
-    'misc_models.apps.MiscModelsConfig',
+    'comments.apps.CommentsConfig',
     'my_auth.apps.MyAuthConfig',
     'django.contrib.admin',
     'django.contrib.auth',

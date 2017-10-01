@@ -27,7 +27,7 @@ urlpatterns = [
     url(r'^admin/', admin.site.urls),
     url(r'^events/', include('events.urls')),
     url(r'^persol_users/', include('persol_users.urls')),
-    url(r'^miscs/', include('misc_models.urls')),
+    url(r'^miscs/', include('comments.urls')),
     url(r'^questions/', include('questions.urls')),
     # for access to uploaded files
     url(r'^files/(?P<path>.*)$','django.views.static.serve', {'document_root': settings.MEDIA_ROOT}),
