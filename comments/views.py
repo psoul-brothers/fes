@@ -28,7 +28,8 @@ def create(request, event_id):
             )
         cmt.save()
         
-    return redirect('comments:index', event_id=event_id )
+    return redirect('events:event_detail', event_id=event_id )
+    # return redirect('comments:index', event_id=event_id )
 
 
 @login_required
@@ -39,5 +40,6 @@ def update(request, event_id, comment_id):
         cmt.comment_text = txt
         cmt.save()
     
-    return redirect('comments:index', event_id=event_id )
+    return redirect('events:event_detail', event_id=event_id )
+    # return redirect('comments:index', event_id=event_id )
     

@@ -1,7 +1,8 @@
-{% if comments_list %}
-    {% for cmt in comments_list %}
+<hr>
+{% if event.comment_set.all %}
+    {% for cmt in event.comment_set.all %}
         <p>
-            {{cmt.id}} : {{ cmt.comment_text }}<br/>
+            {{ cmt.comment_text }}<br/>
             
             {% if user.id = cmt.author.id %}
                 <form action="{% url 'comments:update' event.id cmt.id %}" method="POST">
