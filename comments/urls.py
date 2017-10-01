@@ -4,7 +4,7 @@ from . import views
 
 app_name = 'comments'
 urlpatterns = [
-    url(r'^comments/$', views.IndexView.as_view(), name='comment_index'),
-    url(r'^comments/event/(?P<event_id>[0-9]+)/author/(?P<persoluser_id>[0-9]+)/new/$', views.new, name='comment_new'),
-    url(r'^comments/create/$', views.create, name='comment_create'),
+    url(r'^$', views.index, name='index'),
+    url(r'^create$', views.create, name='create'),
+    url(r'^(?P<comment_id>[0-9]+)/update$', views.update, name='update'),
 ]

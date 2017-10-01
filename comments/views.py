@@ -1,34 +1,43 @@
 # coding: utf-8
 from django.http import HttpResponse
-from django.shortcuts import get_object_or_404, render, render_to_response
+from django.shortcuts import get_object_or_404, render, render_to_response, redirect
 from django.http import HttpResponseRedirect, HttpResponse
 from django.core.urlresolvers import reverse
 
 from .models import Comment
-from .forms import CommentForm
 from events.models import Event
 from persol_users.models import PersolUser
 
-from django.views import generic
+from django.contrib.auth.decorators import login_required
 
-class IndexView(generic.ListView):
-    template_name = 'misc_models/index.html'
-    context_object_name = 'all_comment_list'
 
-    def get_queryset(self):
-        return Comment.objects.all()
-
-def new(request, event_id, persoluser_id):
+@login_required
+def index(request, event_id):
     ev = get_object_or_404(Event, pk=event_id)
-    athr = get_object_or_404(PersolUser, pk=persoluser_id)
-    context={
-        'form' : CommentForm(request.POST, instance=Comment(event=ev, author=athr)),
-    }
-    return render(request,'misc_models/comment_form.html',context)
-    
+    return render(request, 'comments/index.html', {'comments_list': ev.comment_set.all, 'event':ev})    
 
-def create(request):
-    form = CommentForm(request.POST)
-    form.save()
-    return HttpResponseRedirect(reverse('miscs:comment_index'))
+@login_required
+def create(request, event_id):
+    ev = get_object_or_404(Event, pk=event_id)
+    txt = request.POST['comment_text_new']
+    if len(txt.strip()) > 0:
+        cmt = Comment(
+            author=request.user,
+            event=ev, 
+            comment_text=txt
+            )
+        cmt.save()
+        
+    return redirect('comments:index', event_id=event_id )
+
+
+@login_required
+def update(request, event_id, comment_id):
+    cmt = get_object_or_404(Comment, pk=comment_id)
+    txt = request.POST['comment_text_update']
+    if len(txt.strip()) > 0:
+        cmt.comment_text = txt
+        cmt.save()
+    
+    return redirect('comments:index', event_id=event_id )
     

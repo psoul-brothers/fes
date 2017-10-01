@@ -18,6 +18,7 @@ from django.conf.urls import include,url
 from django.contrib import admin
 
 from django.conf import settings
+from django.views import static
 
 import events.views
 
@@ -25,10 +26,10 @@ urlpatterns = [
     url(r'^$', events.views.event_index, name='portal'),
     url(r'^log', include('my_auth.urls')),
     url(r'^admin/', admin.site.urls),
+    url(r'^events/(?P<event_id>[0-9]+)/comments/', include('comments.urls')),
     url(r'^events/', include('events.urls')),
     url(r'^persol_users/', include('persol_users.urls')),
-    url(r'^miscs/', include('comments.urls')),
     url(r'^questions/', include('questions.urls')),
     # for access to uploaded files
-    url(r'^files/(?P<path>.*)$','django.views.static.serve', {'document_root': settings.MEDIA_ROOT}),
+    url(r'^files/(?P<path>.*)$', static.serve, {'document_root': settings.MEDIA_ROOT}),
 ]

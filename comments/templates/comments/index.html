@@ -1,15 +1,26 @@
-{% if all_comment_list %}
-    <ul>
-    {% for cmt in all_comment_list %}
-        <li>
-            {{cmt.id}} : {{ cmt.comment_text }}
-            <ul>
-                <li>Commented by : {{cmt.author.Name}}</li>
-                <li>Commented to : {{cmt.event.event_name}}</li>
-            </ul>
-        </li>
+{% if comments_list %}
+    {% for cmt in comments_list %}
+        <p>
+            {{cmt.id}} : {{ cmt.comment_text }}<br/>
+            
+            {% if user.id = cmt.author.id %}
+                <form action="{% url 'comments:update' event.id cmt.id %}" method="POST">
+                {% csrf_token %}
+                <input type="textarea" value ="{{ cmt.comment_text }}" name="comment_text_update"/>
+                <input type="submit" value="変更" />
+                </form>
+            {% endif %}
+            
+            by : 
+            <img src="{{ BASE_DIR }}/{{ cmt.author.data.url }}" height="50" />
+            {{cmt.author.fullname}}
+        </p>
+        <hr/>
     {% endfor %}
-    </ul>
-{% else %}
-    <p>No comments are available.</p>
 {% endif %}
+
+<form action="{% url 'comments:create' event.id %}" method="POST">
+{% csrf_token %}
+<input type="textarea" name="comment_text_new"/>
+<input type="submit" value="投稿" />
+</form>
