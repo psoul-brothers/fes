@@ -70,7 +70,6 @@ def user_modify(request):
         finally:
             f = user_modify_Form(request.POST, instance = user)
             if f.is_valid():
-                
                 f.save()
                 
             try:
@@ -84,8 +83,7 @@ def user_modify(request):
                 user.save()
                 
                 if tmp:
-                    print tmp
-                    #os.remove(tmp)
+                    os.remove(tmp)
                     
                 return HttpResponseRedirect(reverse('persol_users:index'))
 
