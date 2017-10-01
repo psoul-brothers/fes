@@ -5,5 +5,5 @@ from forms import MyAuthForm
 app_name = 'my_auth'
 urlpatterns = [
     url(r'^in/$', auth_views.login, {'template_name': 'my_auth/login.html','authentication_form': MyAuthForm}, name='login'),
-    url(r'^out/$',auth_views.logout,{'template_name': 'my_auth/logout.html'},name='logout'),
+    url(r'^out/$',auth_views.logout, {'next_page': 'portal'}, name='logout'),
 ]

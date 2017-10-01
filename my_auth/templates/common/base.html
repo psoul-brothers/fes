@@ -1,0 +1,29 @@
+<html>
+<head>
+{% block head %}
+    ヘッダをここに
+{% endblock %}
+</head>
+
+<header>
+システム共通ヘッダー
+<img src="{{ BASE_DIR }}/{{ user.data.url }}" height="30" />
+<a href="{% url 'persol_users:detail' user.id %}">ユーザー情報</a>
+|<a href="{% url 'events:event_create' %}">イベント作成</a>
+|<form action="{% url 'events:event_index' %}" method="POST">
+    {% csrf_token %}
+    <input type="text" name='word'/>
+    <input type="hidden" name="sort" value="ascforday" />
+    <input type="submit" value="search">
+</form>
+|<a href="{% url 'portal' %}">イベント一覧</a>
+|<a href="{% url 'my_auth:logout' %}">ログアウト</a>
+</header>
+<hr>
+
+<body>
+{% block contents %}
+    ここにいろんなページが入る
+{% endblock %}
+</body>
+</html>
