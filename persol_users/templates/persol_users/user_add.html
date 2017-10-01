@@ -1,8 +1,9 @@
-<html>
-<head>
+{% extends 'common/base.html' %}
+{% block head %}
      <title>ユーザー追加フォーム</title>
-</head>
-<body>
+{% endblock %}
+
+{% block contents %}
 <h1>ユーザー追加フォーム</h1>
 <form enctype="multipart/form-data" action="{% url 'persol_users:user_add_operation'%}" method="post">
      {% csrf_token %}
@@ -11,5 +12,4 @@
           <tr><td colspan='2'><input type="submit" value="Submit"></td></tr>
      </table>
 </form>
-</body>
-</html>
+{% endblock %}
