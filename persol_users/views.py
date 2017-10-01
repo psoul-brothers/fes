@@ -26,21 +26,28 @@ def user_add_operation(request):
     if request.method == 'POST':
         form = user_add_Form(request.POST)
         if form.is_valid():
-            q = PersolUser(
-                employee_number = request.POST['employee_number']
-                , surname =  request.POST['surname']
-                , name =  request.POST['name']
-                , mail_address =  request.POST['mail_address']
-                , self_introduction_text =  request.POST['self_introduction_text']
-                , data = request.FILES['data']
-                )
+            try:
+                data_tmp = request.FILES['data']
+                
+            except:
+                data_tmp = ''
             
-            # for auth by tanaka
-            q.set_password(request.POST['password'])
-            
-            
-            q.save()
-            return HttpResponseRedirect(reverse('persol_users:index'))
+            finally:
+                q = PersolUser(
+                    employee_number = request.POST['employee_number']
+                    , surname =  request.POST['surname']
+                    , name =  request.POST['name']
+                    , mail_address =  request.POST['mail_address']
+                    , self_introduction_text =  request.POST['self_introduction_text']
+                    , data =  data_tmp
+                    )
+                
+                # for auth by tanaka
+                q.set_password(request.POST['password'])
+                
+                
+                q.save()
+                return HttpResponseRedirect(reverse('persol_users:index'))
             
     else:
         form = user_add_Form()
@@ -54,13 +61,33 @@ def user_modify(request):
     user = get_object_or_404(PersolUser, employee_number=req_employee_number)
     
     if request.method == 'POST':
-        tmp = user.data.path
-        f = user_modify_Form(request.POST, instance = user)
-        if f.is_valid():
+        try:
+            tmp = user.data.path
             
-            f.save()
-            #os.remove(tmp)
-            return HttpResponseRedirect(reverse('persol_users:index'))
+        except:
+            tmp = ""
+            
+        finally:
+            f = user_modify_Form(request.POST, instance = user)
+            if f.is_valid():
+                
+                f.save()
+                
+            try:
+                data_tmp = request.FILES['data']
+                
+            except:
+                data_tmp = ''
+            
+            finally:
+                user.data = data_tmp
+                user.save()
+                
+                if tmp:
+                    print tmp
+                    #os.remove(tmp)
+                    
+                return HttpResponseRedirect(reverse('persol_users:index'))
 
     else:
         f = user_modify_Form(instance=user)
