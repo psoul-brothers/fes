@@ -1,6 +1,5 @@
-{% extends 'events/base.html' %}
+{% extends 'common/base.html' %}
 {% block contents %}
-
 
 <h2>{{ event.event_name }}</h2>
 {% if event.event_image %}
@@ -81,5 +80,7 @@
 </form>
 {% else %}
 {% endif %}
+
+{% include 'comments/index.html' %}
 
 {% endblock %}

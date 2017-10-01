@@ -1,11 +1,15 @@
-<html lang="en">
+{% extends 'common/base.html' %}
+
 <head>
     <link rel="stylesheet" href="style.css" />
     <title>{% block title %}イベント作成{% endblock %}</title>
 </head>
 
 <body>
-    <h3 >イベント作成画面</h3>
+
+{% block contents %}
+
+<h3 >イベント作成画面</h3>
 <form enctype="multipart/form-data" action="{% url 'events:event_create' %}" method="POST">
   {% csrf_token %}
   <table>
@@ -13,6 +17,8 @@
     <tr><td colspan='2'><input type="submit" value="Submit"></td></tr>
   </table>
 </form>
-<a href="/events/">イベント一覧に戻る</a>
+
+{% endblock %}
+
 </body>
 </html>
