@@ -1,0 +1,13 @@
+<h3>参加中のイベント</h3>
+{% if user.event_set.all %}
+{% for event in user.event_set.all %}
+<hr/>
+<ul>
+<li><img src="{{ BASE_DIR }}/{{ event.event_image.url }}" width="100" height="100" </img>
+{{ event.event_name }}</li>
+<li>{{ event.event_datetime }}</li>
+<li>{{ event.event_location }}</li>
+</ul>
+{% endfor %}
+
+{% endif %}
