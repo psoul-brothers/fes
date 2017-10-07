@@ -1,18 +1,16 @@
 <html>
 <head>
 {% block head %}
-    ヘッダをここに
+    headタグの中身を書いてください。headタグ自体は共通ヘッダにあるので、中身だけ。
 {% endblock %}
 </head>
 
+{% if user.is_authenticated %}
 <header>
 システム共通ヘッダー
-{% if user.is_authenticated %}
 <img src="{{ BASE_DIR }}/{{ user.data.url }}" height="30" />
 <a href="{% url 'persol_users:detail' user.id %}">ユーザー情報</a>
-|
-{% endif %}
-<a href="{% url 'events:event_create' %}">イベント作成</a>
+|<a href="{% url 'events:event_create' %}">イベント作成</a>
 |<form action="{% url 'events:event_index' %}" method="POST">
     {% csrf_token %}
     <input type="text" name='word'/>
@@ -23,6 +21,7 @@
 |<a href="{% url 'my_auth:logout' %}">ログアウト</a>
 </header>
 <hr>
+{% endif %}
 
 <body>
 {% block contents %}
