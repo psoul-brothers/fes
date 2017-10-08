@@ -20,7 +20,8 @@ def event_index(request):
         search_word = request.POST['word'] # 検索の値が空白でも大丈夫
         search_results = Event.objects.filter(
                 Q(event_name__contains = search_word) | 
-                Q(overview__contains   = search_word)
+                Q(overview__contains   = search_word) |
+                Q(search_tag__contains = search_word)
             )
         event_list = search_results
         if request.POST['sort'] == 'like':
@@ -138,7 +139,9 @@ def event_edit(request, event_id):
 
 @login_required
 def event_join(request, event_id):
+    print "now1"
     target_event = get_object_or_404(Event, id=event_id)
+    print "now2"
     if request.POST['join'] == 'add':
         print(request.user.id)
         new_member = get_object_or_404(PersolUser, id=request.user.id)
@@ -148,7 +151,8 @@ def event_join(request, event_id):
         if new_member in watcher:
             target_event.watch.remove(new_member)
     elif request.POST['join'] == 'leave':
-        out_member = get_object_or_404(PersolUser, employee_number=request.user.id)
+        print "now3"
+        out_member = get_object_or_404(PersolUser,id=request.user.id)
         target_event.members.remove(out_member)
 #あとで消すテスト用
     elif  request.POST['join'] == 'new_member':
@@ -162,7 +166,7 @@ def event_join(request, event_id):
 def event_like(request, event_id):
     if request.POST['like'] == 'leave':
         target_event = get_object_or_404(Event, id=event_id)
-        new_like = get_object_or_404(PersolUser, employee_number=request.user.id)
+        new_like = get_object_or_404(PersolUser, id=request.user.id)
         target_event.like.remove(new_like)
 # 後で消す。テスト用
     elif request.POST['like'] == 'like':
@@ -171,7 +175,7 @@ def event_like(request, event_id):
         target_event.like.add(new_like)
     else:
         target_event = get_object_or_404(Event, id=event_id)
-        new_like = get_object_or_404(PersolUser, employee_number=request.user.id)
+        new_like = get_object_or_404(PersolUser, id=request.user.id)
         target_event.like.add(new_like)
     return HttpResponseRedirect(request.META['HTTP_REFERER']) # リクエスト先にリダイレクト
 
@@ -179,11 +183,11 @@ def event_like(request, event_id):
 def event_watch(request, event_id):
     if request.POST['watch'] == 'leave':
         target_event = get_object_or_404(Event, id=event_id)
-        new_watch = get_object_or_404(PersolUser, employee_number=request.user.id)
+        new_watch = get_object_or_404(PersolUser, id=request.user.id)
         target_event.watch.remove(new_watch)
     else:
         target_event = get_object_or_404(Event, id=event_id)
-        new_watch = get_object_or_404(PersolUser, employee_number=request.user.id)
+        new_watch = get_object_or_404(PersolUser, id=request.user.id)
         target_event.watch.add(new_watch)
         print(new_watch)
     return HttpResponseRedirect(request.META['HTTP_REFERER']) # リクエスト先にリダイレクト

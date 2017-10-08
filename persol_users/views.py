@@ -100,7 +100,7 @@ def user_modify(request):
 #                    if tmp != BASE_DIR + '/user_image/default.png':
 #                        os.remove(tmp)
                 if tmp:
-                    if tmp != BASE_DIR + '/user_image/default.png':
+                    if tmp != os.getcwd() + '/media/user_image/default.png':
                         os.remove(tmp)
                     
                 return HttpResponseRedirect(reverse('persol_users:index'))
