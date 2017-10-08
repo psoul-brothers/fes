@@ -19,16 +19,13 @@ class user_add_Form(forms.Form):
     surname = forms.CharField(label='姓')
     name = forms.CharField(label='名')
     mail_address = forms.EmailField(label='メールアドレス')
-    self_introduction_text = forms.CharField(label='自己紹介メッセージ',widget=forms.Textarea)
+    self_introduction_text = forms.CharField(label='自己紹介メッセージ',widget=forms.Textarea,required=False)
     data = forms.FileField(label='画像',required=False)
     
 class user_modify_Form(ModelForm):
     class Meta:
         model = PersolUser
-        fields = [
-            'employee_number', 'surname', 'name', 'mail_address', 
-            'self_introduction_text', 'data'
-        ]
+        fields = ['surname', 'name', 'mail_address', 'self_introduction_text']
+    data = forms.FileField(label='画像',required=False)    
 
     
-
