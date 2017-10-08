@@ -13,9 +13,10 @@
 <li>{{ user.mail_address}}</li>
 <li>{{ user.self_introduction_text}}</li>
 
-
-
 </ul>
-
 <a href="{% url 'persol_users:user_modify' %}">編集</a>
+
+
+{% include 'persol_users/event_list.html' %}
+
 {% endblock %}

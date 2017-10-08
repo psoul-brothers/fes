@@ -31,7 +31,7 @@ def user_add_operation(request):
                 data_tmp = request.FILES['data']
                 
             except:
-                data_tmp = ''
+                data_tmp = 'user_image/default.png'
             
             finally:
                 q = PersolUser(
@@ -77,14 +77,15 @@ def user_modify(request):
                 data_tmp = request.FILES['data']
                 
             except:
-                data_tmp = ''
+                data_tmp = 'user_image/default.png'
             
             finally:
                 user.data = data_tmp
                 user.save()
                 
                 if tmp:
-                    os.remove(tmp)
+                    if tmp != BASE_DIR + '/user_image/default.png':
+                        os.remove(tmp)
                     
                 return HttpResponseRedirect(reverse('persol_users:index'))
 

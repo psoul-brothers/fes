@@ -1,10 +1,11 @@
 <html>
 <head>
 {% block head %}
-    ヘッダをここに
+    headタグの中身を書いてください。headタグ自体は共通ヘッダにあるので、中身だけ。
 {% endblock %}
 </head>
 
+{% if user.is_authenticated %}
 <header>
 システム共通ヘッダー
 <img src="{{ BASE_DIR }}/{{ user.data.url }}" height="30" />
@@ -20,6 +21,7 @@
 |<a href="{% url 'my_auth:logout' %}">ログアウト</a>
 </header>
 <hr>
+{% endif %}
 
 <body>
 {% block contents %}
