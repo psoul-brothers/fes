@@ -42,8 +42,7 @@ class Event(models.Model):
     
     def nokori(self):
         now_member = self.members.count()
-        return 10 - now_member
-    
+        return self.num_of_members - now_member
 
     def like_list(self):
         return self.like.all()

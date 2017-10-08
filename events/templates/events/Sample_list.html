@@ -1,0 +1,549 @@
+<!DOCTYPE html>
+<html lang="ja">
+  <head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>一覧ページ</title>
+    <!-- css -->
+    <link href="css/bootstrap.min.css" rel="stylesheet">
+    <link href="css/spStyle.css" rel="stylesheet">
+    <link href="css/listStyle.css" rel="stylesheet">
+    <link rel="stylesheet" href="http://maxcdn.bootstrapcdn.com/font-awesome/4.3.0/css/font-awesome.min.css">
+    <!-- jQuery -->
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/2.2.4/jquery.min.js"></script>
+<!--     <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.8.3/jquery.min.js"></script> -->
+    <script src="../js/bootstrap.min.js"></script>
+
+    <!--[if lt IE 9]>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/html5shiv/3.7.3/html5shiv.js"></script>
+<![endif]-->
+    <!-- JS -->
+    <script src="js/jquery.bxslider.js"></script>
+    <script src="js/list.js"></script>
+    <script src="js/common.js"></script>
+<!-- スワイプ参照サイト
+https://www.tam-tam.co.jp/tipsnote/html_css/post9210.html
+スクロール参照サイト
+http://weboook.blog22.fc2.com/blog-entry-412.html
+ -->
+  </head>
+  <body>
+    <article>
+      <header>
+        <ul id="menu-wrap">
+        <li class="logo"><a href="">PUB</a></li>
+
+        <li class="userImage"><span class="trigger none-submenu"><img class="user" src="images/dummy/user.png" width="30px"></span>
+          <ul class="submenu">
+          <li><a href=""><span>ユーザー情報編集</span></a></li>
+          <li><a href=""><span>ログアウト</span></a></li>
+          </ul>
+        </li>
+
+        <li class="hunMeny"><span class="trigger none-submenu">+</span>
+          <ul class="submenu hub">
+          <li><a href=""><span>イベントを作る</span></a></li>
+          <li><input id="searchKeyword" type="text" name="search" value="search" onblur="if (this.value == '') this.value = 'search';" onfocus="if (this.value == 'search') this.value = '';"/> <input value="検索" id="keywordSearchSubmit" class="searchBtn" name="searchsubmit" type="button"></li>
+          </ul>
+        </li>
+<!--           <li class="search"><input id="searchKeyword" type="text" name="search" value="search" onblur="if (this.value == '') this.value = 'search';" onfocus="if (this.value == 'search') this.value = '';"/> <input value="検索" id="keywordSearchSubmit" class="searchBtn" name="searchsubmit" type="button"></li>
+          <li class="makeEvent"><a href="">イベントを作る</a></li> -->
+        </ul><!-- /#menu-wrap -->
+
+      </header>
+      <div id="listArticle">
+      <h1>イベント一覧</h1>
+<div class="container">
+    <div class="tabContainer">
+        <div class="tab">
+            <div id="" class="tab__button tabNew active"><a href="#">新着</a></div>
+            <div class="tab__button tabJoin"><a href="#">参加予定</a></div>
+            <div class="tab__button tabWatch"><a href="#">ウォッチ</a></div>
+            <div class="tab__button tabMake"><a href="#">主催のイベント</a></div>
+        </div>
+    </div>
+    <div class="contents">
+
+        <div class="contents__content contentNew">
+        <!-- ▼このdivをイベントの数だけ複製▼ -->
+        <div class="list">
+          <p class="title">新着イベントタイトル</p>
+          <p class="date">開催日：2017.10.15</p>
+          <p class="place">場所：墨田野球場</p>
+          <p class="description">説明文入ります</p>
+
+              <ul class="btnList">
+                <li class="detail "><a href="#">イベント詳細</a></li>
+                <li class="join"><a href="#">このイベントに参加する</a></li>
+              </ul>
+
+        </div>
+        <!-- ▲このdivをイベントの数だけ複製▲ -->
+
+        <!-- ▼このdivをイベントの数だけ複製▼ -->
+        <div class="list">
+          <p class="title">新着イベントタイトル</p>
+          <p class="date">2017.10.15</p>
+          <p class="place">墨田野球場</p>
+          <p class="description">初心か歓迎</p>
+          <ul class="btnList">
+            <li class="detail"><a href="#">詳細</a></li>
+            <li class="join"><a href="#">このイベントに参加する</a></li>
+          </ul>
+        </div>
+        <!-- ▲このdivをイベントの数だけ複製▲ -->
+
+        <!-- ▼このdivをイベントの数だけ複製▼ -->
+        <div class="list">
+          <p class="title">新着イベントタイトル</p>
+          <p class="date">2017.10.15</p>
+          <p class="place">墨田野球場</p>
+          <p class="description">初心か歓迎</p>
+          <ul class="btnList">
+            <li class="detail"><a href="#">詳細</a></li>
+            <li class="join"><a href="#">このイベントに参加する</a></li>
+          </ul>
+        </div>
+        <!-- ▲このdivをイベントの数だけ複製▲ -->
+        <!-- ▼このdivをイベントの数だけ複製▼ -->
+        <div class="list">
+          <p class="title">新着イベントタイトル</p>
+          <p class="date">開催日：2017.10.15</p>
+          <p class="place">場所：墨田野球場</p>
+          <p class="description">説明文入ります</p>
+          <ul class="btnList">
+            <li class="detail"><a href="#">詳細</a></li>
+            <li class="join"><a href="#">このイベントに参加する</a></li>
+          </ul>
+        </div>
+        <!-- ▲このdivをイベントの数だけ複製▲ -->
+
+        <!-- ▼このdivをイベントの数だけ複製▼ -->
+        <div class="list">
+          <p class="title">新着イベントタイトル</p>
+          <p class="date">2017.10.15</p>
+          <p class="place">墨田野球場</p>
+          <p class="description">初心か歓迎</p>
+          <ul class="btnList">
+            <li class="detail"><a href="#">詳細</a></li>
+            <li class="join"><a href="#">このイベントに参加する</a></li>
+          </ul>
+        </div>
+        <!-- ▲このdivをイベントの数だけ複製▲ -->
+
+        <!-- ▼このdivをイベントの数だけ複製▼ -->
+        <div class="list">
+          <p class="title">新着イベントタイトル</p>
+          <p class="date">2017.10.15</p>
+          <p class="place">墨田野球場</p>
+          <p class="description">初心か歓迎</p>
+          <ul class="btnList">
+            <li class="detail"><a href="#">詳細</a></li>
+            <li class="join"><a href="#">このイベントに参加する</a></li>
+          </ul>
+        </div>
+        <!-- ▲このdivをイベントの数だけ複製▲ -->
+        <!-- ▼このdivをイベントの数だけ複製▼ -->
+        <div class="list">
+          <p class="title">新着イベントタイトル</p>
+          <p class="date">開催日：2017.10.15</p>
+          <p class="place">場所：墨田野球場</p>
+          <p class="description">説明文入ります</p>
+          <ul class="btnList">
+            <li class="detail"><a href="#">詳細</a></li>
+            <li class="join"><a href="#">このイベントに参加する</a></li>
+          </ul>
+        </div>
+        <!-- ▲このdivをイベントの数だけ複製▲ -->
+
+        <!-- ▼このdivをイベントの数だけ複製▼ -->
+        <div class="list">
+          <p class="title">新着イベントタイトル</p>
+          <p class="date">2017.10.15</p>
+          <p class="place">墨田野球場</p>
+          <p class="description">初心か歓迎</p>
+          <ul class="btnList">
+            <li class="detail"><a href="#">詳細</a></li>
+            <li class="join"><a href="#">このイベントに参加する</a></li>
+          </ul>
+        </div>
+        <!-- ▲このdivをイベントの数だけ複製▲ -->
+
+        <!-- ▼このdivをイベントの数だけ複製▼ -->
+        <div class="list">
+          <p class="title">新着イベントタイトル</p>
+          <p class="date">2017.10.15</p>
+          <p class="place">墨田野球場</p>
+          <p class="description">初心か歓迎</p>
+          <ul class="btnList">
+            <li class="detail"><a href="#">詳細</a></li>
+            <li class="join"><a href="#">このイベントに参加する</a></li>
+          </ul>
+        </div>
+        <!-- ▲このdivをイベントの数だけ複製▲ -->
+        </div>
+
+        <div class="contents__content contentJoin">
+        <!-- ▼このdivをイベントの数だけ複製▼ -->
+        <div class="list">
+          <p class="title">参加予定イベントタイトル</p>
+          <p class="date">2017.10.15</p>
+          <p class="place">墨田野球場</p>
+          <p class="description">初心か歓迎</p>
+          <ul class="btnList">
+            <li class="detail"><a href="#">詳細</a></li>
+            <li class="join"><a href="#">このイベントに参加する</a></li>
+          </ul>
+        </div>
+        <!-- ▲このdivをイベントの数だけ複製▲ -->
+
+        <!-- ▼このdivをイベントの数だけ複製▼ -->
+        <div class="list">
+          <p class="title">参加予定イベントタイトル</p>
+          <p class="date">2017.10.15</p>
+          <p class="place">墨田野球場</p>
+          <p class="description">初心か歓迎</p>
+          <ul class="btnList">
+            <li class="detail"><a href="#">詳細</a></li>
+            <li class="join"><a href="#">このイベントに参加する</a></li>
+          </ul>
+        </div>
+        <!-- ▲このdivをイベントの数だけ複製▲ -->
+
+        <!-- ▼このdivをイベントの数だけ複製▼ -->
+        <div class="list">
+          <p class="title">参加予定イベントタイトル</p>
+          <p class="date">2017.10.15</p>
+          <p class="place">墨田野球場</p>
+          <p class="description">初心か歓迎</p>
+          <ul class="btnList">
+            <li class="detail"><a href="#">詳細</a></li>
+            <li class="join"><a href="#">このイベントに参加する</a></li>
+          </ul>
+        </div>
+        <!-- ▲このdivをイベントの数だけ複製▲ -->
+
+        <!-- ▼このdivをイベントの数だけ複製▼ -->
+        <div class="list">
+          <p class="title">参加予定イベントタイトル</p>
+          <p class="date">2017.10.15</p>
+          <p class="place">墨田野球場</p>
+          <p class="description">初心か歓迎</p>
+          <ul class="btnList">
+            <li class="detail"><a href="#">詳細</a></li>
+            <li class="join"><a href="#">このイベントに参加する</a></li>
+          </ul>
+        </div>
+        <!-- ▲このdivをイベントの数だけ複製▲ -->
+
+        <!-- ▼このdivをイベントの数だけ複製▼ -->
+        <div class="list">
+          <p class="title">参加予定イベントタイトル</p>
+          <p class="date">2017.10.15</p>
+          <p class="place">墨田野球場</p>
+          <p class="description">初心か歓迎</p>
+          <ul class="btnList">
+            <li class="detail"><a href="#">詳細</a></li>
+            <li class="join"><a href="#">このイベントに参加する</a></li>
+          </ul>
+        </div>
+        <!-- ▲このdivをイベントの数だけ複製▲ -->
+
+        <!-- ▼このdivをイベントの数だけ複製▼ -->
+        <div class="list">
+          <p class="title">参加予定イベントタイトル</p>
+          <p class="date">2017.10.15</p>
+          <p class="place">墨田野球場</p>
+          <p class="description">初心か歓迎</p>
+          <ul class="btnList">
+            <li class="detail"><a href="#">詳細</a></li>
+            <li class="join"><a href="#">このイベントに参加する</a></li>
+          </ul>
+        </div>
+        <!-- ▲このdivをイベントの数だけ複製▲ -->
+
+        <!-- ▼このdivをイベントの数だけ複製▼ -->
+        <div class="list">
+          <p class="title">参加予定イベントタイトル</p>
+          <p class="date">2017.10.15</p>
+          <p class="place">墨田野球場</p>
+          <p class="description">初心か歓迎</p>
+          <ul class="btnList">
+            <li class="detail"><a href="#">詳細</a></li>
+            <li class="join"><a href="#">このイベントに参加する</a></li>
+          </ul>
+        </div>
+        <!-- ▲このdivをイベントの数だけ複製▲ -->
+
+        <!-- ▼このdivをイベントの数だけ複製▼ -->
+        <div class="list">
+          <p class="title">参加予定イベントタイトル</p>
+          <p class="date">2017.10.15</p>
+          <p class="place">墨田野球場</p>
+          <p class="description">初心か歓迎</p>
+          <ul class="btnList">
+            <li class="detail"><a href="#">詳細</a></li>
+            <li class="join"><a href="#">このイベントに参加する</a></li>
+          </ul>
+        </div>
+        <!-- ▲このdivをイベントの数だけ複製▲ -->
+
+        <!-- ▼このdivをイベントの数だけ複製▼ -->
+        <div class="list">
+          <p class="title">参加予定イベントタイトル</p>
+          <p class="date">2017.10.15</p>
+          <p class="place">墨田野球場</p>
+          <p class="description">初心か歓迎</p>
+          <ul class="btnList">
+            <li class="detail"><a href="#">詳細</a></li>
+            <li class="join"><a href="#">このイベントに参加する</a></li>
+          </ul>
+        </div>
+        <!-- ▲このdivをイベントの数だけ複製▲ -->
+        </div>
+
+        <div class="contents__content contentWatch">
+        <!-- ▼このdivをイベントの数だけ複製▼ -->
+        <div class="list">
+          <p class="title">ウォッチイベントタイトル</p>
+          <p class="date">2017.10.15</p>
+          <p class="place">墨田野球場</p>
+          <p class="description">初心か歓迎</p>
+          <ul class="btnList">
+            <li class="detail"><a href="#">詳細</a></li>
+            <li class="join"><a href="#">このイベントに参加する</a></li>
+          </ul>
+        </div>
+        <!-- ▲このdivをイベントの数だけ複製▲ -->
+
+        <!-- ▼このdivをイベントの数だけ複製▼ -->
+        <div class="list">
+          <p class="title">ウォッチイベントタイトル</p>
+          <p class="date">2017.10.15</p>
+          <p class="place">墨田野球場</p>
+          <p class="description">初心か歓迎</p>
+          <ul class="btnList">
+            <li class="detail"><a href="#">詳細</a></li>
+            <li class="join"><a href="#">このイベントに参加する</a></li>
+          </ul>
+        </div>
+        <!-- ▲このdivをイベントの数だけ複製▲ -->
+
+        <!-- ▼このdivをイベントの数だけ複製▼ -->
+        <div class="list">
+          <p class="title">ウォッチイベントタイトル</p>
+          <p class="date">2017.10.15</p>
+          <p class="place">墨田野球場</p>
+          <p class="description">初心か歓迎</p>
+          <ul class="btnList">
+            <li class="detail"><a href="#">詳細</a></li>
+            <li class="join"><a href="#">このイベントに参加する</a></li>
+          </ul>
+        </div>
+        <!-- ▲このdivをイベントの数だけ複製▲ -->
+        <!-- ▼このdivをイベントの数だけ複製▼ -->
+        <div class="list">
+          <p class="title">ウォッチイベントタイトル</p>
+          <p class="date">2017.10.15</p>
+          <p class="place">墨田野球場</p>
+          <p class="description">初心か歓迎</p>
+          <ul class="btnList">
+            <li class="detail"><a href="#">詳細</a></li>
+            <li class="join"><a href="#">このイベントに参加する</a></li>
+          </ul>
+        </div>
+        <!-- ▲このdivをイベントの数だけ複製▲ -->
+
+        <!-- ▼このdivをイベントの数だけ複製▼ -->
+        <div class="list">
+          <p class="title">ウォッチイベントタイトル</p>
+          <p class="date">2017.10.15</p>
+          <p class="place">墨田野球場</p>
+          <p class="description">初心か歓迎</p>
+          <ul class="btnList">
+            <li class="detail"><a href="#">詳細</a></li>
+            <li class="join"><a href="#">このイベントに参加する</a></li>
+          </ul>
+        </div>
+        <!-- ▲このdivをイベントの数だけ複製▲ -->
+
+        <!-- ▼このdivをイベントの数だけ複製▼ -->
+        <div class="list">
+          <p class="title">ウォッチイベントタイトル</p>
+          <p class="date">2017.10.15</p>
+          <p class="place">墨田野球場</p>
+          <p class="description">初心か歓迎</p>
+          <ul class="btnList">
+            <li class="detail"><a href="#">詳細</a></li>
+            <li class="join"><a href="#">このイベントに参加する</a></li>
+          </ul>
+        </div>
+        <!-- ▲このdivをイベントの数だけ複製▲ -->
+        <!-- ▼このdivをイベントの数だけ複製▼ -->
+        <div class="list">
+          <p class="title">ウォッチイベントタイトル</p>
+          <p class="date">2017.10.15</p>
+          <p class="place">墨田野球場</p>
+          <p class="description">初心か歓迎</p>
+          <ul class="btnList">
+            <li class="detail"><a href="#">詳細</a></li>
+            <li class="join"><a href="#">このイベントに参加する</a></li>
+          </ul>
+        </div>
+        <!-- ▲このdivをイベントの数だけ複製▲ -->
+
+        <!-- ▼このdivをイベントの数だけ複製▼ -->
+        <div class="list">
+          <p class="title">ウォッチイベントタイトル</p>
+          <p class="date">2017.10.15</p>
+          <p class="place">墨田野球場</p>
+          <p class="description">初心か歓迎</p>
+          <ul class="btnList">
+            <li class="detail"><a href="#">詳細</a></li>
+            <li class="join"><a href="#">このイベントに参加する</a></li>
+          </ul>
+        </div>
+        <!-- ▲このdivをイベントの数だけ複製▲ -->
+
+        <!-- ▼このdivをイベントの数だけ複製▼ -->
+        <div class="list">
+          <p class="title">ウォッチイベントタイトル</p>
+          <p class="date">2017.10.15</p>
+          <p class="place">墨田野球場</p>
+          <p class="description">初心か歓迎</p>
+          <ul class="btnList">
+            <li class="detail"><a href="#">詳細</a></li>
+            <li class="join"><a href="#">このイベントに参加する</a></li>
+          </ul>
+        </div>
+        <!-- ▲このdivをイベントの数だけ複製▲ -->
+        </div>
+
+        <div class="contents__content contentMake">
+        <!-- ▼このdivをイベントの数だけ複製▼ -->
+        <div class="list">
+          <p class="title">自分が作ったベントタイトル</p>
+          <p class="date">2017.10.15</p>
+          <p class="place">墨田野球場</p>
+          <p class="description">初心か歓迎</p>
+          <ul class="btnList">
+            <li class="detail"><a href="#">詳細</a></li>
+            <li class="join"><a href="#">このイベントに参加する</a></li>
+          </ul>
+        </div>
+        <!-- ▲このdivをイベントの数だけ複製▲ -->
+
+        <!-- ▼このdivをイベントの数だけ複製▼ -->
+        <div class="list">
+          <p class="title">自分が作ったベントタイトル</p>
+          <p class="date">2017.10.15</p>
+          <p class="place">墨田野球場</p>
+          <p class="description">初心か歓迎</p>
+          <ul class="btnList">
+            <li class="detail"><a href="#">詳細</a></li>
+            <li class="join"><a href="#">このイベントに参加する</a></li>
+          </ul>
+        </div>
+        <!-- ▲このdivをイベントの数だけ複製▲ -->
+
+        <!-- ▼このdivをイベントの数だけ複製▼ -->
+        <div class="list">
+          <p class="title">自分が作ったベントタイトル</p>
+          <p class="date">2017.10.15</p>
+          <p class="place">墨田野球場</p>
+          <p class="description">初心か歓迎</p>
+          <ul class="btnList">
+            <li class="detail"><a href="#">詳細</a></li>
+            <li class="join"><a href="#">このイベントに参加する</a></li>
+          </ul>
+        </div>
+        <!-- ▲このdivをイベントの数だけ複製▲ -->
+        <!-- ▼このdivをイベントの数だけ複製▼ -->
+        <div class="list">
+          <p class="title">自分が作ったベントタイトル</p>
+          <p class="date">2017.10.15</p>
+          <p class="place">墨田野球場</p>
+          <p class="description">初心か歓迎</p>
+          <ul class="btnList">
+            <li class="detail"><a href="#">詳細</a></li>
+            <li class="join"><a href="#">このイベントに参加する</a></li>
+          </ul>
+        </div>
+        <!-- ▲このdivをイベントの数だけ複製▲ -->
+
+        <!-- ▼このdivをイベントの数だけ複製▼ -->
+        <div class="list">
+          <p class="title">自分が作ったベントタイトル</p>
+          <p class="date">2017.10.15</p>
+          <p class="place">墨田野球場</p>
+          <p class="description">初心か歓迎</p>
+          <ul class="btnList">
+            <li class="detail"><a href="#">詳細</a></li>
+            <li class="join"><a href="#">このイベントに参加する</a></li>
+          </ul>
+        </div>
+        <!-- ▲このdivをイベントの数だけ複製▲ -->
+
+        <!-- ▼このdivをイベントの数だけ複製▼ -->
+        <div class="list">
+          <p class="title">自分が作ったベントタイトル</p>
+          <p class="date">2017.10.15</p>
+          <p class="place">墨田野球場</p>
+          <p class="description">初心か歓迎</p>
+          <ul class="btnList">
+            <li class="detail"><a href="#">詳細</a></li>
+            <li class="join"><a href="#">このイベントに参加する</a></li>
+          </ul>
+        </div>
+        <!-- ▲このdivをイベントの数だけ複製▲ -->
+
+        <!-- ▼このdivをイベントの数だけ複製▼ -->
+        <div class="list">
+          <p class="title">自分が作ったベントタイトル</p>
+          <p class="date">2017.10.15</p>
+          <p class="place">墨田野球場</p>
+          <p class="description">初心か歓迎</p>
+          <ul class="btnList">
+            <li class="detail"><a href="#">詳細</a></li>
+            <li class="join"><a href="#">このイベントに参加する</a></li>
+          </ul>
+        </div>
+        <!-- ▲このdivをイベントの数だけ複製▲ -->
+
+        <!-- ▼このdivをイベントの数だけ複製▼ -->
+        <div class="list">
+          <p class="title">自分が作ったベントタイトル</p>
+          <p class="date">2017.10.15</p>
+          <p class="place">墨田野球場</p>
+          <p class="description">初心か歓迎</p>
+          <ul class="btnList">
+            <li class="detail"><a href="#">詳細</a></li>
+            <li class="join"><a href="#">このイベントに参加する</a></li>
+          </ul>
+        </div>
+        <!-- ▲このdivをイベントの数だけ複製▲ -->
+
+        <!-- ▼このdivをイベントの数だけ複製▼ -->
+        <div class="list">
+          <p class="title">自分が作ったベントタイトル</p>
+          <p class="date">2017.10.15</p>
+          <p class="place">墨田野球場</p>
+          <p class="description">初心か歓迎</p>
+          <ul class="btnList">
+            <li class="detail"><a href="#">詳細</a></li>
+            <li class="join"><a href="#">このイベントに参加する</a></li>
+          </ul>
+        </div>
+        <!-- ▲このdivをイベントの数だけ複製▲ -->
+
+
+        </div>
+    </div>
+</div>
+
+
+      </div>
+    </article>
+  </body>
+</html>

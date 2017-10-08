@@ -1,0 +1,93 @@
+<!DOCTYPE html>
+<html lang="ja">
+  <head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>詳細ページ</title>
+    <!-- css -->
+    <link href="css/sp_style.css" rel="stylesheet">
+    <link href="css/detail_style.css" rel="stylesheet">
+    <link rel="stylesheet" href="http://maxcdn.bootstrapcdn.com/font-awesome/4.3.0/css/font-awesome.min.css">    <!-- jQuery -->
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/2.2.4/jquery.min.js"></script>
+    <!-- JS -->
+    <script src="js/detail.js"></script>
+    <script src="js/common.js"></script>
+
+    <!--[if lt IE 9]>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/html5shiv/3.7.3/html5shiv.js"></script>
+<![endif]-->
+    <link rel="stylesheet" href="http://maxcdn.bootstrapcdn.com/font-awesome/4.3.0/css/font-awesome.min.css">
+
+
+  </head>
+  <body>
+    <article>
+      <header>
+        <ul id="menu-wrap">
+        <li class="logo"><a href="">PUB</a></li>
+
+        <li class="userImage"><span class="trigger none-submenu"><img class="user" src="images/dummy/person.jpg" width="30px"></span>
+          <ul class="submenu">
+          <li><a href=""><span>ユーザー情報編集</span></a></li>
+          <li><a href=""><span>ログアウト</span></a></li>
+          </ul>
+        </li>
+
+        <li class="hunMeny"><span class="trigger none-submenu"><i class="fa fa-bars" aria-hidden="true"></i></span>
+          <ul class="submenu hub">
+          <li><a href=""><span>イベントを作る</span></a></li>
+          <li><input id="searchKeyword" type="text" name="search" value="search" onblur="if (this.value == '') this.value = 'search';" onfocus="if (this.value == 'search') this.value = '';"/> <a id="keywordSearchSubmit"  class="searchBtn" name="searchsubmit" ><i class="fa fa-search" aria-hidden="true"></i></a></li>
+          </ul>
+        </li>
+        </ul><!-- /#menu-wrap -->
+      </header>
+      
+      <div id="article">
+        <div class="event">
+          <p class="title">{{ event.event_name }}</p>
+          {% if event.event_datetime %}
+            <p class="date"><i class="fa fa-calendar" aria-hidden="true"></i>{{ event.event_datetime }}</p>
+          {% else %}
+            <p class="questions"><a href="" >日時アンケートに参加する</a></p><!-- 値がセットされていなかったら表示する -->
+          {% endif %}
+          <p class="dateHour"><i class="fa fa-clock-o" aria-hidden="true"></i>{{ event.event_datetime }}</p>
+          {% if event.event_datetime %}
+            <p class="place"><i class="fa fa-map-marker" aria-hidden="true"></i>{{ event.event_location }}</p>
+          {% else %}
+            <p class="questions"><a href="" >場所アンケートに参加する</a></p><!-- 値がセットされていなかったら表示する -->
+          {% endif %}
+          <p class="description">イベント概要；{{ event.overview }}</p>
+          <p class="participant">参加者</p>
+          <ul class="participantIcon">
+          {% for members in event.members.all %}
+            <li><img src="{{ BASE_DIR }}/{{ members.data.url }}" width="50"/></li><!-- 参加者分の画像を表示 -->
+          {% endfor %}
+          </ul>
+          <p class="questions"><a href="" >主催者に問い合わせる</a></p>
+          <p class="Organizer">主催者名：{{ event.author.fullname }}</p>
+          <ul class="btn">
+          {% if user in event.watch.all %}　　<!-- ログインユーザーがウォッチ中の場合-->
+            <form action="{% url 'events:event_watch' event.id %}" method="post">{% csrf_token %}
+            <li class="watch"><button name="watch" value="leave"><i class="fa fa-star-o" aria-hidden="true"></i> ウォッチ中</button></li><!-- ウォッチ状態ではiタグのclass名が fa fa-star-o 変わります -->
+            </form>
+          {% else %}　　　　　　　　　　　　　<!-- ログインユーザーがウォッチしていないの場合-->
+            <form action="{% url 'events:event_watch' event.id %}" method="post">{% csrf_token %}
+            <li class="watch"><button name="watch"><i class="fa fa-star" aria-hidden="true"></i> ウォッチ</button></li><!-- ウォッチ状態ではiタグのclass名が fa fa-star-o 変わります -->
+            </form>
+          {% endif %}
+          {% if user in event.members.all %}　<!-- ログインユーザーがイベント参加予定の場合-->
+            <form action="{% url 'events:event_join' event.id %}" method="post">{% csrf_token %}
+            <li class="join"><button name ="join" value="leave" class="participat">イベントに参加予定</button></li>
+            </form>
+          {% else %}　　　　　　　　　　　　　<!-- ログインユーザーがイベント未参加の場合-->
+            <form action="{% url 'events:event_join' event.id %}" method="post">{% csrf_token %}
+            <li class="join"><button name="join" value="add">イベントに参加する</button></li>
+            </form>
+          {% endif %}
+          </ul>
+        </div>
+      </div>
+    </article>
+  </body>
+</html>
