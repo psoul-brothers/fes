@@ -4,17 +4,22 @@
 {% endblock %}
 
 {% block contents %}
-<img src="{{ BASE_DIR }}/{{ user.data.url }}" width="100" height="100" </img>
-<h1>{{ user.name }}</h1>
+<img src="{{ BASE_DIR }}/{{ reference_user.data.url }}" width="100" height="100" </img>
+<h1>{{ reference_user.name }}</h1>
 <ul>
 
-<li>{{ user.employee_number}}</li>
-<li>{{ user.surname}}</li>
-<li>{{ user.mail_address}}</li>
-<li>{{ user.self_introduction_text}}</li>
+<li>{{ reference_user.employee_number}}</li>
+<li>{{ reference_user.surname}}</li>
+<li>{{ reference_user.mail_address}}</li>
+<li>{{ reference_user.self_introduction_text}}</li>
 
-</ul>
-<a href="{% url 'persol_users:user_modify' %}">編集</a>
+{% if reference_user.employee_number ==  login_user.employee_number%}
+　</ul>
+　<a href="{% url 'persol_users:user_modify' %}">編集</a>
+{% endif %}
+
+
+
 
 
 {% include 'persol_users/event_list.html' %}

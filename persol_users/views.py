@@ -18,8 +18,17 @@ def index(request):
 
 @login_required
 def detail(request, user_id):
-    user = get_object_or_404(PersolUser, pk=user_id)
-    return render(request, 'persol_users/detail.html', {'user': user})
+    reference_user = get_object_or_404(PersolUser, pk=user_id)
+    
+    req_employee_number = request.user.employee_number
+    login_user = get_object_or_404(PersolUser, employee_number=req_employee_number)
+    
+    edit_context = {
+        'reference_user'  : reference_user,
+        'login_user' : login_user
+    }
+    return render(request, 'persol_users/detail.html', context=edit_context)
+    #return render(request, 'persol_users/detail.html', {'user': user})
 
 
 def user_add(request):
