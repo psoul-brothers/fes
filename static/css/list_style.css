@@ -1,0 +1,268 @@
+/* 一覧ページ用スタイルシート */
+
+div#listArticle h1{
+	font-size: 120%;
+	padding-bottom: 5px;
+}
+
+div#listArticle .select p, div#listArticle .select select {
+	display: inline-block;
+}
+
+div#listArticle .list {
+	padding: 10px 0;
+	width:94%;
+	background-color:#ffffff;
+	margin:0 auto 5px;
+	border-radius:5px;
+	padding:1%;
+}
+
+div#listArticle .list .title{
+	font-size: 120%;
+	font-weight: bold;
+}
+
+div#listArticle .list .title i{
+	color: #ffca28;
+}
+
+div#listArticle .list .box {
+	border-top:1px solid #cccccc;
+	border-bottom:1px solid #cccccc;
+}
+
+
+div#listArticle .list .date{
+	font-size: 90%;
+	display: inline-block;
+	padding:0 5%;
+	width:40%;
+}
+div#listArticle .list .date span {
+	vertical-align:top;
+	}
+
+div#listArticle .list .place{
+	font-size: 90%;
+	display: inline-block;
+	padding:0 5%;
+	border-left:1px solid #cccccc;
+	width:37%;
+}
+
+div#listArticle .list .description {
+	font-size: 95%;
+	padding:5px 2%
+}
+
+div#listArticle .list li.detail {
+	display: inline-block;
+	width: 33%;
+	margin: 0 2%;
+}
+
+div#listArticle ul.btnList {
+	margin-top: 10px;
+}
+
+div#listArticle .list ul.btnList li button {
+	display: block;
+	text-align: center;
+	padding: 10px;
+	font-size: 4vw;
+	font-weight: bold;
+	overflow: hidden;
+}
+
+
+div#listArticle .list ul.btnList li.detail button {
+	background-color:#FFFFFF;
+	
+	border: 3px solid #0040ff;
+	color:#0040ff;
+	border-radius:15px 15px ;
+}
+
+div#listArticle .list ul.btnList li.join {
+	display:inline-block;
+	width: 53%;
+	margin: 0 2%;
+}
+
+div#listArticle .list ul.btnList li.join button {
+	background-color:#FFFFFF;
+	border-radius:15px 15px ;
+	border:3px solid #FF4000;
+	color:#FF4000;
+}
+
+div#listArticle .list ul.btnList li.join button.participat {
+	background-color:#FF4000;
+	border-radius:15px 15px ;
+	border:3px solid #FF4000;
+	color:#FFFFFF;
+}
+
+
+/* スワイプタブ用記述 */
+.container{
+    max-width: 400px;
+    margin: auto;
+}
+
+.tabContainer {
+    overflow-x: auto;
+}
+.tabContainer::-webkit-scrollbar {
+    height: 0px;
+}
+.tabContainer::-webkit-scrollbar-track {
+    background: #fff;
+}
+.tabContainer::-webkit-scrollbar-thumb {
+    background: #fff;
+}
+
+.tab{
+    display: table;
+}
+.tab__button.tabNew {
+	border-top:1px solid #bd0303;
+	border-right:1px solid #bd0303;
+	border-left:1px solid #bd0303;
+}
+.tab__button.tabNew a {
+	color:#bd0303;}
+.tab__button.tabNew.active {
+	background-color: #bd0303;
+}
+
+.tab__button.tabJoin {
+	border-top:1px solid #4caf50;
+	border-right:1px solid #4caf50;
+	border-left:1px solid #4caf50;
+}
+.tab__button.tabJoin a {
+	color:#4caf50;}
+.tab__button.tabJoin.active {
+	background-color: #4caf50;
+}
+
+.tab__button.tabWatch {
+	border-top:1px solid #ff8f00;
+	border-right:1px solid #ff8f00;
+	border-left:1px solid #ff8f00;
+}
+.tab__button.tabWatch a {
+	color:#ff8f00;}
+.tab__button.tabWatch.active {
+	background-color: #ff8f00;
+}
+
+
+.tab__button.tabMake {
+	border-top:1px solid #9c27b0;
+	border-right:1px solid #9c27b0;
+	border-left:1px solid #9c27b0;
+}
+.tab__button.tabMake a {
+	color:#9c27b0;}
+.tab__button.tabMake.active {
+	background-color: #9c27b0;
+}
+
+
+.tab__button{
+    display: table-cell;
+    text-align: center;
+    /*background-color: #000;*/
+    vertical-align: middle;
+    border: 2px solid white;
+    border-bottom-width: 4px;
+    min-width: 80px;
+}
+
+.tab__button.active{
+    border-bottom: none;
+}
+
+.tab__button a{
+    padding: 10px;
+    display: block;
+    text-decoration: none;
+    font-size: 12px;
+}
+.tab__button.active a{
+	color: #fff;
+}
+
+
+.contents__content.contentNew {
+	border-top: 2px solid #bd0303;
+	background: #f7c8d6;
+	background: -moz-linear-gradient( #bd0303 0%, #ef9a9a 20%, #f7c8d6 100%);
+	background: -webkit-gradient(linear, left top, left bottom, from(#bd0303), color-stop(50%, #ef9a9a)2 to(#f7c8d6));
+	background: -webkit-linear-gradient( #bd0303 0%, #ef9a9a 20%, #f7c8d6 100%);
+	background: -o-linear-gradient( #bd0303 0%, #ef9a9a 20%, #f7c8d6 100%);
+	background: linear-gradient( #bd0303 0%, #ef9a9a 20%, #f7c8d6 100%);
+	
+}
+.contents__content.contentJoin {
+	border-top: 2px solid #4caf50;
+	background: #f7c8d6;
+	background: -moz-linear-gradient( #4caf50 0%, #b0dbb2 20%, #c8e6c9 100%);
+	background: -webkit-gradient(linear, left top, left bottom, from(#4caf50), color-stop(50%, #b0dbb2)2 to(#c8e6c9));
+	background: -webkit-linear-gradient( #4caf50 0%, #b0dbb2 20%, #c8e6c9 100%);
+	background: -o-linear-gradient( #4caf50 0%, #b0dbb2 20%, #c8e6c9 100%);
+	background: linear-gradient( #4caf50 0%, #b0dbb2 20%, #c8e6c9 100%);
+
+
+}
+.contents__content.contentWatch {
+	border-top: 2px solid #ff8f00;
+	background: #f7c8d6;
+	background: -moz-linear-gradient( #ff8f00 0%, #ffd8a0 20%, #fddeb1 100%);
+	background: -webkit-gradient(linear, left top, left bottom, from(#ff8f00), color-stop(50%, #ffd8a0)2 to(#fddeb1));
+	background: -webkit-linear-gradient( #ff8f00 0%, #ffd8a0 20%, #fddeb1 100%);
+	background: -o-linear-gradient( #ff8f00 0%, #ffd8a0 20%, #fddeb1 100%);
+	background: linear-gradient( #ff8f00 0%, #ffd8a0 20%, #fddeb1 100%);
+}
+
+.contents__content.contentMake {
+	border-top: 2px solid #9c27b0;
+	background: #f7c8d6;
+	background: -moz-linear-gradient( #9c27b0 0%, #dbb1e2 20%, #e1bee7 100%);
+	background: -webkit-gradient(linear, left top, left bottom, from(#9c27b0), color-stop(50%, #dbb1e2)2 to(#e1bee7));
+	background: -webkit-linear-gradient( #9c27b0 0%, #dbb1e2 20%, #e1bee7 100%);
+	background: -o-linear-gradient( #9c27b0 0%, #dbb1e2 20%, #e1bee7 100%);
+	background: linear-gradient( #9c27b0 0%, #dbb1e2 20%, #e1bee7 100%);
+
+}
+
+.contents__content{
+    padding-top:15px;
+}
+
+.contents__content div{
+    clear: left;
+}
+
+.contents__content div a{
+    display: table;
+    width: 100%;
+    text-decoration: none;
+    padding: 10px;
+    border-bottom:1px solid #999;
+    color:#222;
+    text-align: left;
+    line-height: 1.5em;
+    font-size: 14px;
+}
+
+.contents__content div a span{
+    display: table-cell;
+    padding-left: 10px;
+    padding-right: 10px;
+}
+
