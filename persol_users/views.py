@@ -20,6 +20,7 @@ def detail(request, user_id):
     
 def user_add(request):
     f = user_add_Form()
+    print "test!!!!!!!!!"
     return render(request, 'persol_users/user_add.html', {'form1': f})
     
 def user_add_operation(request):

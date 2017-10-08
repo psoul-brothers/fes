@@ -27,14 +27,14 @@ class Event(models.Model):
     event_image    = models.ImageField('イメージ画像', upload_to='event_image', blank=True)
     event_datetime = models.DateTimeField('日時',blank=True,null=True)
     event_location = models.CharField('開催場所', max_length=200)
-    num_of_members = models.IntegerField('募集人数', max_length=200)
+    num_of_members = models.IntegerField('募集人数')
     dead_line      = models.DateField('募集締切日')
     overview       = models.TextField('概要')
 #    comment = models.ManyToManyField(Comment)
     like           = models.ManyToManyField(PersolUser,verbose_name='いいね', related_name='like')
     watch          = models.ManyToManyField(PersolUser,verbose_name='ウォッチ', related_name='Watch')
     members        = models.ManyToManyField(PersolUser)
-    search_tag     = models.TextField('検索用タグ')
+    search_tag     = models.TextField('検索用タグ', blank=True, null=True)
     event_status   = models.CharField('イベントステータス', max_length=1, choices=STATUS_CHOICES, blank=True, null=True)
     
     def __str__(self):  

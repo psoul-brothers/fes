@@ -74,7 +74,7 @@
 
 {% if event.author == user %}
 検索用タグ(主催者しか見えません)<br>
-<TEXTAREA cols="40" rows="5" readonly>{{ event.overview }}</TEXTAREA>
+<TEXTAREA cols="40" rows="5" readonly>{{ event.search_tag }}</TEXTAREA>
 <form action="{% url 'events:event_edit' event.id %}">
 <input type="submit" value="イベント更新" />
 </form>
