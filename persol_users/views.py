@@ -86,15 +86,12 @@ def user_modify(request):
                 user.data = data_tmp
                 user.save()
                 
-<<<<<<< HEAD
 #                if tmp:
 #                    if tmp != BASE_DIR + '/user_image/default.png':
 #                        os.remove(tmp)
-=======
                 if tmp:
                     if tmp != os.path.join(settings.MEDIA_ROOT, DEFAULT_USER_IMG):
                         os.remove(tmp)
->>>>>>> df36f217dbefee02b3ee4282fac42d87e6263981
                     
                 return HttpResponseRedirect(reverse('persol_users:index'))
 
