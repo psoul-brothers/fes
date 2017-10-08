@@ -7,7 +7,10 @@
 <h1>ユーザー修正フォーム</h1>
 <form enctype="multipart/form-data" action="{% url 'persol_users:user_modify'%}" method="post">
      {% csrf_token %}
+     <img src="/{{ user.data.url }}" width="100" height="100" </img>
      <table>
+          <tr><th><label for="id_employee_number">社員番号:</label></th><td> {{ user.employee_number }} </td></tr>
+          <tr><td colspan='2'></td></tr>
           {{form1.as_table}}
           <tr><td colspan='2'><input type="submit" value="Submit"></td></tr>
      </table>

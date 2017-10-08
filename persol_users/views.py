@@ -9,6 +9,9 @@ import os
 from .models import PersolUser
 from .forms import user_add_Form
 from .forms import user_modify_Form
+from django.conf import settings
+DEFAULT_USER_IMG = 'user_image/default.png'
+
 
 @login_required
 def index(request):
@@ -44,7 +47,7 @@ def user_add_operation(request):
                 data_tmp = request.FILES['data']
                 
             except:
-                data_tmp = 'user_image/default.png'
+                data_tmp = DEFAULT_USER_IMG
             
             finally:
                 q = PersolUser(
@@ -71,8 +74,7 @@ def user_add_operation(request):
 @login_required
 def user_modify(request):
    
-    req_employee_number = request.user.employee_number
-    user = get_object_or_404(PersolUser, employee_number=req_employee_number)
+    user = request.user
     
     if request.method == 'POST':
         try:
@@ -90,17 +92,14 @@ def user_modify(request):
                 data_tmp = request.FILES['data']
                 
             except:
-                data_tmp = 'user_image/default.png'
+                data_tmp = DEFAULT_USER_IMG
             
             finally:
                 user.data = data_tmp
                 user.save()
                 
-#                if tmp:
-#                    if tmp != BASE_DIR + '/user_image/default.png':
-#                        os.remove(tmp)
                 if tmp:
-                    if tmp != BASE_DIR + '/user_image/default.png':
+                    if tmp != os.path.join(settings.MEDIA_ROOT, DEFAULT_USER_IMG):
                         os.remove(tmp)
                     
                 return HttpResponseRedirect(reverse('persol_users:index'))
