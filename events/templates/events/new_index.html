@@ -130,7 +130,7 @@ http://weboook.blog22.fc2.com/blog-entry-412.html
         <!-- ▲このdivをイベントの数だけ複製▲ -->
         {% endfor %}
         {% else %}
-        <p>No event are available.</p>
+        <p>参加予定のイベントはありません。</p>
         {% endif %}
         </div>
 
@@ -161,7 +161,7 @@ http://weboook.blog22.fc2.com/blog-entry-412.html
         <!-- ▲このdivをイベントの数だけ複製▲ -->
         {% endfor %}
         {% else %}
-        <p>No event are available.</p>
+        <p>ウォッチ中のイベントはありません。</p>
         {% endif %}
         </div>
 
@@ -187,12 +187,13 @@ http://weboook.blog22.fc2.com/blog-entry-412.html
                 {% endif %}
                   </form>
                 </li>
+                <li class="detail "><a href="{% url 'events:event_edit' event.id %}">イベント更新</li></a>
               </ul>
         </div>
         <!-- ▲このdivをイベントの数だけ複製▲ -->
         {% endfor %}
         {% else %}
-        <p>No event are available.</p>
+        <p>主催しているイベントはありません。</p>
         {% endif %}
         </div>
     </div>

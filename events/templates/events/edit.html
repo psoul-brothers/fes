@@ -7,7 +7,7 @@
 {% block contents %}
 
 <body>
-    <h3 >イベント作成画面</h3>
+    <h3 >イベント更新画面</h3>
 <form action="{% url 'events:event_edit' event.id %}" method="POST">{% csrf_token %}
 <table>
 {{ form.as_table }}

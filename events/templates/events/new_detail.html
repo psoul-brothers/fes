@@ -23,7 +23,7 @@
     <article>
       <header>
         <ul id="menu-wrap">
-        <li class="logo"><a href="/events/">PUB</a></li>
+        <li class="logo"><a href="/events/"><img src="/static/images/logo.png" width="30px"></a></li>
 
         <li class="userImage"><span class="trigger none-submenu"><img class="user" src="{{ BASE_DIR }}/{{ user.data.url }}" width="30px"></span>
           <ul class="submenu">
@@ -83,9 +83,9 @@
               </form>
             </li>
             <li class="join"><form action="{% url 'events:event_join' event.id %}" method="post">{% csrf_token %}
-            {% if user in event.members.all %}　<!-- ログインユーザーがイベント参加予定の場合-->
+            {% if user in event.members.all %}<!-- ログインユーザーがイベント参加予定の場合-->
               <button name="join" value="leave">イベントに参加予定</button>
-            {% else %}　　　　　　　　　　　　　<!-- ログインユーザーがイベント未参加の場合-->
+            {% else %}<!-- ログインユーザーがイベント未参加の場合-->
               <button name="join" value="add" class="participat">イベントに参加する</button>
             {% endif %}
               </form>
@@ -93,6 +93,12 @@
           </ul>
         </div>
       </div>
+      {% if event.author == user %}<!-- 主催者のみ表示 -->
+      検索用タグ<br>
+      <TEXTAREA cols="40" rows="5" readonly>{{ event.search_tag }}</TEXTAREA>
+      <a href="{% url 'events:event_edit' event.id %}"><button>イベント更新</button></a>
+      {% else %}
+      {% endif %}
     </article>
   </body>
 </html>

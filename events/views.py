@@ -4,6 +4,7 @@ from django.shortcuts import get_object_or_404, render, render_to_response
 from django.template import Context, loader, RequestContext
 from django.http import HttpResponseRedirect, HttpResponse
 from django.core.urlresolvers import reverse
+from django.core.exceptions import PermissionDenied
 from .models import Event, Person
 from persol_users.models import PersolUser
 from django.db.models import Q, Count
@@ -108,7 +109,7 @@ def event_detail(request, event_id):
 def event_edit(request, event_id):
     event = get_object_or_404(Event, pk=event_id)
     if request.user != event.author: 
-        return HttpResponseRedirect('/events/')
+        raise PermissionDenied
     if request.method == 'POST':
         try: old_image = event.event_image.path
         except : old_image = ''
@@ -126,7 +127,6 @@ def event_edit(request, event_id):
                 if old_image != '':
                     if old_image != os.getcwd() + '/media/event_image/default.png': #/home/ubuntu/workspace/media/event_image/default.png
                         os.remove(old_image)
-                
                 return HttpResponseRedirect('/events/' + event_id) # POST 後のリダイレクト
     else:
         form = EventForm(instance=event) # 非束縛フォーム
