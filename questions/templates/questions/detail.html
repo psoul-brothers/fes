@@ -1,39 +1,40 @@
 <h1>{{ question.question_text }}についての回答</h1>
 
 {% if error_message %}<p><strong>{{ error_message }}</strong></p>{% endif %}
-
+{% if choices %}
 <table border="1">
-      <thead>
-        <tr>
-　        <th>ユーザー</th>
-        {% for choice in choices %}
-          <th>{{ choice.choice_text }}</th>
-        {% endfor %}
-        </tr>
-      </thead>
-      <tbody>
-          {% if question.get_user_answers %}
-          {% for user in question.get_user_answers.keys() %}
-          <tr>
-            <td>{{ user.surname }}</td>
-            {% for choice_answer in question.get_user_answers.values() %}
-              {% for answer in choice_answer.values() %}
-                <td>{{ answer }}</td>
-              {% endfor %}
-            {% endfor %}
-            <!--  https://qiita.com/tell-k/items/710c79ae9ab47f7a4f7c 
-                  Choice.objects.values('question').distinct()
-                  # answer.values("user").filter(question = id).distinct() とか？
-                  Answer.objects.values("user").filter(question = id).distinct() こんな？
-            -->
-          </tr>
+  <thead>
+    <tr>
+　    <th>ユーザー</th>
+      {% for choice in choices %}
+        <th>{{ choice }}</th>
+      {% endfor %}
+    </tr>
+  </thead>
+  <tbody>
+    {% if user_answers_dict %}
+      {% for user in user_answers_dict.keys %}
+      <tr>
+        <td>{{ user.surname }}</td>
+        {% for choice_answer in user_answers_dict.values %}
+          {% for answer in choice_answer.values %}
+            <td>{{ answer }}</td>
           {% endfor %}
-          {% else %}
-          {% endif %}
-      </tbody>
+        {% endfor %}
+        <!--  https://qiita.com/tell-k/items/710c79ae9ab47f7a4f7c 
+              Choice.objects.values('question').distinct()
+              # answer.values("user").filter(question = id).distinct() とか？
+              Answer.objects.values("user").filter(question = id).distinct() こんな？
+        -->
+      </tr>
+      {% endfor %}
+    {% else %}
+    {% endif %}
+  </tbody>
     <!--<input type="radio" name="choice" id="choice{{ forloop.counter }}" value="{{ choice.id }}" />-->
     <!--<label for="choice{{ forloop.counter }}">{{ choice.choice_text }}</label><br />-->
 </table>
+{% endif %}
 <form action="{% url 'questions:answerRegistration' question.id %}" method="post">
 {% csrf_token %}
 <table border="1">
