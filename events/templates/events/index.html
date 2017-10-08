@@ -15,7 +15,8 @@
 
 <form action="{% url 'events:event_join' event.id %}" method="post">
 {{ form }}
-<button type="submit" value="event join">このイベントに参加する</button>
+<button name="join" value="new_member" type="submit">イベントに参加</button>
+<!--<button name="join" value="new_member" type="submit">イベントに参加</button>-->
 {% csrf_token %}
 </form>
 
@@ -49,7 +50,7 @@
 
 <form action="{% url 'events:event_join' event.id %}" method="post">
 {{ form }}
-<button type="submit" value="event join">このイベントに参加する</button>
+<button name="join" value="new_member" type="submit">イベントに参加</button>
 {% csrf_token %}
 </form>
 
@@ -83,7 +84,7 @@
 
 <form action="{% url 'events:event_join' event.id %}" method="post">
 {{ form }}
-<button type="submit" value="event join">このイベントに参加する</button>
+<button name="join" value="new_member" type="submit">イベントに参加</button>
 {% csrf_token %}
 </form>
 
@@ -117,7 +118,7 @@
 
 <form action="{% url 'events:event_join' event.id %}" method="post">
 {{ form }}
-<button type="submit" value="event join">このイベントに参加する</button>
+<button name="join" value="new_member" type="submit">イベントに参加</button>
 {% csrf_token %}
 </form>
 

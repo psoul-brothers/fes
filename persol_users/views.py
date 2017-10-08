@@ -87,6 +87,9 @@ def user_modify(request):
                 user.data = data_tmp
                 user.save()
                 
+#                if tmp:
+#                    if tmp != BASE_DIR + '/user_image/default.png':
+#                        os.remove(tmp)
                 if tmp:
                     if tmp != BASE_DIR + '/user_image/default.png':
                         os.remove(tmp)
