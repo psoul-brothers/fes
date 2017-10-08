@@ -136,3 +136,9 @@ AUTH_USER_MODEL = 'persol_users.PersolUser'
 LOGIN_URL = 'my_auth:login'
 LOGIN_REDIRECT_URL = 'portal'
 LOGOUT_REDIRECT_URL = 'portal'
+
+EMAIL_HOST = 'smtp.gmail.com'
+EMAIL_PORT = 587
+EMAIL_HOST_USER = 'psoul.brothers'
+EMAIL_HOST_PASSWORD = 'psoul1234'
+EMAIL_USE_TLS = True
