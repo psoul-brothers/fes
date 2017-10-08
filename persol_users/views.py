@@ -1,30 +1,32 @@
 from django.shortcuts import get_object_or_404, render
 from django.http import HttpResponseRedirect, HttpResponse
 from django.core.urlresolvers import reverse 
+from django.contrib.auth.decorators import login_required
 import os
 
-from django.conf import settings
-DEFAULT_USER_IMG = 'user_image/default.png'
 
 # Create your views here.
 from .models import PersolUser
 from .forms import user_add_Form
 from .forms import user_modify_Form
 
+@login_required
 def index(request):
     user_list = PersolUser.objects.order_by('name')
     context = {'user_list': user_list}
     return render(request, 'persol_users/index.html', context)
-    
+
+@login_required
 def detail(request, user_id):
     user = get_object_or_404(PersolUser, pk=user_id)
     return render(request, 'persol_users/detail.html', {'user': user})
-    
+
+
 def user_add(request):
     f = user_add_Form()
-    print "test!!!!!!!!!"
     return render(request, 'persol_users/user_add.html', {'form1': f})
-    
+
+
 def user_add_operation(request):
     if request.method == 'POST':
         form = user_add_Form(request.POST)
@@ -33,7 +35,7 @@ def user_add_operation(request):
                 data_tmp = request.FILES['data']
                 
             except:
-                data_tmp = DEFAULT_USER_IMG
+                data_tmp = 'user_image/default.png'
             
             finally:
                 q = PersolUser(
@@ -50,19 +52,18 @@ def user_add_operation(request):
                 
                 
                 q.save()
-                return HttpResponseRedirect(reverse('persol_users:index'))
+                return HttpResponseRedirect(reverse('portal'))
             
     else:
         form = user_add_Form()
         
     return render(request, 'persol_users/user_add.html', {'form1': form})
 
-    
+@login_required
 def user_modify(request):
    
-    # req_employee_number = request.user.employee_number
-    # user = get_object_or_404(PersolUser, employee_number=req_employee_number)
-    user = request.user
+    req_employee_number = request.user.employee_number
+    user = get_object_or_404(PersolUser, employee_number=req_employee_number)
     
     if request.method == 'POST':
         try:
@@ -80,14 +81,14 @@ def user_modify(request):
                 data_tmp = request.FILES['data']
                 
             except:
-                data_tmp = DEFAULT_USER_IMG
+                data_tmp = 'user_image/default.png'
             
             finally:
                 user.data = data_tmp
                 user.save()
                 
                 if tmp:
-                    if tmp != os.path.join(settings.MEDIA_ROOT, DEFAULT_USER_IMG):
+                    if tmp != BASE_DIR + '/user_image/default.png':
                         os.remove(tmp)
                     
                 return HttpResponseRedirect(reverse('persol_users:index'))

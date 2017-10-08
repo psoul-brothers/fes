@@ -4,16 +4,23 @@ from django import forms
 from django.forms import ModelForm
 from .models import PersolUser
 
-#
+from django import forms
+from django.contrib.auth.forms import AuthenticationForm
+from django.forms.widgets import PasswordInput, TextInput
+
 
 class user_add_Form(forms.Form):
-    employee_number = forms.CharField()
-    password = forms.CharField()
-    surname = forms.CharField()
-    name = forms.CharField()
-    mail_address = forms.EmailField()
-    self_introduction_text = forms.CharField(widget=forms.Textarea)
-    data = forms.FileField(required=False)
+    employee_number = forms.CharField(label='社員番号')
+    password = forms.CharField(label='パスワード',widget=PasswordInput(attrs={
+         'type':"text",
+         'onfocus':"if (this.value == 'Password') this.value = '';",
+         'onfocus':"type='Password'",
+    }))
+    surname = forms.CharField(label='姓')
+    name = forms.CharField(label='名')
+    mail_address = forms.EmailField(label='メールアドレス')
+    self_introduction_text = forms.CharField(label='自己紹介メッセージ',widget=forms.Textarea)
+    data = forms.FileField(label='画像',required=False)
     
 class user_modify_Form(ModelForm):
     class Meta:
