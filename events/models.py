@@ -1,5 +1,5 @@
 # coding: utf-8
-import datetime
+from datetime import datetime
 
 #from __future__ import unicode_literals
 
@@ -46,6 +46,12 @@ class Event(models.Model):
 
     def like_list(self):
         return self.like.all()
+    
+    def event_date(self):
+        return self.event_datetime.strftime('%Y.%m.%d')
+    
+    def event_starttime(self):
+        return self.event_datetime.strftime('%H:%M~')
         
     
         
