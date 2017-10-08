@@ -52,7 +52,9 @@ def event_index(request):
         'watching_events'  : watching_events,
         'organized_events' : organized_events
     }
-    return render(request, 'events/index.html', context)
+#    return render(request, 'events/index.html', context)
+    return render(request, 'events/new_index.html', context)
+
 
 @login_required 
 def event_create(request):
@@ -100,6 +102,7 @@ def event_detail(request, event_id):
     }
 #    return render(request, 'events/detail.html', context)
     return render(request, 'events/new_detail.html', context)
+#    return render(request, 'events/Sample_detail.html', context)
 
 @login_required
 def event_edit(request, event_id):
