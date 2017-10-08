@@ -52,8 +52,10 @@ class Event(models.Model):
     
     def event_starttime(self):
         return self.event_datetime.strftime('%H:%M~')
-        
     
+    def nobreak_overview(self):
+        return self.overview.replace("\n", "")
+
         
 """
 python manage.py makemigrations
