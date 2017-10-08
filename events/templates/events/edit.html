@@ -1,14 +1,16 @@
-<html lang="en">
+{% extends 'common/base.html' %}
 <head>
     <link rel="stylesheet" href="style.css" />
     <title>{% block title %}イベント作成{% endblock %}</title>
 </head>
 
+{% block contents %}
+
 <body>
-    <h3 >イベント作成画面</h3>
+    <h3 >イベント更新画面</h3>
 <form action="{% url 'events:event_edit' event.id %}" method="POST">{% csrf_token %}
 <table>
-{{ form.as_table }}
+{{ form.as_ul }}
 </table>
 <input type="submit" value="Submit" />
 </form>
@@ -17,6 +19,4 @@
 <input type="submit" value="Back" />
 </form>
 
-
-</body>
-</html>
+{% endblock %}

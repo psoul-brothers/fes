@@ -34,7 +34,7 @@ INSTALLED_APPS = [
     'events.apps.EventsConfig',
     'questions.apps.QuestionsConfig',
     'persol_users.apps.PersolUsersConfig',
-    'misc_models.apps.MiscModelsConfig',
+    'comments.apps.CommentsConfig',
     'my_auth.apps.MyAuthConfig',
     'django.contrib.admin',
     'django.contrib.auth',
@@ -135,4 +135,10 @@ MEDIA_URL = 'files/'
 AUTH_USER_MODEL = 'persol_users.PersolUser'
 LOGIN_URL = 'my_auth:login'
 LOGIN_REDIRECT_URL = 'portal'
-LOGOUT_REDIRECT_URL = 'my_auth:logout'
+LOGOUT_REDIRECT_URL = 'portal'
+
+EMAIL_HOST = 'smtp.gmail.com'
+EMAIL_PORT = 587
+EMAIL_HOST_USER = 'psoul.brothers'
+EMAIL_HOST_PASSWORD = 'psoul1234'
+EMAIL_USE_TLS = True

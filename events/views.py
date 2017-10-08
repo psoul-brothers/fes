@@ -4,11 +4,13 @@ from django.shortcuts import get_object_or_404, render, render_to_response
 from django.template import Context, loader, RequestContext
 from django.http import HttpResponseRedirect, HttpResponse
 from django.core.urlresolvers import reverse
+from django.core.exceptions import PermissionDenied
 from .models import Event, Person
 from persol_users.models import PersolUser
 from django.db.models import Q, Count
 from .forms import CreateForm,CreateUserForm, EventForm, SelectUserForm, LikeUserForm, EventsSearchForm
 from datetime import datetime
+import os
 
 from django.contrib.auth.decorators import login_required
 
@@ -18,7 +20,8 @@ def event_index(request):
         search_word = request.POST['word'] # 検索の値が空白でも大丈夫
         search_results = Event.objects.filter(
                 Q(event_name__contains = search_word) | 
-                Q(overview__contains   = search_word)
+                Q(overview__contains   = search_word) |
+                Q(search_tag__contains = search_word)
             )
         event_list = search_results
         if request.POST['sort'] == 'like':
@@ -51,7 +54,9 @@ def event_index(request):
         'watching_events'  : watching_events,
         'organized_events' : organized_events
     }
-    return render(request, 'events/index.html', context)
+#    return render(request, 'events/index.html', context)
+    return render(request, 'events/new_index.html', context)
+
 
 @login_required 
 def event_create(request):
@@ -64,7 +69,7 @@ def event_create(request):
             try:
                 image = request.FILES['event_image']
             except:
-                image = ''
+                image = 'event_image/default.png'
             finally:
                 new_event = Event(
                     author         = login_user,
@@ -97,18 +102,33 @@ def event_detail(request, event_id):
         'watcher_list': watcher_list,
         'num_of_like' : num_of_like
     }
-    return render(request, 'events/detail.html', context)
+#    return render(request, 'events/detail.html', context)
+    return render(request, 'events/new_detail.html', context)
+#    return render(request, 'events/Sample_detail.html', context)
 
 @login_required
 def event_edit(request, event_id):
     event = get_object_or_404(Event, pk=event_id)
     if request.user != event.author: 
-        return HttpResponseRedirect('/events/')
+        raise PermissionDenied
     if request.method == 'POST':
-        form = EventForm(request.POST, instance=event)
-        if form.is_valid(): # バリデーションを通った
-            form.save()
-            return HttpResponseRedirect('/events/' + event_id) # POST 後のリダイレクト
+        try: old_image = event.event_image.path
+        except : old_image = ''
+        finally:
+            form = EventForm(request.POST, instance=event)
+            if form.is_valid(): # バリデーションを通った
+                form.save()     # image以外をデータコミット
+            try:
+                image_tmp = request.FILES['event_image']
+            except:
+                image_tmp = 'event_image/default.png'
+            finally:
+                event.event_image = image_tmp
+                event.save()
+                if old_image != '':
+                    if old_image != os.getcwd() + '/media/event_image/default.png': #/home/ubuntu/workspace/media/event_image/default.png
+                        os.remove(old_image)
+                return HttpResponseRedirect('/events/' + event_id) # POST 後のリダイレクト
     else:
         form = EventForm(instance=event) # 非束縛フォーム
     edit_context = {
@@ -119,20 +139,24 @@ def event_edit(request, event_id):
 
 @login_required
 def event_join(request, event_id):
+    print "now1"
     target_event = get_object_or_404(Event, id=event_id)
+    print "now2"
     if request.POST['join'] == 'add':
-        new_member = get_object_or_404(PersolUser, employee_number=request.user.id)
+        print(request.user.id)
+        new_member = get_object_or_404(PersolUser, id=request.user.id)
         target_event.members.add(new_member)
         # ウォッチ中の場合は、ウォッチをはずす
         watcher = target_event.watch.filter(id=request.user.id)
         if new_member in watcher:
             target_event.watch.remove(new_member)
     elif request.POST['join'] == 'leave':
-        out_member = get_object_or_404(PersolUser, employee_number=request.user.id)
+        print "now3"
+        out_member = get_object_or_404(PersolUser,id=request.user.id)
         target_event.members.remove(out_member)
 #あとで消すテスト用
-    elif 'new_members' in request.POST:
-        new_member = get_object_or_404(PersolUser, id=request.POST['out_members'])
+    elif  request.POST['join'] == 'new_member':
+        new_member = get_object_or_404(PersolUser, id=request.POST['join'])
         target_event.members.add(new_member)
         if new_member in target_event.watch:
             target_event.watch.remove(new_member)
@@ -142,7 +166,7 @@ def event_join(request, event_id):
 def event_like(request, event_id):
     if request.POST['like'] == 'leave':
         target_event = get_object_or_404(Event, id=event_id)
-        new_like = get_object_or_404(PersolUser, employee_number=request.user.id)
+        new_like = get_object_or_404(PersolUser, id=request.user.id)
         target_event.like.remove(new_like)
 # 後で消す。テスト用
     elif request.POST['like'] == 'like':
@@ -151,7 +175,7 @@ def event_like(request, event_id):
         target_event.like.add(new_like)
     else:
         target_event = get_object_or_404(Event, id=event_id)
-        new_like = get_object_or_404(PersolUser, employee_number=request.user.id)
+        new_like = get_object_or_404(PersolUser, id=request.user.id)
         target_event.like.add(new_like)
     return HttpResponseRedirect(request.META['HTTP_REFERER']) # リクエスト先にリダイレクト
 
@@ -159,11 +183,11 @@ def event_like(request, event_id):
 def event_watch(request, event_id):
     if request.POST['watch'] == 'leave':
         target_event = get_object_or_404(Event, id=event_id)
-        new_watch = get_object_or_404(PersolUser, employee_number=request.user.id)
+        new_watch = get_object_or_404(PersolUser, id=request.user.id)
         target_event.watch.remove(new_watch)
     else:
         target_event = get_object_or_404(Event, id=event_id)
-        new_watch = get_object_or_404(PersolUser, employee_number=request.user.id)
+        new_watch = get_object_or_404(PersolUser, id=request.user.id)
         target_event.watch.add(new_watch)
         print(new_watch)
     return HttpResponseRedirect(request.META['HTTP_REFERER']) # リクエスト先にリダイレクト

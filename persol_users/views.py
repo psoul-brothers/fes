@@ -1,6 +1,7 @@
 from django.shortcuts import get_object_or_404, render
 from django.http import HttpResponseRedirect, HttpResponse
 from django.core.urlresolvers import reverse 
+from django.contrib.auth.decorators import login_required
 import os
 
 
@@ -9,58 +10,100 @@ from .models import PersolUser
 from .forms import user_add_Form
 from .forms import user_modify_Form
 
+@login_required
 def index(request):
     user_list = PersolUser.objects.order_by('name')
     context = {'user_list': user_list}
     return render(request, 'persol_users/index.html', context)
-    
+
+@login_required
 def detail(request, user_id):
-    user = get_object_or_404(PersolUser, pk=user_id)
-    return render(request, 'persol_users/detail.html', {'user': user})
+    reference_user = get_object_or_404(PersolUser, pk=user_id)
     
+    req_employee_number = request.user.employee_number
+    login_user = get_object_or_404(PersolUser, employee_number=req_employee_number)
+    
+    edit_context = {
+        'reference_user'  : reference_user,
+        'login_user' : login_user
+    }
+    return render(request, 'persol_users/detail.html', context=edit_context)
+    #return render(request, 'persol_users/detail.html', {'user': user})
+
+
 def user_add(request):
     f = user_add_Form()
     return render(request, 'persol_users/user_add.html', {'form1': f})
-    
+
+
 def user_add_operation(request):
     if request.method == 'POST':
         form = user_add_Form(request.POST)
         if form.is_valid():
-            q = PersolUser(
-                employee_number = request.POST['employee_number']
-                , surname =  request.POST['surname']
-                , name =  request.POST['name']
-                , mail_address =  request.POST['mail_address']
-                , self_introduction_text =  request.POST['self_introduction_text']
-                , data = request.FILES['data']
-                )
+            try:
+                data_tmp = request.FILES['data']
+                
+            except:
+                data_tmp = 'user_image/default.png'
             
-            # for auth by tanaka
-            q.set_password(request.POST['password'])
-            
-            
-            q.save()
-            return HttpResponseRedirect(reverse('persol_users:index'))
+            finally:
+                q = PersolUser(
+                    employee_number = request.POST['employee_number']
+                    , surname =  request.POST['surname']
+                    , name =  request.POST['name']
+                    , mail_address =  request.POST['mail_address']
+                    , self_introduction_text =  request.POST['self_introduction_text']
+                    , data =  data_tmp
+                    )
+                
+                # for auth by tanaka
+                q.set_password(request.POST['password'])
+                
+                
+                q.save()
+                return HttpResponseRedirect(reverse('portal'))
             
     else:
         form = user_add_Form()
         
     return render(request, 'persol_users/user_add.html', {'form1': form})
 
-    
+@login_required
 def user_modify(request):
    
     req_employee_number = request.user.employee_number
     user = get_object_or_404(PersolUser, employee_number=req_employee_number)
     
     if request.method == 'POST':
-        tmp = user.data.path
-        f = user_modify_Form(request.POST, instance = user)
-        if f.is_valid():
+        try:
+            tmp = user.data.path
             
-            f.save()
-            #os.remove(tmp)
-            return HttpResponseRedirect(reverse('persol_users:index'))
+        except:
+            tmp = ""
+            
+        finally:
+            f = user_modify_Form(request.POST, instance = user)
+            if f.is_valid():
+                f.save()
+                
+            try:
+                data_tmp = request.FILES['data']
+                
+            except:
+                data_tmp = 'user_image/default.png'
+            
+            finally:
+                user.data = data_tmp
+                user.save()
+                
+#                if tmp:
+#                    if tmp != BASE_DIR + '/user_image/default.png':
+#                        os.remove(tmp)
+                if tmp:
+                    if tmp != os.getcwd() + '/media/user_image/default.png':
+                        os.remove(tmp)
+                    
+                return HttpResponseRedirect(reverse('persol_users:index'))
 
     else:
         f = user_modify_Form(instance=user)

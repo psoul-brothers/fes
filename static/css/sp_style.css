@@ -1,11 +1,11 @@
 /* スマホ用スタイルシート */
- 
+
 @charset "utf-8";
- 
+
 /*----------------------------------------------------*/
 /* element reset
 ------------------------------------------------------*/
- 
+
 html, body, div, span, object, iframe, h1, h2, h3, h4, h5, h6, p, blockquote, pre, abbr, address, cite, code, del, dfn, em, img, ins, kbd, q, samp, small, strong, sub, sup, var, b, i, dl, dt, dd, ol, ul, li, fieldset, form, label, legend, table, caption, tbody, tfoot, thead, tr, th, td, article, aside, canvas, details, figcaption, figure, footer, header, hgroup, menu, nav, section, summary, time, mark, audio, video, a, input {
     margin:0;
     padding:0;
@@ -27,58 +27,149 @@ input, select { vertical-align:middle; }
 input[type=text],input[type=submit]{
     -webkit-appearance:none;
 }
- 
- 
- 
+
+
+
 /*----------------------------------------------------*/
 /* link
 -----------------------------------------------------*/
- 
+
 a:link {    color:#458CDD; text-decoration:none;}
 a:visited { color:#458CDD;  text-decoration:none;}
 a:hover {   color:#458CDD;  text-decoration:underline;}
 a:active {  color:#458CDD;  text-decoration:none;}
- 
+
 #course-nav-sp a img:hover,.nbp_contents a img:hover {opacity: 0.8}
- 
+
 /*----------------------------------------------------*/
 /* text
 ------------------------------------------------------*/
- 
+
 body {
     background:#FFF;
     color:#333;
     font: 16px "メイリオ", "Hiragino Kaku Gothic ProN","ヒラギノ角ゴ ProN W3","ＭＳ Ｐゴシック",Helvetica,Arial,sans-serif;
 }
- 
+
 p,dt,dd,li,th,td,address {
     line-height:1.5;
 }
- 
+
 p,dt,dd,li,th,td,input,textarea,address {
     font-size:100%;
 }
- 
+
 img {
     vertical-align:bottom;
 }
- 
- 
+
+
 body {
-    padding: 0 2%;
+    padding: 0 ;
 }
- 
+
 header {
     margin:10px 0 ;
+
+}
+
+header ul#menu-wrap{
+  background-color: #cccccc;
+  position: fixed;
+  z-index: 9999;
+  top: 0;
+  left: 0;
+  transition: .3s;
+  width: 96%;
+  padding-top:2px;
+  padding-bottom:2px;
+  padding-left:5%;
+  padding-right:5%;
+
+}
+header ul#menu-wrap li {
+    display: inline-block;
+}
+header ul#menu-wrap li.logo {
+    width: 50%;
+
+}
+header ul#menu-wrap li.userImage {
+    width: 30%;
+}
+
+header ul#menu-wrap li.userImage img {
+  border-radius: 20px;
+  height: 40px;
+  width: 40px;
+}
+
+header ul#menu-wrap li.hunMeny {
+    width: 10%;
+}
+header ul#menu-wrap li.hunMeny span {
+	font-size: 150%;
+}
+
+header ul#menu-wrap li ul.submenu {
+    position: fixed;
+    top:45px;
+    left: 50%;
  
 }
- 
+header ul#menu-wrap li ul.submenu.hub {
+    position: fixed;
+    top:45px;
+    left: 60%;
+    width: 38%;
+    background-color:#333333;
+}
+
+header ul#menu-wrap li ul.submenu li{
+	background-color:#333333;
+    border-top: 1px solid #ffffff;
+    padding: 1px 0;
+}
+header ul#menu-wrap li ul.submenu li span {
+    color: #ffffff;
+    padding: 3px 6px;
+    font-size: 80%;
+}
+
+header ul#menu-wrap li ul.submenu.hub li{
+    padding: 1px 0;
+    border: none;
+    color: #ffffff;
+    padding: 3px 0;
+    border-top:1px solid #ffffff;
+}
+header ul#menu-wrap li ul.submenu.hub li span {
+    font-size: 80%;
+    margin-bottom: 3px
+}
+header ul#menu-wrap li ul.submenu.hub input#searchKeyword {
+    width: 70%;
+    padding: 3px;
+    border:1px solid #a9a9a9;
+    color: #ffffff;
+    margin-left: 3px;
+}
+
+
+header ul#menu-wrap li ul.submenu.hub input.searchBtn {
+    border:1px solid #a9a9a9;
+    background-color: #a9a9a9;
+    color:#ffffff;
+    margin: 6px;
+}
+
+
 header ul li.search {
     display: inline-block;
     width: 65%;
     font-size: 3vw;
 }
- 
+
 header div.select {
     width: 100%;
     margin-top: 10px;
@@ -86,25 +177,15 @@ header div.select {
 header div.select p {
     font-size: 80%;
 }
- 
-header ul li #searchKeyword {
-    width: 60%;
-    padding: 3px;
-    border:1px solid #a9a9a9;
-}
- 
-header ul li.search input.searchBtn {
-    border:1px solid #a9a9a9;
-    background-color: #a9a9a9;
-    color:#ffffff;
-    display: inline-block;
-}
+
+
+
 header ul li.makeEvent {
     width: 30%;
     display: inline-block;
     font-size: 3vw;
 }
- 
+
 header ul li.makeEvent a {
     padding: 2px 0;
     display: block;
@@ -117,8 +198,8 @@ header ul li.makeEvent a {
 article {
     width: 100%;
 }
- 
- 
+
+
 .clearfix:after {
     content:" ";
     display:block;

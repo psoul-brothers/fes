@@ -1,0 +1,131 @@
+/* 詳細ページ用スタイルシート */
+
+div#article {
+
+	width: 94%;
+	padding: 1%;
+	margin: 0 auto;
+
+}
+
+
+div#article .event .title{
+	font-size: 120%;
+	font-weight: bold;
+	padding-bottom: 3px;
+	border-bottom: 2px solid #cccccc;
+	margin-bottom: 20px;
+}
+
+div#article .event .date{
+	font-size: 90%;
+	margin-bottom:5px; 
+	/*display: inline-block;*/
+}
+div#article .event .dateHour{
+	font-size: 90%;
+	margin-bottom:5px;	
+	/*display: inline-block;*/
+}
+div#article .event .place{
+	font-size: 90%;
+	margin-bottom:5px;
+	padding-top: 5px;
+	/*display: inline-block;*/
+}
+div#article .event .questions{
+	float: right;
+}
+div#article .place + .questions{
+	margin-bottom:10px; : 
+}
+
+div#article .event .questions a {
+	display: block;
+	padding: 3px;
+	color: #ffffff;
+	background-color: #0B610B;
+	font-size: 2.8vw;
+	border-radius: 2px;
+}
+
+div#article .event .description {
+	border-top:2px dotted #cccccc;
+	padding-top:5px;
+	font-size: 90%;
+	clear: both;
+	margin-bottom: 20px;
+}
+div#article .event .participant {
+	font-size: 90%
+}
+div#article .event ul.participantIcon {
+	margin-bottom:20px;
+}
+
+div#article .event ul.participantIcon li{
+	display: inline-block;
+}
+div#article .event ul.participantIcon li img {
+  border-radius: 20px;
+  height: 40px;
+  width: 40px;
+}
+
+
+div#article .event .Organizer {
+	font-size: 90%;
+	margin-bottom: 20px;
+}
+
+
+
+div#article .event li.watch {
+	display: inline-block;
+	width: 48%;
+	margin: 0 2%;
+}
+
+div#article ul.btn li.join  {
+	display:inline-block;
+	width: 40%;
+}
+
+div#article ul.btn {
+	margin-top: 10px;
+}
+
+div#article ul.btn li a {
+	display: block;
+	color: #ffffff;
+	text-align: center;
+	padding: 5px;
+	border-radius: 5px;
+	font-size: 3vw;
+	font-weight: bold;
+}
+
+
+div#article ul.btn li.watch button {
+	/*background-color:#ffca28;*/
+	display:inline-block;
+	border-radius: 15px;
+	padding: 5px 20px;
+	border:3px solid #ff8f00;
+	color: #ff8f00;
+}
+
+div#article ul.btn li.join button{
+	border-radius: 15px;
+	padding: 5px;
+	width: 100%;
+	border: 3px solid #FF4000;
+	color: #FF4000;
+}
+div#article ul.btn li.join button.participat{
+	border-radius: 15px;
+	padding: 5px;
+	width: 100%;
+	background-color:#FF4000;
+	color: #ffffff;
+}

@@ -1,0 +1,160 @@
+{% extends 'common/base.html' %}
+{% block head %}
+<title>一覧ページ</title>
+<!-- css -->
+<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" >
+<link href="/static/css/list_style.css" rel="stylesheet">
+<!-- JS -->
+<script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-beta/js/bootstrap.min.js"></script>
+<!--<script src="../js/bootstrap.min.js"></script>-->
+<script src="/static/js/jquery.bxslider.js"></script>
+<script src="/static/js/list.js"></script>
+<!-- スワイプ参照サイト
+https://www.tam-tam.co.jp/tipsnote/html_css/post9210.html
+スクロール参照サイト
+http://weboook.blog22.fc2.com/blog-entry-412.html
+ -->
+{% endblock %}
+{% block contents %}
+<article>
+  <div id="listArticle">
+  <h1>イベント一覧</h1>
+    <div class="container">
+        <div class="tabContainer">
+            <div class="tab">
+                <div id="" class="tab__button tabNew active"><a href="#">新着</a></div>
+                <div class="tab__button tabJoin"><a href="#">参加予定</a></div>
+                <div class="tab__button tabWatch"><a href="#">ウォッチ</a></div>
+                <div class="tab__button tabMake"><a href="#">主催のイベント</a></div>
+            </div>
+        </div>
+        <div class="contents">
+            <div class="contents__content contentNew">
+            {% if latest_event_list %}
+            {% for event in latest_event_list %}
+            <!-- ▼このdivをイベントの数だけ複製▼ -->
+            <div class="list">
+              <a href="{% url 'events:event_detail' event.id %}">
+              <p class="title">{{ event.event_name }}</p>
+              <p class="date">{{ event.event_date }}</p>
+              <p class="place">{{ event.event_location }}</p>
+              <p class="description">{{ event.nobreak_overview }}</p>
+              </a>
+                  <ul class="btnList">
+                    <!--<li class="detail ">イベント詳細</li>-->
+                    <li class="join">
+                      <form action="{% url 'events:event_join' event.id %}" method="post">{% csrf_token %}
+                    {% if user in event.members.all %}　<!-- ログインユーザーがイベント参加予定の場合-->
+                      <button name ="join" value="leave">イベントに参加予定</button>
+                    {% else %}　　　　　　　　　　　　　<!-- ログインユーザーがイベント未参加の場合-->
+                      <button name="join" value="add" class="participat">イベントに参加する</button>
+                    {% endif %}
+                      </form>
+                    </li>
+                  </ul>
+            </div>
+            <!-- ▲このdivをイベントの数だけ複製▲ -->
+            {% endfor %}
+            {% else %}
+            <p>No event are available.</p>
+            {% endif %}
+            </div>
+            
+            <div class="contents__content contentJoin"><!-- 参加予定イベント -->
+            {% if joing_events %}
+            {% for event in joing_events %}
+            <!-- ▼このdivをイベントの数だけ複製▼ -->
+            <div class="list">
+              <a href="{% url 'events:event_detail' event.id %}">
+              <p class="title">{{ event.event_name }}</p>
+              <p class="date">{{ event.event_date }}</p>
+              <p class="place">{{ event.event_location }}</p>
+              <p class="description">{{ event.overview }}</p>
+              </a>
+                  <ul class="btnList">
+                    <!--<li class="detail ">イベント詳細</li>-->
+                    <li class="join">
+                      <form action="{% url 'events:event_join' event.id %}" method="post">{% csrf_token %}
+                    {% if user in event.members.all %}　<!-- ログインユーザーがイベント参加予定の場合-->
+                      <button name ="join" value="leave">イベントに参加予定</button>
+                    {% else %}　　　　　　　　　　　　　<!-- ログインユーザーがイベント未参加の場合-->
+                      <button name="join" value="add" class="participat">イベントに参加する</button>
+                    {% endif %}
+                      </form>
+                    </li>
+                  </ul>
+            </div>
+            <!-- ▲このdivをイベントの数だけ複製▲ -->
+            {% endfor %}
+            {% else %}
+            <p>参加予定のイベントはありません。</p>
+            {% endif %}
+            </div>
+    
+            <div class="contents__content contentWatch"><!-- ウォッチ中のイベント -->
+            {% if watching_events %}
+            {% for event in watching_events %}
+            <!-- ▼このdivをイベントの数だけ複製▼ -->
+            <div class="list">
+              <a href="{% url 'events:event_detail' event.id %}">
+              <p class="title">{{ event.event_name }}</p>
+              <p class="date">{{ event.event_date }}</p>
+              <p class="place">{{ event.event_location }}</p>
+              <p class="description">{{ event.overview }}</p>
+              </a>
+                  <ul class="btnList">
+                    <!--<li class="detail ">イベント詳細</li>-->
+                    <li class="join">
+                      <form action="{% url 'events:event_join' event.id %}" method="post">{% csrf_token %}
+                    {% if user in event.members.all %}　<!-- ログインユーザーがイベント参加予定の場合-->
+                      <button name ="join" value="leave">イベントに参加予定</button>
+                    {% else %}　　　　　　　　　　　　　<!-- ログインユーザーがイベント未参加の場合-->
+                      <button name="join" value="add" class="participat">イベントに参加する</button>
+                    {% endif %}
+                      </form>
+                    </li>
+                  </ul>
+            </div>
+            <!-- ▲このdivをイベントの数だけ複製▲ -->
+            {% endfor %}
+            {% else %}
+            <p>ウォッチ中のイベントはありません。</p>
+            {% endif %}
+            </div>
+    
+            <div class="contents__content contentMake"><!-- 自分が主催者のイベント -->
+            {% if organized_events %}
+            {% for event in organized_events %}
+            <!-- ▼このdivをイベントの数だけ複製▼ -->
+            <div class="list">
+              <a href="{% url 'events:event_detail' event.id %}">
+              <p class="title">{{ event.event_name }}</p>
+              <p class="date">{{ event.event_date }}</p>
+              <p class="place">{{ event.event_location }}</p>
+              <p class="description">{{ event.overview }}</p>
+              </a>
+                  <ul class="btnList">
+                    <!--<li class="detail ">イベント詳細</li>-->
+                    <li class="join">
+                      <form action="{% url 'events:event_join' event.id %}" method="post">{% csrf_token %}
+                    {% if user in event.members.all %}　<!-- ログインユーザーがイベント参加予定の場合-->
+                      <button name ="join" value="leave">イベントに参加予定</button>
+                    {% else %}　　　　　　　　　　　　　<!-- ログインユーザーがイベント未参加の場合-->
+                      <button name="join" value="add" class="participat">イベントに参加する</button>
+                    {% endif %}
+                      </form>
+                    </li>
+                    <li class="detail "><a href="{% url 'events:event_edit' event.id %}">イベント更新</li></a>
+                  </ul>
+            </div>
+            <!-- ▲このdivをイベントの数だけ複製▲ -->
+            {% endfor %}
+            {% else %}
+            <p>主催しているイベントはありません。</p>
+            {% endif %}
+            </div>
+        </div>
+    </div>
+  </div>
+</article>
+{% endblock %}

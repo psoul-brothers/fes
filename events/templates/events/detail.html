@@ -1,12 +1,32 @@
-{% extends 'events/base.html' %}
-{% block contents %}
+  <head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>詳細ページ</title>
+    <!-- css -->
+    <link href="css/sp_style.css" rel="stylesheet">
+    <link href="css/detail_style.css" rel="stylesheet">
+    <link rel="stylesheet" href="http://maxcdn.bootstrapcdn.com/font-awesome/4.3.0/css/font-awesome.min.css">    <!-- jQuery -->
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/2.2.4/jquery.min.js"></script>
+    <!-- JS -->
+    <script src="js/detail.js"></script>
+    <script src="js/common.js"></script>
 
+    <!--[if lt IE 9]>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/html5shiv/3.7.3/html5shiv.js"></script>
+<![endif]-->
+    <link rel="stylesheet" href="http://maxcdn.bootstrapcdn.com/font-awesome/4.3.0/css/font-awesome.min.css">
+
+
+  </head>
+{% extends 'common/base.html' %}
+{% block contents %}
 
 <h2>{{ event.event_name }}</h2>
 {% if event.event_image %}
   <img src="{{ BASE_DIR }}/{{ event.event_image.url }}" width="100" height="100" </img><br>
 {% else %}
-　<img src="{{ BASE_DIR }}/files/event_image/image.png" width="100" height="100" </img><br>
+　<img src="{{ BASE_DIR }}/files/event_image/default.png" width="100" height="100" </img><br>
 {% endif %}
 イベント作成者:{{ event.author.fullname }}<br>
 {{ event.event_datetime }}<br>
@@ -75,11 +95,13 @@
 
 {% if event.author == user %}
 検索用タグ(主催者しか見えません)<br>
-<TEXTAREA cols="40" rows="5" readonly>{{ event.overview }}</TEXTAREA>
+<TEXTAREA cols="40" rows="5" readonly>{{ event.search_tag }}</TEXTAREA>
 <form action="{% url 'events:event_edit' event.id %}">
 <input type="submit" value="イベント更新" />
 </form>
 {% else %}
 {% endif %}
+
+{% include 'comments/index.html' %}
 
 {% endblock %}

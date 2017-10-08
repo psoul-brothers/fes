@@ -1,6 +1,6 @@
-{% extends 'events/base.html' %}
+{# extends 'events/base.html' #}
+{% extends 'common/base.html' %}
 {% block contents %}
-
 <h3>イベント一覧</h3>
 <div>
 {% if latest_event_list %}
@@ -14,7 +14,8 @@
 
 <form action="{% url 'events:event_join' event.id %}" method="post">
 {{ form }}
-<button type="submit" value="event join">このイベントに参加する</button>
+<button name="join" value="new_member" type="submit">イベントに参加</button>
+<!--<button name="join" value="new_member" type="submit">イベントに参加</button>-->
 {% csrf_token %}
 </form>
 
@@ -48,7 +49,7 @@
 
 <form action="{% url 'events:event_join' event.id %}" method="post">
 {{ form }}
-<button type="submit" value="event join">このイベントに参加する</button>
+<button name="join" value="new_member" type="submit">イベントに参加</button>
 {% csrf_token %}
 </form>
 
@@ -82,7 +83,7 @@
 
 <form action="{% url 'events:event_join' event.id %}" method="post">
 {{ form }}
-<button type="submit" value="event join">このイベントに参加する</button>
+<button name="join" value="new_member" type="submit">イベントに参加</button>
 {% csrf_token %}
 </form>
 
@@ -116,7 +117,7 @@
 
 <form action="{% url 'events:event_join' event.id %}" method="post">
 {{ form }}
-<button type="submit" value="event join">このイベントに参加する</button>
+<button name="join" value="new_member" type="submit">イベントに参加</button>
 {% csrf_token %}
 </form>
 

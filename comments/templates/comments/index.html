@@ -1,0 +1,27 @@
+<hr>
+{% if event.comment_set.all %}
+    {% for cmt in event.comment_set.all %}
+        <p>
+            {{ cmt.comment_text }}<br/>
+            
+            {% if user.id = cmt.author.id %}
+                <form action="{% url 'comments:update' event.id cmt.id %}" method="POST">
+                {% csrf_token %}
+                <input type="textarea" value ="{{ cmt.comment_text }}" name="comment_text_update"/>
+                <input type="submit" value="変更" />
+                </form>
+            {% endif %}
+            
+            by : 
+            <img src="{{ BASE_DIR }}/{{ cmt.author.data.url }}" height="50" />
+            {{cmt.author.fullname}}
+        </p>
+        <hr/>
+    {% endfor %}
+{% endif %}
+
+<form action="{% url 'comments:create' event.id %}" method="POST">
+{% csrf_token %}
+<input type="textarea" name="comment_text_new"/>
+<input type="submit" value="投稿" />
+</form>

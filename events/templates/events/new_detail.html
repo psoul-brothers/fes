@@ -1,0 +1,59 @@
+{% extends 'common/base.html' %}
+{% block head %}
+<title>詳細ページ</title>
+{% endblock %}
+{% block contents %}
+    <article>
+      <div id="article">
+        <div class="event">
+          <p class="title">{{ event.event_name }}</p>
+          {% if event.event_datetime %}
+            <p class="date"><i class="fa fa-calendar" aria-hidden="true"></i> {{ event.event_date }}</p>
+          {% else %}
+            <p class="questions"><a href="">日時アンケートに参加する</a></p><!-- 値がセットされていなかったら表示する -->
+          {% endif %}
+            <p class="dateHour"><i class="fa fa-clock-o" aria-hidden="true"></i> {{ event.event_starttime }}</p>
+          {% if event.event_datetime %}
+            <p class="place"><i class="fa fa-map-marker" aria-hidden="true"></i> {{ event.event_location }}</p>
+          {% else %}
+            <p class="questions"><a href="">場所アンケートに参加する</a></p><!-- 値がセットされていなかったら表示する -->
+          {% endif %}
+          <p class="description">イベント概要：{{ event.nobleak_overview }}</p>
+          <p class="participant">参加者</p>
+          <ul class="participantIcon">
+          {% for members in event.members.all %}
+            <li><a href="/persol_users/{{ members.id }}/"><img src="{{ BASE_DIR }}/{{ members.data.url }}" width="50"/></a></li><!-- 参加者分の画像を表示 -->
+          {% endfor %}
+          </ul>
+          <p class="questions"><a href="">主催者に問い合わせる</a></p>
+          <p class="Organizer">主催者名：{{ event.author.fullname }}</p>
+          <ul class="btn">
+            <li class="watch">
+              <form action="{% url 'events:event_watch' event.id %}" method="post">{% csrf_token %}
+              {% if user in event.watch.all %}<!-- ログインユーザーがウォッチ中の場合-->
+                <button name="watch" value="leave"><i class="fa fa-star-o" aria-hidden="true"></i> ウォッチ中</button><!-- ウォッチ状態ではiタグのclass名が fa fa-star-o 変わります -->
+              {% else %}<!-- ログインユーザーがウォッチしていないの場合-->
+                <button name="watch" value="add"><i class="fa fa-star" aria-hidden="true"></i> ウォッチ</button><!-- ウォッチ状態ではiタグのclass名が fa fa-star-o 変わります -->
+              {% endif %}
+              </form>
+            </li>
+            <li class="join">
+              <form action="{% url 'events:event_join' event.id %}" method="post">{% csrf_token %}
+              {% if user in event.members.all %}<!-- ログインユーザーがイベント参加予定の場合-->
+                <button name="join" value="leave"> イベントに参加予定</button>
+              {% else %}<!-- ログインユーザーがイベント未参加の場合-->
+                <button name="join" value="add" class="participat"> イベントに参加する</button>
+              {% endif %}
+              </form>
+            </li>
+          </ul>
+        </div>
+      </div>
+      {% if event.author == user %}<!-- 主催者のみ表示 -->
+      検索用タグ<br>
+      <TEXTAREA cols="40" rows="5" readonly>{{ event.search_tag }}</TEXTAREA>
+      <a href="{% url 'events:event_edit' event.id %}"><button>イベント更新</button></a>
+      {% else %}
+      {% endif %}
+    </article>
+{% endblock %}
