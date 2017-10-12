@@ -9,6 +9,9 @@ from django.utils import timezone
 from persol_users.models import PersolUser
 from django.db.models import Q, Count
 
+# アンケート
+from questions.models import Question
+
 @python_2_unicode_compatible
 class Person(models.Model):
     name = models.CharField(max_length=50)
@@ -26,7 +29,7 @@ class Event(models.Model):
     event_name     = models.CharField('イベント名', max_length=200)
     event_image    = models.ImageField('イメージ画像', upload_to='event_image', blank=True)
     event_datetime = models.DateTimeField('日時',blank=True,null=True)
-    event_location = models.CharField('開催場所', max_length=200)
+    event_location = models.CharField('開催場所', max_length=200, blank=True)
     num_of_members = models.IntegerField('募集人数')
     dead_line      = models.DateField('募集締切日')
     overview       = models.TextField('概要')
@@ -36,6 +39,11 @@ class Event(models.Model):
     members        = models.ManyToManyField(PersolUser)
     search_tag     = models.TextField('検索用タグ', blank=True, null=True)
     event_status   = models.CharField('イベントステータス', max_length=1, choices=STATUS_CHOICES, blank=True, null=True)
+    
+    # アンケート
+    question_date  = models.OneToOneField(Question, related_name='event_date', blank=True, null=True)
+    question_location  = models.OneToOneField(Question, related_name='event_location', blank=True, null=True)
+    
     
     def __str__(self):  
         return self.event_name

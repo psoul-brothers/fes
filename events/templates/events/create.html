@@ -1,17 +1,27 @@
 {% extends 'common/base.html' %}
-<head>
-    <link rel="stylesheet" href="style.css" />
+{% block head %}
     <title>{% block title %}イベント作成{% endblock %}</title>
-</head>
-<body>
+{% endblock %}
 {% block contents %}
 <h3>イベント作成画面</h3>
 <form enctype="multipart/form-data" action="{% url 'events:event_create' %}" method="POST">
   {% csrf_token %}
   <table>
     {{ form.as_ul }}
+    
+    {# アンケート作成 #}
+    <tr><td colspan='2'>
+      <input type="checkbox" name="question_date" value='1' id="question_date_checkbox">
+      <label for="question_date_checkbox">日付アンケート</label>
+    </td></tr>
+    <tr><td colspan='2'>
+      <input type="checkbox" name="question_location" value='1' id="question_location_checkbox">
+      <label for="question_location_checkbox">場所アンケート</label>
+    </td></tr>
+
     <tr><td colspan='2'><input type="submit" value="Submit"></td></tr>
   </table>
+  
 </form>
 
 {% endblock %}

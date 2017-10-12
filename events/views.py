@@ -1,6 +1,6 @@
 # coding: utf-8
 from django.http import HttpResponse
-from django.shortcuts import get_object_or_404, render, render_to_response
+from django.shortcuts import get_object_or_404, render, render_to_response, redirect
 from django.template import Context, loader, RequestContext
 from django.http import HttpResponseRedirect, HttpResponse
 from django.core.urlresolvers import reverse
@@ -19,11 +19,12 @@ def event_index(request):
     if request.method == 'POST':
         search_word = request.POST['word'] # 検索の値が空白でも大丈夫
         search_results = Event.objects.filter(
-                Q(event_name__contains = search_word) | 
-                Q(overview__contains   = search_word) |
-                Q(search_tag__contains = search_word)
-            )
+            Q(event_name__contains = search_word) | 
+            Q(overview__contains   = search_word) |
+            Q(search_tag__contains = search_word)
+        )
         event_list = search_results
+    # Sort order definition
         if request.POST['sort'] == 'like':
             event_list = event_list.annotate(like_num = Count('like')).order_by('-like_num')
         elif request.POST['sort'] == 'watch':
@@ -36,13 +37,12 @@ def event_index(request):
         """
     else:
         event_list = Event.objects.order_by('id')
-    # get each event
+# get each event
     latest_events    = event_list
     joing_events     = event_list.filter(Q(members = request.user.id))
     watching_events  = event_list.filter(Q(watch   = request.user.id))
     organized_events = event_list.filter(Q(author  = request.user.id))
-    
-    member_list = PersolUser.objects.order_by('id')
+    member_list      = PersolUser.objects.order_by('id')
     form = SelectUserForm()
     like_form = LikeUserForm()
     context = {
@@ -57,33 +57,44 @@ def event_index(request):
 #    return render(request, 'events/index.html', context)
     return render(request, 'events/new_index.html', context)
 
-
 @login_required 
 def event_create(request):
     if request.method == 'POST':
         form = CreateForm(request.POST)
         if form.is_valid(): # バリデーションを通った
             # form.cleaned_data を処理
-            # ...
             login_user = get_object_or_404(PersolUser, id=request.user.id)
-            try:
-                image = request.FILES['event_image']
-            except:
-                image = 'event_image/default.png'
-            finally:
+            try : image = request.FILES['event_image']
+            except : image = 'event_image/default.png'
+            finally :
                 new_event = Event(
                     author         = login_user,
                     event_name     = request.POST['event_name'], 
                     event_image    = image, 
-                    event_datetime = request.POST['event_datetime'], 
                     event_location = request.POST['event_location'], 
                     num_of_members = request.POST['num_of_members'], 
                     dead_line      = request.POST['dead_line'],
                     overview       = request.POST['overview'],
-                    search_tag     = request.POST['search_tag']
+                    search_tag     = request.POST['search_tag'],
+                    # アンケート
+                    question_date = None,
+                    question_location = None,
                 )
+                if len(request.POST['event_datetime']) > 0:
+                    new_event.event_datetime = request.POST['event_datetime']
+    
                 new_event.save()
-                return HttpResponseRedirect('/events/'+ str(new_event.id)) # 作成したイベントの詳細画面に
+                
+                # アンケートがあるなら作成画面へ
+                creation_type = ''
+                if 'question_date' in request.POST:
+                    creation_type += 'd'
+                if 'question_location' in request.POST:
+                    creation_type += 'l'
+                if len(creation_type) > 0:
+                    return redirect('event_questions:new', event_id=new_event.id, creation_type=creation_type)
+                else:
+                    return HttpResponseRedirect('/events/'+ str(new_event.id)) # 作成したイベントの詳細画面に
     else:
         form = CreateForm() # 非束縛フォーム
     return render(request, 'events/create.html', {'form': form,})
@@ -109,19 +120,16 @@ def event_detail(request, event_id):
 @login_required
 def event_edit(request, event_id):
     event = get_object_or_404(Event, pk=event_id)
-    if request.user != event.author: 
-        raise PermissionDenied
+    if request.user != event.author : raise PermissionDenied
     if request.method == 'POST':
-        try: old_image = event.event_image.path
+        try : old_image = event.event_image.path
         except : old_image = ''
         finally:
             form = EventForm(request.POST, instance=event)
-            if form.is_valid(): # バリデーションを通った
+            if form.is_valid():
                 form.save()     # image以外をデータコミット
-            try:
-                image_tmp = request.FILES['event_image']
-            except:
-                image_tmp = 'event_image/default.png'
+            try : image_tmp = request.FILES['event_image']
+            except : image_tmp = 'event_image/default.png'
             finally:
                 event.event_image = image_tmp
                 event.save()
@@ -131,70 +139,52 @@ def event_edit(request, event_id):
                 return HttpResponseRedirect('/events/' + event_id) # POST 後のリダイレクト
     else:
         form = EventForm(instance=event) # 非束縛フォーム
-    edit_context = {
-        'form'  : form,
-        'event' : event
-    }
+    edit_context = {'form' : form, 'event' : event}
     return render(request, 'events/edit.html', context=edit_context)
 
 @login_required
 def event_join(request, event_id):
-    print "now1"
     target_event = get_object_or_404(Event, id=event_id)
-    print "now2"
+    login_user = get_object_or_404(PersolUser, id=request.user.id)
     if request.POST['join'] == 'add':
-        print(request.user.id)
-        new_member = get_object_or_404(PersolUser, id=request.user.id)
-        target_event.members.add(new_member)
+        target_event.members.add(login_user)
         # ウォッチ中の場合は、ウォッチをはずす
-        watcher = target_event.watch.filter(id=request.user.id)
-        if new_member in watcher:
-            target_event.watch.remove(new_member)
+        watcher = target_event.watch.filter( id=request.user.id)
+        if login_user in watcher:
+            target_event.watch.remove(login_user)
     elif request.POST['join'] == 'leave':
-        print "now3"
-        out_member = get_object_or_404(PersolUser,id=request.user.id)
-        target_event.members.remove(out_member)
+        target_event.members.remove(login_user)
 #あとで消すテスト用
     elif  request.POST['join'] == 'new_member':
-        new_member = get_object_or_404(PersolUser, id=request.POST['join'])
-        target_event.members.add(new_member)
-        if new_member in target_event.watch:
-            target_event.watch.remove(new_member)
+        target_event.members.add(login_user)
+        if login_user in target_event.watch:
+            target_event.watch.remove(login_user)
     return HttpResponseRedirect(request.META['HTTP_REFERER']) # リクエスト先にリダイレクト
 
 @login_required    
 def event_like(request, event_id):
-    if request.POST['like'] == 'leave':
-        target_event = get_object_or_404(Event, id=event_id)
-        new_like = get_object_or_404(PersolUser, id=request.user.id)
-        target_event.like.remove(new_like)
-# 後で消す。テスト用
+    target_event = get_object_or_404(Event, id=event_id)
+    login_user   = get_object_or_404(PersolUser, id=request.user.id)
+    if request.POST['like'] == 'leave' :
+        target_event.like.remove(login_user)
     elif request.POST['like'] == 'like':
-        target_event = get_object_or_404(Event, id=event_id)
-        new_like = get_object_or_404(PersolUser, id=request.POST['like'])
-        target_event.like.add(new_like)
+        target_event.like.add(login_user) # 後で消す。テスト用
     else:
-        target_event = get_object_or_404(Event, id=event_id)
-        new_like = get_object_or_404(PersolUser, id=request.user.id)
-        target_event.like.add(new_like)
+        target_event.like.add(login_user)
     return HttpResponseRedirect(request.META['HTTP_REFERER']) # リクエスト先にリダイレクト
 
 @login_required
 def event_watch(request, event_id):
+    target_event = get_object_or_404(Event, id=event_id)
+    login_user   = get_object_or_404(PersolUser, id=request.user.id)
     if request.POST['watch'] == 'leave':
-        target_event = get_object_or_404(Event, id=event_id)
-        new_watch = get_object_or_404(PersolUser, id=request.user.id)
-        target_event.watch.remove(new_watch)
+        target_event.watch.remove(login_user)
     else:
-        target_event = get_object_or_404(Event, id=event_id)
-        new_watch = get_object_or_404(PersolUser, id=request.user.id)
-        target_event.watch.add(new_watch)
-        print(new_watch)
+        target_event.watch.add(login_user)
     return HttpResponseRedirect(request.META['HTTP_REFERER']) # リクエスト先にリダイレクト
 
 def event_leave(request, event_id):
     pass
-
 
 def event_delete(request, event_id):
     pass
@@ -213,23 +203,3 @@ def create_user(request):
         form = CreateUserForm() # 非束縛フォーム
     return render(request, 'events/create_user.html', {'form': form,})
 """
-
-@login_required
-def event_search(request):
-    if request.method == 'POST':
-        form = EventsSearchForm(request.POST)
-        if form.is_valid():
-            word     = form.cleaned_data['word']
-            search_results = Event.objects.filter(
-                Q(event_name__contains = word) | 
-                Q(overview__contains = word)
-            )
-            context = {
-                'form'     : SelectUserForm(),
-                'like_form': LikeUserForm(),
-                'latest_event_list' : search_results
-            }
-            return render(request, 'events/index.html', context)
-    else:
-        form = EventsSearchForm()
-    return render(request, 'events/index.html', {'form' : form})

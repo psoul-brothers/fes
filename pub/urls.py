@@ -26,6 +26,7 @@ urlpatterns = [
     url(r'^$', events.views.event_index, name='portal'),
     url(r'^log', include('my_auth.urls')),
     url(r'^admin/', admin.site.urls),
+    url(r'^events/(?P<event_id>[0-9]+)/questions/', include('questions.urls2')),
     url(r'^events/(?P<event_id>[0-9]+)/comments/', include('comments.urls')),
     url(r'^events/', include('events.urls')),
     url(r'^persol_users/', include('persol_users.urls')),

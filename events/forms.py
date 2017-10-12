@@ -22,7 +22,7 @@ class CreateForm(forms.Form):
     event_name     = forms.CharField(max_length=200, label='イベント名')
     event_image    = forms.FileField(required=False, label='イメージ画像')
     event_datetime = forms.DateTimeField(required=False, label='開催日時')
-    event_location = forms.CharField(max_length=200, label='開催場所')
+    event_location = forms.CharField(required=False, max_length=200, label='開催場所')
     num_of_members = forms.CharField(max_length=200, label='募集人数')
     dead_line      = forms.DateField(label='募集締切日')
     overview       = forms.CharField(max_length=2000, label='概要',widget=forms.Textarea)
