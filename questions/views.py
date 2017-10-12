@@ -29,14 +29,8 @@ def registration(request):
 def detail(request, question_id):
     question = get_object_or_404(Question, pk=question_id)
     choices = []
+    choices = question.get_sorted_choices()
     user_answers_dict = question.get_user_answers()
-    if (len(user_answers_dict)!=0):
-        print u"要素数=" + str(len(user_answers_dict))
-        choice_answer_dict = sorted(user_answers_dict.values())[0]
-        print choice_answer_dict
-        if (choice_answer_dict):
-            choices = sorted(choice_answer_dict.keys())
-    
     return render(request, 'questions/detail.html', {'question': question, 'choices': choices, 'user_answers_dict':user_answers_dict})
 
 def index(request):
