@@ -21,6 +21,7 @@
             <p class="questions"><a href="">場所アンケートに参加する</a></p><!-- 値がセットされていなかったら表示する -->
           {% endif %}
           <p class="description">イベント概要：{{ event.nobleak_overview }}</p>
+          <p class="Organizer">主催者<a href="/persol_users/{{ event.author.id }}/"><img src="{{ BASE_DIR }}/{{ event.author.data.url }}" width="50"/></a> {{ event.author.fullname }}</p>
           <p class="participant">参加者</p>
           <ul class="participantIcon">
           {% for members in event.members.all %}
@@ -28,7 +29,6 @@
           {% endfor %}
           </ul>
           <p class="questions"><a href="">主催者に問い合わせる</a></p>
-          <p class="Organizer">主催者名：{{ event.author.fullname }}</p>
           <ul class="btn">
             <li class="watch">
               <form action="{% url 'events:event_watch' event.id %}" method="post">{% csrf_token %}
