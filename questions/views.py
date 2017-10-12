@@ -7,6 +7,8 @@ from persol_users.models import PersolUser
 from django.core.urlresolvers import reverse
 from django.utils import timezone
 from django.contrib.auth.decorators import login_required
+from . import forms
+
 import traceback
 
 @login_required
@@ -35,13 +37,14 @@ def detail(request, question_id):
     choices = []
     choices = question.get_sorted_choices()
     user_answers_dict = question.get_user_answers()
+    
+    # 検証用(実装後削除)
     print "view user_answers_dict 長さ:%d" % len(user_answers_dict)
     for choice_answer in user_answers_dict.values(): 
         print choice_answer
         for answer in choice_answer.values():
             print answer
-    
-    return render(request, 'questions/detail.html', {'question': question, 'choices': choices, 'user_answers_dict':user_answers_dict})
+    return render(request, 'questions/detail.html', {'question': question, 'choices': choices, 'user_answers_dict':user_answers_dict, 'form': forms.AnswerForm})
 
 def index(request):
     latest_question_list = Question.objects.order_by('id')

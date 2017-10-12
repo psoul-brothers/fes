@@ -58,8 +58,10 @@
             <td>
               <div>
                 <input type="hidden" name="choiceId" value="{{choice.id}}"/>
-                <label for="answer_text">回答:</label>
-                <input type="text" name="answer_text_{{choice.id}}" id="answer_text" />
+                <!--<label for="answer_text">回答:</label>-->
+                {{ form.select_answer.label }}：
+                {{ form.select_answer }}
+                <!--<input type="text" name="answer_text_{{choice.id}}" id="answer_text" />-->
               </div>
             </td>
             {% endfor %}
