@@ -1,6 +1,8 @@
 {% extends 'common/base.html' %}
 {% block head %}
-<title>詳細ページ</title>
+    <link href="/static/css/detail_style.css" rel="stylesheet">
+    <script src="/static/js/detail.js"></script>
+    <title>詳細ページ</title>
 {% endblock %}
 {% block contents %}
     <article>
@@ -57,8 +59,12 @@
       {% endif %}
     </article>
     
+    {% if event.question_date %}
     <a href="{% url 'questions:detail' event.question_date.id %}">日時アンケートに答える</a>
+    {% endif %}
+    {% if event.question_location %}
     <a href="{% url 'questions:detail' event.question_location.id %}">場所アンケートに答える</a><br/>
+    {% endif %}
     <a href="{% url 'event_questions:edit' event.id 'd' %}">日時アンケート編集</a>
     <a href="{% url 'event_questions:edit' event.id 'l' %}">場所アンケート編集</a>
     
