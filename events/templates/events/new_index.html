@@ -56,7 +56,7 @@ http://weboook.blog22.fc2.com/blog-entry-412.html
                       <button name="join" value="add" class="participat">イベントに参加する</button>
                       </form>
                     {% elif event.author == user %}
-                    <a href="{% url 'events:event_edit' event.id %}">イベントを更新する</a>
+                      <a href="{% url 'events:event_edit' event.id %}"><button>※イベントを更新※</button></a><!--本当は"イベントを更新"する。-->
                     {% endif %}
                     </li>
                   </ul>
@@ -99,7 +99,7 @@ http://weboook.blog22.fc2.com/blog-entry-412.html
                       <button name="join" value="add" class="participat">イベントに参加する</button>
                       </form>
                     {% elif event.author == user %}
-                    <a href="{% url 'events:event_edit' event.id %}">イベントを更新する</a>
+                      <a href="{% url 'events:event_edit' event.id %}"><button>※イベントを更新※</button></a><!--本当は"イベントを更新"する。-->
                     {% endif %}
                     </li>
                   </ul>
@@ -142,7 +142,7 @@ http://weboook.blog22.fc2.com/blog-entry-412.html
                       <button name="join" value="add" class="participat">イベントに参加する</button>
                       </form>
                     {% elif event.author == user %}
-                    <a href="{% url 'events:event_edit' event.id %}">イベントを更新する</a>
+                      <a href="{% url 'events:event_edit' event.id %}"><button>※イベントを更新※</button></a><!--本当は"イベントを更新"する。-->
                     {% endif %}
                     </li>
                   </ul>
@@ -185,7 +185,7 @@ http://weboook.blog22.fc2.com/blog-entry-412.html
                       <button name="join" value="add" class="participat">イベントに参加する</button>
                       </form>
                     {% elif event.author == user %}
-                    <a href="{% url 'events:event_edit' event.id %}">イベントを更新する</a>
+                      <a href="{% url 'events:event_edit' event.id %}"><button>※イベントを更新※</button></a><!--本当は"イベントを更新"する。-->
                     {% endif %}
                     </li>
                   </ul>
