@@ -36,6 +36,8 @@ class Question(models.Model):
                 print choice.choice_text
                 choice_answer_dict[i] = self.get_answer(persol_user,choice) 
             user_answers_dict[persol_user] = OrderedDict(sorted(choice_answer_dict.items(), key=lambda x: x[0]))
+            print sorted(choice_answer_dict.items(), key=lambda x: x[0])
+        print user_answers_dict
         return user_answers_dict
     
     # 

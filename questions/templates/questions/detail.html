@@ -13,13 +13,11 @@
   </thead>
   <tbody>
     {% if user_answers_dict %}
-      {% for user in user_answers_dict.keys %}
+      {% for user, choice_answer in user_answers_dict.iteritems %}
       <tr>
         <td>{{ user.surname }}</td>
-        {% for choice_answer in user_answers_dict.values %}
-          {% for answer in choice_answer.values %}
-            <td>{{ answer }}</td>
-          {% endfor %}
+        {% for answer in choice_answer.values %}
+          <td>{{ answer }}</td>
         {% endfor %}
         <!--  https://qiita.com/tell-k/items/710c79ae9ab47f7a4f7c 
               Choice.objects.values('question').distinct()
