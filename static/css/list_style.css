@@ -244,6 +244,11 @@ div#listArticle .list ul.btnList li.join button.participat {
     padding-top:15px;
 }
 
+.contents__content p.noevent{
+    padding-left:15px;
+    font-weight:bold;
+    }
+
 .contents__content div{
     clear: left;
 }
