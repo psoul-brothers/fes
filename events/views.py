@@ -1,6 +1,6 @@
 # coding: utf-8
 from django.http import HttpResponse
-from django.shortcuts import get_object_or_404, render, render_to_response
+from django.shortcuts import get_object_or_404, render, render_to_response, redirect
 from django.template import Context, loader, RequestContext
 from django.http import HttpResponseRedirect, HttpResponse
 from django.core.urlresolvers import reverse
@@ -71,15 +71,30 @@ def event_create(request):
                     author         = login_user,
                     event_name     = request.POST['event_name'], 
                     event_image    = image, 
-                    event_datetime = request.POST['event_datetime'], 
                     event_location = request.POST['event_location'], 
                     num_of_members = request.POST['num_of_members'], 
                     dead_line      = request.POST['dead_line'],
                     overview       = request.POST['overview'],
-                    search_tag     = request.POST['search_tag']
+                    search_tag     = request.POST['search_tag'],
+                    # アンケート
+                    question_date = None,
+                    question_location = None,
                 )
+                if len(request.POST['event_datetime']) > 0:
+                    new_event.event_datetime = request.POST['event_datetime']
+    
                 new_event.save()
-                return HttpResponseRedirect('/events/'+ str(new_event.id)) # 作成したイベントの詳細画面に
+                
+                # アンケートがあるなら作成画面へ
+                creation_type = ''
+                if 'question_date' in request.POST:
+                    creation_type += 'd'
+                if 'question_location' in request.POST:
+                    creation_type += 'l'
+                if len(creation_type) > 0:
+                    return redirect('event_questions:new', event_id=new_event.id, creation_type=creation_type)
+                else:
+                    return HttpResponseRedirect('/events/'+ str(new_event.id)) # 作成したイベントの詳細画面に
     else:
         form = CreateForm() # 非束縛フォーム
     return render(request, 'events/create.html', {'form': form,})

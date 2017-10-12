@@ -1,3 +1,4 @@
+# coding: utf-8
 from __future__ import unicode_literals
 
 from django.db import models
@@ -34,6 +35,27 @@ class Question(models.Model):
             # choice_answer_dict = sorted(choice_answer_dict.items(), key=lambda x: x[0])
             user_answers_dict[persol_user] = choice_answer_dict
         return user_answers_dict
+    
+    # 
+    def get_choices_text(self):
+        return '\n'.join(self.choice_set.values_list('choice_text', flat=True))
+        
+    # 選択肢を設定
+    def set_choices(self, choices_text):
+        # 今回の文字列にない選択肢は削除
+        for ch in self.choice_set.all():
+            if ch.choice_text not in choices_text.splitlines():
+                ch.delete()
+        
+        # 今回の文字列で選択し追加･更新
+        for text in choices_text.splitlines():
+            c = self.choice_set.filter(choice_text=text).first()
+            if c is None:
+                self.choice_set.create(choice_text=text)
+            else:
+                c.choice_text = text
+                c.save()
+        
 
                 
 class Choice(models.Model):
