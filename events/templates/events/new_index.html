@@ -34,18 +34,20 @@ http://weboook.blog22.fc2.com/blog-entry-412.html
             {% for event in latest_event_list %}
             <!-- ▼このdivをイベントの数だけ複製▼ -->
             <div class="list">
-              <a href="{% url 'events:event_detail' event.id %}">
               <p class="title">{{ event.event_name }}</p>
               <p class="date">{{ event.event_date }}</p>
               <p class="place">{{ event.event_location }}</p>
               <p class="description">{{ event.nobreak_overview }}</p>
-              </a>
                   <ul class="btnList">
-                    <!--<li class="detail ">イベント詳細</li>-->
+                    <li class="detail">
+                      <button href="{% url 'events:event_detail' event.id %}">イベント詳細</button>
+                    </li>
                     <li class="join">
                       <form action="{% url 'events:event_join' event.id %}" method="post">{% csrf_token %}
                     {% if user in event.members.all %}　<!-- ログインユーザーがイベント参加予定の場合-->
                       <button name ="join" value="leave">イベントに参加予定</button>
+                    {% elif event.author == user %}
+                      <button href="{% url 'events:event_edit' event.id %}">イベント更新</buttongi>
                     {% else %}　　　　　　　　　　　　　<!-- ログインユーザーがイベント未参加の場合-->
                       <button name="join" value="add" class="participat">イベントに参加する</button>
                     {% endif %}
@@ -65,14 +67,14 @@ http://weboook.blog22.fc2.com/blog-entry-412.html
             {% for event in joing_events %}
             <!-- ▼このdivをイベントの数だけ複製▼ -->
             <div class="list">
-              <a href="{% url 'events:event_detail' event.id %}">
               <p class="title">{{ event.event_name }}</p>
               <p class="date">{{ event.event_date }}</p>
               <p class="place">{{ event.event_location }}</p>
-              <p class="description">{{ event.overview }}</p>
-              </a>
+              <p class="description">{{ event.nobreak_overview }}</p>
                   <ul class="btnList">
-                    <!--<li class="detail ">イベント詳細</li>-->
+                    <li class="detail">
+                      <button href="{% url 'events:event_detail' event.id %}">イベント詳細</button>
+                    </li>
                     <li class="join">
                       <form action="{% url 'events:event_join' event.id %}" method="post">{% csrf_token %}
                     {% if user in event.members.all %}　<!-- ログインユーザーがイベント参加予定の場合-->
@@ -96,14 +98,14 @@ http://weboook.blog22.fc2.com/blog-entry-412.html
             {% for event in watching_events %}
             <!-- ▼このdivをイベントの数だけ複製▼ -->
             <div class="list">
-              <a href="{% url 'events:event_detail' event.id %}">
               <p class="title">{{ event.event_name }}</p>
               <p class="date">{{ event.event_date }}</p>
               <p class="place">{{ event.event_location }}</p>
-              <p class="description">{{ event.overview }}</p>
-              </a>
+              <p class="description">{{ event.nobreak_overview }}</p>
                   <ul class="btnList">
-                    <!--<li class="detail ">イベント詳細</li>-->
+                    <li class="detail">
+                      <button href="{% url 'events:event_detail' event.id %}">イベント詳細</button>
+                    </li>
                     <li class="join">
                       <form action="{% url 'events:event_join' event.id %}" method="post">{% csrf_token %}
                     {% if user in event.members.all %}　<!-- ログインユーザーがイベント参加予定の場合-->
@@ -127,14 +129,14 @@ http://weboook.blog22.fc2.com/blog-entry-412.html
             {% for event in organized_events %}
             <!-- ▼このdivをイベントの数だけ複製▼ -->
             <div class="list">
-              <a href="{% url 'events:event_detail' event.id %}">
               <p class="title">{{ event.event_name }}</p>
               <p class="date">{{ event.event_date }}</p>
               <p class="place">{{ event.event_location }}</p>
-              <p class="description">{{ event.overview }}</p>
-              </a>
+              <p class="description">{{ event.nobreak_overview }}</p>
                   <ul class="btnList">
-                    <!--<li class="detail ">イベント詳細</li>-->
+                    <li class="detail">
+                      <button href="{% url 'events:event_detail' event.id %}">イベント詳細</button>
+                    </li>
                     <li class="join">
                       <form action="{% url 'events:event_join' event.id %}" method="post">{% csrf_token %}
                     {% if user in event.members.all %}　<!-- ログインユーザーがイベント参加予定の場合-->
