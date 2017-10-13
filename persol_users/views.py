@@ -39,6 +39,39 @@ def user_add(request):
     return render(request, 'persol_users/user_add.html', {'form1': f})
 
 
+#def user_add_operation(request):
+#    if request.method == 'POST':
+#        form = user_add_Form(request.POST)
+#        if form.is_valid():
+#            try:
+#                data_tmp = request.FILES['data']
+#                
+#            except:
+#                data_tmp = DEFAULT_USER_IMG
+#            
+#            finally:
+#                q = PersolUser(
+#                    employee_number = request.POST['employee_number']
+#                    , surname =  request.POST['surname']
+#                    , name =  request.POST['name']
+#                    , mail_address =  request.POST['mail_address']
+#                    , self_introduction_text =  request.POST['self_introduction_text']
+#                    , data =  data_tmp
+#                    )
+#                
+#                # for auth by tanaka
+#                q.set_password(request.POST['password'])
+#
+#                q.save()
+#
+#                return HttpResponseRedirect(reverse('portal'))
+#            
+#    else:
+#        form = user_add_Form()
+#        
+#    return render(request, 'persol_users/user_add.html', {'form1': form})
+
+
 def user_add_operation(request):
     if request.method == 'POST':
         form = user_add_Form(request.POST)
@@ -61,15 +94,16 @@ def user_add_operation(request):
                 
                 # for auth by tanaka
                 q.set_password(request.POST['password'])
-                
-                
+
                 q.save()
+
                 return HttpResponseRedirect(reverse('portal'))
             
     else:
         form = user_add_Form()
         
     return render(request, 'persol_users/user_add.html', {'form1': form})
+
 
 @login_required
 def user_modify(request):
