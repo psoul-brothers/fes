@@ -14,8 +14,8 @@ def new(request, event_id, creation_type):
     # イベント作成者以外は403
     ev = get_event_or_403(request, event_id)
 
-    question_date = Question() if 'd' in creation_type else None
-    question_location = Question() if 'l' in creation_type else None
+    question_date = Question(question_text='いつがいいですか？') if 'd' in creation_type else None
+    question_location = Question(question_text='どこがいいですか？') if 'l' in creation_type else None
     return render(request, 'questions/new2.html', {'event': ev, 'question_date': question_date, 'question_location': question_location,})
 
 @login_required
@@ -49,8 +49,13 @@ def edit(request, event_id, edit_type):
     
     q = ev.question_date if edit_type == 'd' else ev.question_location
     if q is None:
-        type = '日時' if edit_type == 'd' else '場所'
-        q = Question(questionnaire_title = type + 'アンケート')
+        if edit_type == 'd':
+            type = '日時'
+            text = "いつがいいですか"
+        else:
+            type = '場所'
+            text = "どこがいいですか"
+        q = Question(questionnaire_title = type + 'アンケート', question_text = text)
     return render(request, 'questions/edit2.html', {'event': ev, 'question': q, 'update_type':edit_type})
 
 
