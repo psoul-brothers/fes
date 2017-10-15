@@ -1,27 +1,51 @@
-<hr>
+<!--<link href="/static/css/tnk_comment.css" rel="stylesheet" />-->
+<div class="comment-list">
 {% if event.comment_set.all %}
     {% for cmt in event.comment_set.all %}
-        <p>
-            {{ cmt.comment_text }}<br/>
-            
+    <div class="comment-block">
+        <div class="comment-icon">
+            <img class="comment-author" src="/{{ cmt.author.data.url }}" width=40 />
+        </div>
+        <div class="comment-body">
+            <p class="comment-author">{{cmt.author.fullname}}</p>
+            <div class="comment-text" comment-id="{{ cmt.id }}">
+                <pre>{{ cmt.comment_text }}</pre>{# 改行するために<pre> #}
             {% if user.id = cmt.author.id %}
-                <form action="{% url 'comments:update' event.id cmt.id %}" method="POST">
-                {% csrf_token %}
-                <input type="textarea" value ="{{ cmt.comment_text }}" name="comment_text_update"/>
-                <input type="submit" value="変更" />
-                </form>
+                <i class="fa fa-pencil comment-edit" aria-hidden="true" comment-id="{{ cmt.id }}"></i>
+            </div>
+            <div class="comment-form" comment-id="{{ cmt.id }}" style="display:none;">
+                    <form action="{% url 'comments:update' event.id cmt.id %}" method="POST">
+                        {% csrf_token %}
+                        <textarea name="comment_text_update">{{ cmt.comment_text }}</textarea>
+                        <input type="submit" value="変更" />
+                    </form>
+                    <i class="fa fa-times comment-edit-cancel" aria-hidden="true"></i>
             {% endif %}
-            
-            by : 
-            <img src="{{ BASE_DIR }}/{{ cmt.author.data.url }}" height="50" />
-            {{cmt.author.fullname}}
-        </p>
-        <hr/>
+            </div>
+        </div>
+    </div>
     {% endfor %}
 {% endif %}
 
 <form action="{% url 'comments:create' event.id %}" method="POST">
 {% csrf_token %}
-<input type="textarea" name="comment_text_new"/>
+<textarea name="comment_text_new"></textarea>
 <input type="submit" value="投稿" />
 </form>
+
+<script>
+//<![CDATA[
+    $(".comment-edit").click(function(){
+        var $parent_div = $(this).parent();
+        $parent_div.hide();
+        $parent_div.next().show();
+    });
+    $(".comment-edit-cancel").click(function(){
+        var $parent_div = $(this).parent();
+        $(this).parent().hide();
+        $parent_div.prev().show();
+    });
+    
+//]]>
+</script>
+</div>
