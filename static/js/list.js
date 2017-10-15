@@ -39,7 +39,8 @@ $(document).ready(function(){
                 e.preventDefault();
             });
             isFlick = true;
-        } else if (moveRangeY > THRESHOLD_PX || (-1 * THRESHOLD_PX) > moveRangeY) {
+        }
+        if (moveRangeY > 5 || (-1 * 5) > moveRangeY) {
             $(window).on('touchmove.noScroll', function(e) {
                 e.preventDefault();
             });
