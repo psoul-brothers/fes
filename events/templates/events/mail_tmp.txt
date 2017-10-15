@@ -1,0 +1,5 @@
+■イベント最新情報
+イベント名  ：{{event.event_name}}
+開催場所    ：{{event.event_location}}
+現在の参加者：{{event.members.count}}名
+  {% for member in event.members.all %}{{member.fullname}}{% endfor%}
