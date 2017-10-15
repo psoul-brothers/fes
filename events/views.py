@@ -94,6 +94,8 @@ def event_create(request):
                 new_event.save()
                 
                 return redirect('events:event_detail', event_id=new_event.id)
+        else:
+            return render(request, 'events/create.html', {'form': form,})
     else:
         form = CreateForm() # 非束縛フォーム
         return render(request, 'events/create.html', {'form': form,})
