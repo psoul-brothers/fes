@@ -40,7 +40,7 @@ $(document).ready(function(){
             });
             isFlick = true;
         }
-        if (moveRangeY > 5 || (-1 * THRESHOLD_PX) > 5) {
+        if (moveRangeY > 5 || (-1 * 5) > moveRangeY) {
             $(window).on('touchmove.noScroll', function(e) {
                 e.preventDefault();
             });
