@@ -11,6 +11,7 @@ from persol_users.models import PersolUser
 from questions.models import Question
 from .models import Event
 from .forms import CreateForm, CreateUserForm, EventForm, SelectUserForm, LikeUserForm, EventsSearchForm
+from django.template.loader import get_template
 
 from datetime import datetime
 import os
@@ -38,7 +39,7 @@ def event_index(request):
             event_list = event_list.reverse()
         """
     else:
-        event_list = Event.objects.order_by('id')
+        event_list = Event.objects.order_by('id').reverse()
 # get each event
     latest_events    = event_list
     joing_events     = event_list.filter(Q(members = request.user.id))
@@ -97,7 +98,8 @@ def event_create(request):
                     new_event.question_location = ql
 
                 new_event.save()
-                
+                new_event.members.add(new_event.author)
+             
                 return redirect('events:event_detail', event_id=new_event.id)
         else:
             return render(request, 'events/create.html', {'form': form,})
@@ -137,12 +139,12 @@ def event_edit(request, event_id):
             try : image_tmp = request.FILES['event_image']
             except : image_tmp = 'event_image/default.png'
             finally:
+                print
                 event.event_image = image_tmp
                 event.save()
                 if old_image != '':
                     if old_image != os.getcwd() + '/media/event_image/default.png': #/home/ubuntu/workspace/media/event_image/default.png
                         os.remove(old_image)
-                
                 """
                 send_mail(
                     subject
@@ -154,18 +156,14 @@ def event_edit(request, event_id):
                     , auth_password=None
                     , connection=None
                 )"""
-                """
-#                sendlist=event.mailing_list
-                sendlist=['psoul.brothers@gmail.com','psoul.brothers+test1@gmail.com','psoul.brothers+test2@gmail.com']
-                mail_body = [d for d in event.members.mail_address.all()]
-                send_mail(
-                  'イベントが更新されました。'
-                  ,u'{}更新内容はhogehoegehoge。'.format(mail_body),     
-                  'from@example.com',
-                  sendlist,
-                  fail_silently=False
-                )
-"""
+#                send_to=['psoul.brothers@gmail.com','psoul.brothers+test1@gmail.com','psoul.brothers+test2@gmail.com']
+                subject, send_to, send_from = u'イベント[{}]が更新されました。'.format(event.event_name), event.mailing_list(), 'from@example.com'
+                mail_template=get_template('events/mail_tmp.txt')
+                context = {
+                    "event": event,
+                }
+                mail_body=mail_template.render({"event": event})
+                send_mail(subject, mail_body, send_from, send_to, fail_silently=False)
                 # アンケート変更
                 if not 'use_question_d' in request.POST:
                     event.question_delete('d')

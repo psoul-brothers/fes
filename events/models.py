@@ -96,6 +96,12 @@ class Event(models.Model):
             ql = Question.get_default_question('l')
         return ql
         
+    def mailing_list(self):
+        member_addr=[member.mail_address for member in self.members.all()]
+        watcher_addr=[watcher.mail_address for watcher in self.watch.all()]
+        ml=member_addr+watcher_addr
+        return ml
+
 """
 python manage.py makemigrations
 python manage.py migrate

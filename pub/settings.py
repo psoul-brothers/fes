@@ -117,7 +117,7 @@ USE_I18N = True
 
 USE_L10N = True
 
-USE_TZ = True
+USE_TZ = False
 
 
 # Static files (CSS, JavaScript, Images)
@@ -142,3 +142,4 @@ EMAIL_PORT = 587
 EMAIL_HOST_USER = 'psoul.brothers'
 EMAIL_HOST_PASSWORD = 'psoul1234'
 EMAIL_USE_TLS = True
+EMAIL_BACKEND = 'django.core.mail.backends.console.EmailBackend'
