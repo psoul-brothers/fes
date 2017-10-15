@@ -10,51 +10,6 @@ $(document).ready(function(){
     //タブの長さとボディの長さの差分を取得
     var tabExtraDistance = $('.tab').width() - $('.tabContainer').width();
 
-    var isFlick = false;
-
-    var THRESHOLD_PX = 100;
-
-
-
-    /******************************************
-     スクロール中かどうかの判定
-     *******************************************/
-    $(window).on('touchstart', onTouchStart); //指が触れたか検知
-    $(window).on('touchmove', onTouchMove); //指が動いたか検知
-    $(window).on('touchend', onTouchEnd); //指が離れたか検知
-    var direction, position;
-
-    //スワイプ開始時の横方向の座標を格納
-    function onTouchStart(event) {
-        position = getPosition(event);
-        direction = ''; //一度リセットする
-    }
-
-    //スワイプの方向（left／right）を取得
-    function onTouchMove(event) {
-        moveRangeX = position - event.originalEvent.touches[0].pageX;
-        moveRangeY = position - event.originalEvent.touches[0].pageY;
-        if (moveRangeX > THRESHOLD_PX || (-1 * THRESHOLD_PX) > moveRangeX) {
-            $(window).on('touchmove.noScroll', function(e) {
-                e.preventDefault();
-            });
-            isFlick = true;
-        }
-        if (moveRangeY > 5 || (-1 * 5) > moveRangeY) {
-            $(window).on('touchmove.noScroll', function(e) {
-                e.preventDefault();
-            });
-            isFlick = true;
-        }
-    }
-
-    function onTouchEnd(event) {
-        if (isFlick){
-            $(window).off('.noScroll');
-            isFlick = false;
-        }
-    }
-
 
     /******************************************
      スライダー発動
@@ -62,6 +17,7 @@ $(document).ready(function(){
     var slider = $('.contents').bxSlider({
         pager:false,
         controls:false,
+        oneToOneTouch:false,
         swipeThreshold: THRESHOLD_PX,
         onSlideBefore: function($slideElement, oldIndex, newIndex){
             //スライドする時に関数を呼び出す。newIndexはスライダーの現在地。
