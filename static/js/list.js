@@ -18,7 +18,7 @@ $(document).ready(function(){
         pager:false,
         controls:false,
         oneToOneTouch:false,
-        swipeThreshold: THRESHOLD_PX,
+        swipeThreshold: 50,
         onSlideBefore: function($slideElement, oldIndex, newIndex){
             //スライドする時に関数を呼び出す。newIndexはスライダーの現在地。
             slideChange(newIndex);
