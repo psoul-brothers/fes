@@ -7,9 +7,9 @@ from django.core.exceptions import PermissionDenied
 from django.core.urlresolvers import reverse
 from django.contrib.auth.decorators import login_required
 from django.db.models import Q, Count
-
 from persol_users.models import PersolUser
-from .models import Event, Person
+from questions.models import Question
+from .models import Event
 from .forms import CreateForm, CreateUserForm, EventForm, SelectUserForm, LikeUserForm, EventsSearchForm
 
 from datetime import datetime
@@ -69,6 +69,12 @@ def event_create(request):
             try : image = request.FILES['event_image']
             except : image = 'event_image/default.png'
             finally :
+                # アンケート作成
+                qd = Question()
+                qd.update_from_posted_params('d', request.POST)
+                ql = Question()
+                ql.update_from_posted_params('l', request.POST)
+                
                 new_event = Event(
                     author         = login_user,
                     event_name     = request.POST['event_name'], 
@@ -79,27 +85,20 @@ def event_create(request):
                     overview       = request.POST['overview'],
                     search_tag     = request.POST['search_tag'],
                     # アンケート
-                    question_date = None,
-                    question_location = None,
+                    question_date = qd,
+                    question_location = ql,
                 )
                 if len(request.POST['event_datetime']) > 0:
                     new_event.event_datetime = request.POST['event_datetime']
     
                 new_event.save()
                 
-                # アンケートがあるなら作成画面へ
-                creation_type = ''
-                if 'question_date' in request.POST:
-                    creation_type += 'd'
-                if 'question_location' in request.POST:
-                    creation_type += 'l'
-                if len(creation_type) > 0:
-                    return redirect('event_questions:new', event_id=new_event.id, creation_type=creation_type)
-                else:
-                    return HttpResponseRedirect('/events/'+ str(new_event.id)) # 作成したイベントの詳細画面に
+                return redirect('events:event_detail', event_id=new_event.id)
+        else:
+            return render(request, 'events/create.html', {'form': form,})
     else:
         form = CreateForm() # 非束縛フォーム
-    return render(request, 'events/create.html', {'form': form,})
+        return render(request, 'events/create.html', {'form': form,})
 
 @login_required
 def event_detail(request, event_id):
@@ -150,6 +149,7 @@ def event_edit(request, event_id):
                     , auth_password=None
                     , connection=None
                 )"""
+                """
 #                sendlist=event.mailing_list
                 sendlist=['psoul.brothers@gmail.com','psoul.brothers+test1@gmail.com','psoul.brothers+test2@gmail.com']
                 mail_body = [d for d in event.members.mail_address.all()]
@@ -160,11 +160,16 @@ def event_edit(request, event_id):
                   sendlist,
                   fail_silently=False
                 )
-                return HttpResponseRedirect('/events/' + event_id) # POST 後のリダイレクト
+"""
+                # アンケート変更
+                event.question_date.update_from_posted_params('d', request.POST)
+                event.question_location.update_from_posted_params('l', request.POST)
+                
+                return redirect('events:event_detail', event_id=event_id) # POST 後のリダイレクト
     else:
         form = EventForm(instance=event) # 非束縛フォーム
-    edit_context = {'form' : form, 'event' : event}
-    return render(request, 'events/edit.html', context=edit_context)
+        edit_context = {'form' : form, 'event' : event}
+        return render(request, 'events/edit.html', context=edit_context)
 
 @login_required
 def event_join(request, event_id):
