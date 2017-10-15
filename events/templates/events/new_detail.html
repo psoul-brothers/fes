@@ -28,16 +28,24 @@
             <li><a href="/persol_users/{{ members.id }}/"><img src="{{ BASE_DIR }}/{{ members.data.url }}" width="50"/></a></li><!-- 参加者分の画像を表示 -->
           {% endfor %}
           </ul>
+          {% if event.author == user %}<!-- 主催者のみ表示 -->
+          検索用タグ:{{ event.search_tag }}<br>
+          <a href="{% url 'events:event_edit' event.id %}"><button>イベント更新</button></a>
+          {% else %}
           <p class="questions"><a href="">主催者に問い合わせる</a></p>
           <ul class="btn">
             <li class="watch">
+            {% if user in event.members.all %}
+            ウォッチは表示しない
+            {% else %}
               <form action="{% url 'events:event_watch' event.id %}" method="post">{% csrf_token %}
               {% if user in event.watch.all %}<!-- ログインユーザーがウォッチ中の場合-->
-                <button name="watch" value="leave"><i class="fa fa-star-o" aria-hidden="true"></i> ウォッチ中</button><!-- ウォッチ状態ではiタグのclass名が fa fa-star-o 変わります -->
-              {% else %}<!-- ログインユーザーがウォッチしていないの場合-->
-                <button name="watch" value="add"><i class="fa fa-star" aria-hidden="true"></i> ウォッチ</button><!-- ウォッチ状態ではiタグのclass名が fa fa-star-o 変わります -->
+                <button name="watch" value="leave"><i class="fa fa-star" aria-hidden="true"></i> ウォッチ中</button><!-- ウォッチ状態ではiタグのclass名が fa fa-star-o 変わります -->
+              {% elif user not in event.watch.all%}<!-- ログインユーザーがウォッチしていないの場合-->
+                <button name="watch" value="add"><i class="fa fa-star-o" aria-hidden="true"></i> ウォッチ</button><!-- ウォッチ状態ではiタグのclass名が fa fa-star-o 変わります -->
               {% endif %}
               </form>
+            {% endif %}
             </li>
             <li class="join">
               <form action="{% url 'events:event_join' event.id %}" method="post">{% csrf_token %}
@@ -49,16 +57,10 @@
               </form>
             </li>
           </ul>
+          {% endif %}
         </div>
       </div>
-      {% if event.author == user %}<!-- 主催者のみ表示 -->
-      検索用タグ<br>
-      <TEXTAREA cols="40" rows="5" readonly>{{ event.search_tag }}</TEXTAREA>
-      <a href="{% url 'events:event_edit' event.id %}"><button>イベント更新</button></a>
-      {% else %}
-      {% endif %}
     </article>
-    
     {% if event.question_date %}
     <a href="{% url 'questions:detail' event.question_date.id %}">日時アンケートに答える</a>
     {% endif %}
