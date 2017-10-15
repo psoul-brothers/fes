@@ -71,6 +71,31 @@ class Event(models.Model):
         return self.overview.replace("\n", "")
     
      
+    # アンケート削除
+    def question_delete(self, type):
+        if type == 'd':
+            q = self.question_date
+            self.question_date = None
+        elif type == 'l':
+            q = self.question_location
+            self.question_location = None
+        
+        if q:
+            q.delete()
+        
+    # アンケート取得。なければデフォルト値のダミーアンケートを返す
+    def question_date_or_dummy(self):
+        qd = self.question_date
+        if not qd:
+            qd = Question.get_default_question('d')
+        return qd
+        
+    def question_location_or_dummy(self):
+        ql = self.question_location
+        if not ql:
+            ql = Question.get_default_question('l')
+        return ql
+        
 """
 python manage.py makemigrations
 python manage.py migrate

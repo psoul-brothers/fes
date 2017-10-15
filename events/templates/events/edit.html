@@ -11,8 +11,30 @@
         {{ form.as_ul }}
         
         {# アンケート編集フォーム #}
-        {% include "questions/embeded_form_edit.html" with question_type="d" question=event.question_date %}
-        {% include "questions/embeded_form_edit.html" with question_type="l" question=event.question_location %}
+        <div>
+            <input type="checkbox" name="use_question_d" value='1' id="use_question_d"
+                {% if event.question_date %} checked="true" {% endif %} >
+            <label for="use_question_d">日時をアンケートする</label>
+            {% if event.question_date %}
+            <label id="edit_question_d" >アンケート編集</label>
+            {% endif %}
+            <div id="question_form_d" style="display:none;">
+                {% include "questions/embeded_form_edit.html" with question_type="d" question=event.question_date_or_dummy %}
+                <i class="fa fa-times" aria-hidden="true" onclick="$('#question_form_d').hide()"></i>
+            </div>
+        </div>
+        <div>
+            <input type="checkbox" name="use_question_l" value='1' id="use_question_l"
+                {% if event.question_location %} checked="true" {% endif %} >
+            <label for="use_question_l">場所をアンケートする</label>
+            {% if event.question_location %}
+            <label id="edit_question_l" >アンケート編集</label>
+            {% endif %}
+            <div id="question_form_l" style="display:none;">
+                {% include "questions/embeded_form_edit.html" with question_type="l" question=event.question_location_or_dummy %}
+                <i class="fa fa-times" aria-hidden="true" onclick="$('#question_form_l').hide()"></i>
+            </div>
+        </div>
     </ul>
     
 <input type="submit" value="Submit" />
@@ -22,4 +44,5 @@
 <input type="submit" value="Back" />
 </form>
 
+<script type="text/javascript" src="/static/js/question_form_toggler.js"></script>
 {% endblock %}

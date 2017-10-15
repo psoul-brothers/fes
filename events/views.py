@@ -167,18 +167,26 @@ def event_edit(request, event_id):
                 )
 """
                 # アンケート変更
-                if not event.question_date:
-                    qd = Question(questionnaire_title='日時アンケート', question_text='いつがいいですか？')
-                    qd.save()
-                    event.question_date = qd
-                event.question_date.update_from_posted_params('d', request.POST)
-                
-                if not event.question_location:
-                    ql = Question(questionnaire_title='場所アンケート', question_text='どこがいいですか？')
-                    ql.save()
-                    event.question_location = ql
-                event.question_location.update_from_posted_params('l', request.POST)
-                
+                if not 'use_question_d' in request.POST:
+                    event.question_delete('d')
+                else:
+                    if not event.question_date:
+                        qd = Question()
+                        qd.save()
+                        event.question_date = qd
+                    event.question_date.update_from_posted_params('d', request.POST)
+
+                if not 'use_question_l' in request.POST:
+                    event.question_delete('l')
+                else:
+                    if not event.question_location:
+                        ql = Question()
+                        ql.save()
+                        event.question_location = ql
+                    event.question_location.update_from_posted_params('l', request.POST)
+                    
+                event.save()
+
                 return redirect('events:event_detail', event_id=event_id) # POST 後のリダイレクト
     else:
         form = EventForm(instance=event) # 非束縛フォーム
