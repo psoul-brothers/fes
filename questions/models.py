@@ -59,8 +59,16 @@ class Question(models.Model):
             else:
                 c.choice_text = text
                 c.save()
+    
+    
+    # イベントのviewから使う、作成と変更のメソッド
+    def update_from_posted_params(self, type, posted_params):
+        self.questionnaire_title = posted_params['questionnaire_title_'+type]
+        self.question_text = posted_params['question_text_'+type]
+        self.save()
+        self.set_choices(posted_params['question_choices_'+type])
         
-
+        
                 
 class Choice(models.Model):
     question = models.ForeignKey(Question, on_delete=models.CASCADE)

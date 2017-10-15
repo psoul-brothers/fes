@@ -1,0 +1,19 @@
+<ul>
+    <input type ="hidden" name="question_type" value="{{ question_type }}" />
+    {% if question_type == 'd' %}
+        <label>日時アンケート</label>
+        <input type="hidden" name="questionnaire_title_d" value='日時アンケート<'/>
+    {% else %}
+        <label>場所アンケート</label>
+        <input type="hidden" name="questionnaire_title_l" value='場所アンケート'/>
+    {% endif %}
+    <li>
+        <label for="question_text_{{ question_type }}">質問文:</label>
+        <input type="text" name="question_text_{{ question_type }}" id="question_text_{{ question_type }}" 
+            value="{% if question_type == 'd' %}いつがいいですか？{% else %}どこがいいですか？{% endif %}"/>
+    </li>
+    <li>
+        <label for="question_choices_{{ question_type }}">選択肢:</label>
+        <textarea name="question_choices_{{ question_type }}"  id="question_choices_{{ question_type }}" rows="4" cols="40" placeholder="候補1&#13;&#10;候補2&#13;&#10;候補3"></textarea>
+    </li>
+</ul>
