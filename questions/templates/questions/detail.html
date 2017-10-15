@@ -1,3 +1,8 @@
+{% extends 'common/base.html' %}
+{% block head %}
+    <title>アンケート回答ページ</title>
+{% endblock %}
+{% block contents %}
 <h1>{{ question.question_text }}についての回答</h1>
 
 {% if error_message %}<p><strong>{{ error_message }}</strong></p>{% endif %}
@@ -47,14 +52,22 @@
       <tbody>
           <tr>
             <td>
-              ユーザー名
+              {{ request.user.surname  }}
             </td>
             {% for choice in question.choice_set.all %}
             <td>
               <div>
                 <input type="hidden" name="choiceId" value="{{choice.id}}"/>
-                <label for="answer_text">回答:</label>
-                <input type="text" name="answer_text_{{choice.id}}" id="answer_text" />
+                <!--<label for="answer_text">回答:</label>-->
+                <!--{{ form.select_answer.label }}：-->
+                <!--{{ form.select_answer }}-->
+                <!--{% for radio in form.select_answer  %}-->
+                <!--  {{ radio.tag }}-->
+                <!--  <label for="answer_text_{{ radio.index }}">{{ radio.choice_label }}</label>-->
+                <!--{% endfor %}-->
+                <label><input type="radio" name="answer_text_{{choice.id}}" id="answer_text" value="○" checked/>○</label>
+                <label><input type="radio" name="answer_text_{{choice.id}}" id="answer_text" value="△"/>△</label>
+                <label><input type="radio" name="answer_text_{{choice.id}}" id="answer_text" value="×"/>×</label>
               </div>
             </td>
             {% endfor %}
@@ -63,3 +76,4 @@
 </table>
 <input type="submit" value="送信" />
 </form>
+{% endblock %}

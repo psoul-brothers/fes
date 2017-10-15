@@ -6,11 +6,15 @@ from .models import Question,Choice,Answer
 from persol_users.models import PersolUser
 from django.core.urlresolvers import reverse
 from django.utils import timezone
+from django.contrib.auth.decorators import login_required
+
 import traceback
 
+@login_required
 def create(request):
     return render(request, 'questions/create.html')
 
+@login_required
 def registration(request):
     try:
         q = Question(questionnaire_title=request.POST['questionnaire_title'], question_text=request.POST['question_text'])
@@ -25,36 +29,40 @@ def registration(request):
         return HttpResponse(response + traceback.format_exc())
     else:
         return HttpResponseRedirect(reverse('questions:index'))
-        
+
+@login_required        
 def detail(request, question_id):
     question = get_object_or_404(Question, pk=question_id)
     choices = []
     choices = question.get_sorted_choices()
     user_answers_dict = question.get_user_answers()
+    
+    # 検証用(実装後削除)
     print "view user_answers_dict 長さ:%d" % len(user_answers_dict)
     for choice_answer in user_answers_dict.values(): 
         print choice_answer
         for answer in choice_answer.values():
             print answer
-    
     return render(request, 'questions/detail.html', {'question': question, 'choices': choices, 'user_answers_dict':user_answers_dict})
 
 def index(request):
     latest_question_list = Question.objects.order_by('id')
     context = {'latest_question_list': latest_question_list}
     return render(request, 'questions/index.html', context)
-    
+
+@login_required    
 def answer(request, question_id):
     question = get_object_or_404(Question, pk=question_id)
     return render(request, 'questions/answer.html', {'question': question})
-    
+
+@login_required    
 def answerRegistration(request, question_id):
     print request.POST.getlist('choiceId')
     question = get_object_or_404(Question, pk=question_id)
     # choices = question.choice_set.all
     # choices = get_list_or_404(Choice, pk__in=request.POST.getlist('choiceId'))
     print question
-    user = request.user
+    user = request.user 
     try:
         for choice in question.choice_set.all()  :
             print choice.id
