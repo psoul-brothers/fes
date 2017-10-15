@@ -63,7 +63,7 @@ def answerRegistration(request, question_id):
     # choices = question.choice_set.all
     # choices = get_list_or_404(Choice, pk__in=request.POST.getlist('choiceId'))
     print question
-    user = request.user
+    user = request.user 
     try:
         for choice in question.choice_set.all()  :
             print choice.id
