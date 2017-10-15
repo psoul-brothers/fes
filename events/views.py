@@ -69,12 +69,6 @@ def event_create(request):
             try : image = request.FILES['event_image']
             except : image = 'event_image/default.png'
             finally :
-                # アンケート作成
-                qd = Question()
-                qd.update_from_posted_params('d', request.POST)
-                ql = Question()
-                ql.update_from_posted_params('l', request.POST)
-                
                 new_event = Event(
                     author         = login_user,
                     event_name     = request.POST['event_name'], 
@@ -85,12 +79,23 @@ def event_create(request):
                     overview       = request.POST['overview'],
                     search_tag     = request.POST['search_tag'],
                     # アンケート
-                    question_date = qd,
-                    question_location = ql,
+                    question_date = None,
+                    question_location = None,
                 )
                 if len(request.POST['event_datetime']) > 0:
                     new_event.event_datetime = request.POST['event_datetime']
     
+                # アンケート作成
+                if 'use_question_d' in request.POST:
+                    qd = Question()
+                    qd.update_from_posted_params('d', request.POST)
+                    new_event.question_date = qd
+                
+                if 'use_question_l' in request.POST:
+                    ql = Question()
+                    ql.update_from_posted_params('l', request.POST)
+                    new_event.question_location = ql
+
                 new_event.save()
                 
                 return redirect('events:event_detail', event_id=new_event.id)
@@ -162,7 +167,16 @@ def event_edit(request, event_id):
                 )
 """
                 # アンケート変更
+                if not event.question_date:
+                    qd = Question(questionnaire_title='日時アンケート', question_text='いつがいいですか？')
+                    qd.save()
+                    event.question_date = qd
                 event.question_date.update_from_posted_params('d', request.POST)
+                
+                if not event.question_location:
+                    ql = Question(questionnaire_title='場所アンケート', question_text='どこがいいですか？')
+                    ql.save()
+                    event.question_location = ql
                 event.question_location.update_from_posted_params('l', request.POST)
                 
                 return redirect('events:event_detail', event_id=event_id) # POST 後のリダイレクト

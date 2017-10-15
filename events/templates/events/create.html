@@ -11,14 +11,25 @@
     {{ form.as_ul }}
     
     {# アンケート作成フォーム #}
-    {% include "questions/embeded_form_new.html" with question_type="d" %}
-    {% include "questions/embeded_form_new.html" with question_type="l" %}
+    <div>
+      <input type="checkbox" name="use_question_d" value='1' id="use_question_d">
+      <label for="use_question_d">日時をアンケートする</label>
+      <div id="question_form_d" style="display:none;">
+        {% include "questions/embeded_form_new.html" with question_type="d" %}
+      </div>
+    </div>
+    
+    <div>
+      <input type="checkbox" name="use_question_l" value='1' id="use_question_l">
+      <label for="use_question_l">場所をアンケートする</label>
+      <div id="question_form_l" style="display:none;">
+        {% include "questions/embeded_form_new.html" with question_type="l" %}
+      </div>
+    </div>
   </ul>
   
   <input type="submit" value="Submit">
 </form>
 
+<script type="text/javascript" src="/static/js/question_form_toggler.js"></script>
 {% endblock %}
-
-</body>
-</html>
