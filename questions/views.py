@@ -7,7 +7,6 @@ from persol_users.models import PersolUser
 from django.core.urlresolvers import reverse
 from django.utils import timezone
 from django.contrib.auth.decorators import login_required
-from . import forms
 
 import traceback
 
@@ -44,7 +43,7 @@ def detail(request, question_id):
         print choice_answer
         for answer in choice_answer.values():
             print answer
-    return render(request, 'questions/detail.html', {'question': question, 'choices': choices, 'user_answers_dict':user_answers_dict, 'form': forms.AnswerForm})
+    return render(request, 'questions/detail.html', {'question': question, 'choices': choices, 'user_answers_dict':user_answers_dict})
 
 def index(request):
     latest_question_list = Question.objects.order_by('id')
