@@ -1,18 +1,20 @@
 # coding: utf-8
-from django.http import HttpResponse
-from django.shortcuts import get_object_or_404, render, render_to_response, redirect
-from django.template import Context, loader, RequestContext
 from django.http import HttpResponseRedirect, HttpResponse
-from django.core.urlresolvers import reverse
+from django.template import Context, loader, RequestContext
+from django.shortcuts import get_object_or_404, render, render_to_response, redirect
+from django.core.mail import send_mail
 from django.core.exceptions import PermissionDenied
-from .models import Event, Person
-from persol_users.models import PersolUser
+from django.core.urlresolvers import reverse
+from django.contrib.auth.decorators import login_required
 from django.db.models import Q, Count
-from .forms import CreateForm,CreateUserForm, EventForm, SelectUserForm, LikeUserForm, EventsSearchForm
+
+from persol_users.models import PersolUser
+from .models import Event, Person
+from .forms import CreateForm, CreateUserForm, EventForm, SelectUserForm, LikeUserForm, EventsSearchForm
+
 from datetime import datetime
 import os
 
-from django.contrib.auth.decorators import login_required
 
 @login_required
 def event_index(request):
@@ -136,6 +138,28 @@ def event_edit(request, event_id):
                 if old_image != '':
                     if old_image != os.getcwd() + '/media/event_image/default.png': #/home/ubuntu/workspace/media/event_image/default.png
                         os.remove(old_image)
+                
+                """
+                send_mail(
+                    subject
+                    , message
+                    , from_email
+                    , recipient_list
+                    , fail_silently=False
+                    , auth_user=None
+                    , auth_password=None
+                    , connection=None
+                )"""
+#                sendlist=event.mailing_list
+                sendlist=['psoul.brothers@gmail.com','psoul.brothers+test1@gmail.com','psoul.brothers+test2@gmail.com']
+                mail_body = [d for d in event.members.mail_address.all()]
+                send_mail(
+                  'イベントが更新されました。'
+                  ,u'{}更新内容はhogehoegehoge。'.format(mail_body),     
+                  'from@example.com',
+                  sendlist,
+                  fail_silently=False
+                )
                 return HttpResponseRedirect('/events/' + event_id) # POST 後のリダイレクト
     else:
         form = EventForm(instance=event) # 非束縛フォーム

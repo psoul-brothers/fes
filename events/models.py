@@ -56,14 +56,20 @@ class Event(models.Model):
         return self.like.all()
     
     def event_date(self):
-        return self.event_datetime.strftime('%Y.%m.%d')
+        if self.event_datetime != "":
+            return self.event_datetime.strftime('%Y.%m.%d')
+        else:
+            return ""
     
     def event_starttime(self):
-        return self.event_datetime.strftime('%H:%M~')
+        if self.event_datetime != "":
+            return self.event_datetime.strftime('%H:%M~')
+        else:
+            return ""
     
     def nobreak_overview(self):
         return self.overview.replace("\n", "")
-
+    
         
 """
 python manage.py makemigrations
