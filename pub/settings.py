@@ -142,3 +142,4 @@ EMAIL_PORT = 587
 EMAIL_HOST_USER = 'psoul.brothers'
 EMAIL_HOST_PASSWORD = 'psoul1234'
 EMAIL_USE_TLS = True
+EMAIL_BACKEND = 'django.core.mail.backends.console.EmailBackend'
