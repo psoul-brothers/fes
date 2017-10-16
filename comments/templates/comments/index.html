@@ -1,51 +1,53 @@
-<!--<link href="/static/css/tnk_comment.css" rel="stylesheet" />-->
-<div class="comment-list">
-{% if event.comment_set.all %}
+<div class="comment">
+    <p>コメント欄
+    <div class="comment-list">
+    
     {% for cmt in event.comment_set.all %}
     <div class="comment-block">
+        <p class="comment-author">{{cmt.author.fullname}}</p>
         <div class="comment-icon">
-            <img class="comment-author" src="/{{ cmt.author.data.url }}" width=40 />
+            <a href="{% url 'persol_users:detail' cmt.author.id %}">
+                <img src="/{{ cmt.author.data.url }}" width="40px">
+            </a>
         </div>
         <div class="comment-body">
-            <p class="comment-author">{{cmt.author.fullname}}</p>
-            <div class="comment-text" comment-id="{{ cmt.id }}">
-                <pre>{{ cmt.comment_text }}</pre>{# 改行するために<pre> #}
-            {% if user.id = cmt.author.id %}
-                <i class="fa fa-pencil comment-edit" aria-hidden="true" comment-id="{{ cmt.id }}"></i>
-            </div>
-            <div class="comment-form" comment-id="{{ cmt.id }}" style="display:none;">
+            <div class="comment-text">
+                <span class="comment-text-{{cmt.id}}">{{ cmt.comment_text|linebreaksbr }}</span>
+                {% if user.id = cmt.author.id %}
+                <span class="comment-text-{{cmt.id}}"><i class="fa fa-pencil comment-edit" aria-hidden="true" comment-id="{{ cmt.id }}"></i></span>
+                <div class="comment-form" id="comment-form-{{ cmt.id }}" style="display:none;">
                     <form action="{% url 'comments:update' event.id cmt.id %}" method="POST">
                         {% csrf_token %}
-                        <textarea name="comment_text_update">{{ cmt.comment_text }}</textarea>
+                        <textarea name="comment_text_update" maxlength=255>{{ cmt.comment_text }}</textarea>
                         <input type="submit" value="変更" />
                     </form>
-                    <i class="fa fa-times comment-edit-cancel" aria-hidden="true"></i>
-            {% endif %}
+                    <i class="fa fa-times comment-edit-cancel" aria-hidden="true" comment-id="{{ cmt.id }}"></i>
+                </div>
+                {% endif %}
             </div>
         </div>
     </div>
     {% endfor %}
-{% endif %}
-
-<form action="{% url 'comments:create' event.id %}" method="POST">
-{% csrf_token %}
-<textarea name="comment_text_new"></textarea>
-<input type="submit" value="投稿" />
-</form>
-
-<script>
-//<![CDATA[
-    $(".comment-edit").click(function(){
-        var $parent_div = $(this).parent();
-        $parent_div.hide();
-        $parent_div.next().show();
-    });
-    $(".comment-edit-cancel").click(function(){
-        var $parent_div = $(this).parent();
-        $(this).parent().hide();
-        $parent_div.prev().show();
-    });
+    </div>
     
-//]]>
-</script>
+    <form action="{% url 'comments:create' event.id %}" method="POST">
+        {% csrf_token %}
+        <textarea name="comment_text_new" maxlength=255 /></textarea>
+        <input type="submit" value="投稿" />
+    </form>
+    
+    <script>
+    //<![CDATA[
+        $(".comment-edit").click(function(){
+            var comment_id = $(this).attr('comment-id');
+            $('span.comment-text-' + comment_id).hide()
+            $('#comment-form-' + comment_id).show();
+        });
+        $(".comment-edit-cancel").click(function(){
+            var comment_id = $(this).attr('comment-id');
+            $('span.comment-text-' + comment_id).show()
+            $('#comment-form-' + comment_id).hide();
+        });
+    //]]>
+    </script>
 </div>
