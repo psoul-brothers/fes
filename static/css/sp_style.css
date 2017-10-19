@@ -92,11 +92,11 @@ header ul#menu-wrap li {
     vertical-align:middle
 }
 header ul#menu-wrap li.logo {
-    width: 60%;
+    width: 63%;
 
 }
 header ul#menu-wrap li.userImage {
-    width: 25%;
+    width: 20%;
 }
 
 header ul#menu-wrap li.userImage img {
@@ -106,7 +106,7 @@ header ul#menu-wrap li.userImage img {
 }
 
 header ul#menu-wrap li.hunMeny {
-    width: 10%;
+    width: 7%;
 }
 header ul#menu-wrap li.hunMeny span {
 	font-size: 150%;
