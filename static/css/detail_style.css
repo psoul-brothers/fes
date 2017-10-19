@@ -15,6 +15,8 @@ div#article .event .title{
 	padding-bottom: 3px;
 	border-bottom: 2px solid #cccccc;
 	margin-bottom: 20px;
+	/*text-shadow: 2px 2px 0px #fff,-2px -2px 0px #fff,2px 2px 0px #fff,-2px -2px 0px #fff;
+	background-color:#333;*/
 }
 
 div#article .event .date{
@@ -38,6 +40,7 @@ div#article .event .questions{
 }
 div#article .place + .questions{
 	margin-bottom:10px; : 
+	
 }
 
 div#article .event .questions a {
@@ -46,7 +49,7 @@ div#article .event .questions a {
 	color: #ffffff;
 	background-color: #0B610B;
 	font-size: 2.8vw;
-	border-radius: 2px;
+	border-radius: 3px;
 }
 
 div#article .event .description {
@@ -73,10 +76,80 @@ div#article .event ul.participantIcon li img {
 }
 
 
-div#article .event .Organizer {
+div#article .event .organizer {
 	font-size: 90%;
 	margin-bottom: 20px;
 }
+
+div#article .event .organizer img {
+    border-radius: 20px;
+    width: 40px;
+    height: 40px;
+    margin-top:-10px;
+}
+
+div#article .event .comment {}
+
+div#article .event .comment p {
+font-size:90%;
+}
+
+div#article .event .comment .comment-list {
+border:1px solid #999999;
+border-radius: 5px;
+padding:5px;
+font-size:90%;
+margin-bottom:20px;
+}
+
+div#article .event .comment .comment-list .comment-block {
+border-bottom:1px solid #333333;
+padding:5px 0;
+}
+div#article .event .comment .comment-list .comment-block:last-child {
+border:none;
+} 
+
+div#article .event .comment .comment-list .comment-block .comment-author,div#article .event .comment .comment-list .comment-block .comment-icon {
+display:inline-block;
+vertical-align:middle
+}
+
+div#article .event .comment .comment-list .comment-block .comment-author {
+margin-top:10px;}
+
+div#article .event .comment .comment-list .comment-block .comment-icon img{
+    border-radius: 20px;
+    width: 40px;
+    height: 40px;}
+
+div#article .event .comment .comment-list .comment-block .comment-body {
+border-top:1px dotted #999999;
+margin-top:5px;
+padding-top:5px;
+}
+
+div#article .event .comment .comment-list .comment-block .comment-form {
+margin-top:10px;
+
+}
+
+div#article .event .comment .comment-list .comment-block .comment-form textarea {
+display:inline-block;
+vertical-align:middle;
+width:80%;
+}
+
+div#article .event .comment .comment-list .comment-block .comment-form input {
+background-color:#666666;
+border-radius: 5px;
+padding:2px 5px;
+color:#ffffff;
+display:inline-block;
+vertical-align:middle;
+}
+
+
 
 
 
@@ -86,13 +159,14 @@ div#article .event li.watch {
 	margin: 0 2%;
 }
 
+
 div#article ul.btn li.join  {
 	display:inline-block;
 	width: 40%;
 }
 
 div#article ul.btn {
-	margin-top: 10px;
+	margin: 10px 0 20px;
 }
 
 div#article ul.btn li a {
@@ -107,12 +181,13 @@ div#article ul.btn li a {
 
 
 div#article ul.btn li.watch button {
-	/*background-color:#ffca28;*/
+	background-color:#ffffff;
 	display:inline-block;
 	border-radius: 15px;
 	padding: 5px 20px;
 	border:3px solid #ff8f00;
 	color: #ff8f00;
+	
 }
 
 div#article ul.btn li.join button{
@@ -121,6 +196,7 @@ div#article ul.btn li.join button{
 	width: 100%;
 	border: 3px solid #FF4000;
 	color: #FF4000;
+	background-color:#ffffff;
 }
 div#article ul.btn li.join button.participat{
 	border-radius: 15px;
@@ -129,3 +205,35 @@ div#article ul.btn li.join button.participat{
 	background-color:#FF4000;
 	color: #ffffff;
 }
+
+
+/*
+
+          <div class="comment">
+          <p>コメント欄
+          
+          	<div class="comment-list">
+
+          	<div class="comment-block"><!-- コメントの数だけ増える -->
+				<p class="comment-author">コメントした人の名前</p>
+          		<div class="comment-icon"><a href=""><img src="images/dummy/person.jpg" width="40px"></a></div>
+          		<div class="comment-body">
+          			<div class="comment-text" comment-id="xxx">コメント本文入ります。コメント本文入ります。コメント本文入ります。コメント本文入ります。
+
+          			
+          			</div><i class="fa fa-pencil comment-edit" aria-hidden="true" comment-id="{{ cmt.id }}"></i>
+          			<div class="comment-form" comment-id="xxx">
+                    <form action="ppppppppppp" method="POST">
+                        
+                        <textarea name="comment_text_update">編集用の投稿したテキスト</textarea>
+                        <input type="submit" value="変更" />
+                    </form>
+                    <i class="fa fa-times comment-edit-cancel" aria-hidden="true"></i>
+                    </div>
+          		</div>
+          	</div><!-- /.comment-block コメントの数だけ増える -->
+          </div>
+        </div><!-- /.comment-->
+
+
+*/
