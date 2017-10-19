@@ -1,0 +1,172 @@
+/* 一覧ページ用スタイルシート */
+
+div#listArticle h1{
+	font-size: 120%;
+	padding-bottom: 5px;
+}
+
+div#listArticle .select p, div#listArticle .select select {
+	display: inline-block;
+}
+
+div#listArticle .list {
+	padding: 10px 0;
+	width:94%;
+	background-color:#ffffff;
+	margin:0 auto 5px;
+	border-radius:5px;
+	padding:1%;
+}
+
+div#listArticle .list .title{
+	font-size: 120%;
+	font-weight: bold;
+}
+
+div#listArticle .list .title i{
+	color: #ffca28;
+}
+
+div#listArticle .list .box {
+	border-top:1px solid #cccccc;
+	border-bottom:1px solid #cccccc;
+}
+
+
+div#listArticle .list .date{
+	font-size: 90%;
+	display: inline-block;
+	padding:0 5%;
+	width:40%;
+}
+div#listArticle .list .date span {
+	vertical-align:top;
+	}
+
+div#listArticle .list .place{
+	font-size: 90%;
+	display: inline-block;
+	padding:0 5%;
+	border-left:1px solid #cccccc;
+	width:37%;
+}
+
+div#listArticle .list .description {
+	font-size: 95%;
+	padding:5px 2%
+}
+
+div#listArticle .list li.detail {
+	display: inline-block;
+	width: 33%;
+	margin: 0 2%;
+}
+
+div#listArticle ul.btnList {
+	margin-top: 10px;
+}
+
+div#listArticle .list ul.btnList li.join button,div#listArticle .list ul.btnList li.detail a{
+	display: inline-block;
+	text-align: center;
+	padding: 10px;
+	font-size: 4vw;
+	font-weight: bold;
+	overflow: hidden;
+	vertical-align:top;
+}
+
+
+div#listArticle .list ul.btnList li.detail a {
+	background-color:#FFFFFF;
+	line-height:130%;
+	border: 3px solid #0040ff;
+	color:#0040ff;
+	border-radius:15px 15px ;
+}
+
+div#listArticle .list ul.btnList li.join {
+	display:inline-block;
+	width: 53%;
+	margin: 0 2%;
+}
+
+div#listArticle .list ul.btnList li.join button {
+	background-color:#FFFFFF;
+	border-radius:15px 15px ;
+	border:3px solid #FF4000;
+	color:#FF4000;
+}
+
+div#listArticle .list ul.btnList li.join button.participat {
+	background-color:#FF4000;
+	border-radius:15px 15px ;
+	border:3px solid #FF4000;
+	color:#FFFFFF;
+}
+
+/* プロフィール枠ここから */
+.profile_waku {
+	border: 2px solid #dddddd;
+	background: #f6f6f6;
+	padding: 1%;
+	margin-bottom: 5%;
+}
+.profile_waku .profile_photo img {
+    border-radius: 36px;
+    height: 72px;
+    width: 72px;
+		float: left;
+}
+.profile_waku .profile_namae {
+	margin: 20px auto auto 90px;
+	font-size: 105%;
+	font-weight: bold;
+	height: 52px;
+	vertical-align: middle;
+}
+.profile_waku .profile_maile {
+	clear: left;
+	padding: 2% 1% 1% 1%;
+}
+.profile_waku .selfintroduction {
+	clear: left;
+	background: #ffffff;
+	margin-top: 2%;
+	padding: 1%;
+}
+/* プロフィール枠ここまで */
+/* 参加予定タイトルここから */
+.title_sankayotei {
+		display: block;
+    margin: auto auto 15px auto;
+		color: #ffffff;
+		text-align: center;
+	}
+	/* 参加予定タイトルここまで */
+
+
+.contents__content.contentJoin {
+	border-top: 2px solid #4caf50;
+	background: #f7c8d6;
+	background: -moz-linear-gradient( #4caf50 0%, #b0dbb2 20%, #c8e6c9 100%);
+	background: -webkit-gradient(linear, left top, left bottom, from(#4caf50), color-stop(50%, #b0dbb2)2 to(#c8e6c9));
+	background: -webkit-linear-gradient( #4caf50 0%, #b0dbb2 20%, #c8e6c9 100%);
+	background: -o-linear-gradient( #4caf50 0%, #b0dbb2 20%, #c8e6c9 100%);
+	background: linear-gradient( #4caf50 0%, #b0dbb2 20%, #c8e6c9 100%);
+
+
+}
+
+.contents__content{
+    padding-top:15px;
+}
+
+.contents__content p.noevent{
+    padding-left:15px;
+    font-weight:bold;
+    }
+
+.contents__content div{
+    clear: left;
+}

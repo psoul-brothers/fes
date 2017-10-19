@@ -1,27 +1,57 @@
 {% extends 'common/base.html' %}
 {% block head %}
-     <title>ユーザー情報</title>
+        <link href="/static/css/user_style.css" rel="stylesheet">
+        <title>{{ reference_user.surname}} {{ reference_user.name }}さんのプロフィール</title>
+
+
 {% endblock %}
 
 {% block contents %}
-<img src="/{{ reference_user.data.url }}" width="100" height="100" </img>
-<h1>{{ reference_user.name }}</h1>
-<ul>
+<!--<img src="/{{ reference_user.data.url }}" width="100" height="100" </img>-->
+<div id="listArticle">
+<h1> {{ reference_user.surname}} {{ reference_user.name }} さんのプロフィール</h1>
+    <div class="container">
+        <div class="profile_waku">
+            <div class="profile_photo">
+                <img src="/{{ reference_user.data.url }}">
+            </div>
+            
+            <div class="profile_namae">
+                {{ reference_user.surname}} {{ reference_user.name }}
+            </div>
+            
+            <div class="profile_maile">
+                <i class="fa fa-envelope-o fa-fw"></i>{{ reference_user.mail_address}}
+            </div>
+            
+            <div class="selfintroduction">
+                {{ reference_user.self_introduction_text|linebreaksbr }}
+            </div>
+            
+        </div>
+    </div>
 
+<!--
 <li>{{ reference_user.employee_number}}</li>
 <li>{{ reference_user.surname}}</li>
 <li>{{ reference_user.mail_address}}</li>
 <li>{{ reference_user.self_introduction_text}}</li>
-
+-->
+<!--
 {% if reference_user.employee_number ==  login_user.employee_number%}
 　</ul>
 　<a href="{% url 'persol_users:user_modify' %}">編集</a>
 {% endif %}
+-->
 
 
+    <div class="contents">
 
-
-
-{% include 'persol_users/event_list.html' %}
+        <div class="contents__content contentJoin">
+            <div class="title_sankayotei">参加予定</div>
+            {% include 'persol_users/event_list.html' %}
+        </div>
+    </div>
+</div>
 
 {% endblock %}

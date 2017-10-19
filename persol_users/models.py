@@ -18,7 +18,7 @@ class PersolUser(AbstractBaseUser):
     surname = models.CharField('姓',max_length=200)
     name = models.CharField('名',max_length=200)
     mail_address = models.EmailField('メールアドレス',max_length=75, unique=True)
-    self_introduction_text = models.CharField('自己紹介メッセージ',max_length=200)
+    self_introduction_text = models.TextField('自己紹介メッセージ',max_length=200 )
     data = models.ImageField('画像',upload_to='user_image',blank=True)
     
     # for authentication by tnk
