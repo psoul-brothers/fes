@@ -66,7 +66,7 @@ div#listArticle ul.btnList {
 	margin-top: 10px;
 }
 
-div#listArticle .list ul.btnList li.join button,div#listArticle .list ul.btnList li.detail a,div#listArticle .list ul.btnList li.update button{
+div#listArticle .list ul.btnList li.detail a{
 	display: inline-block;
 	text-align: center;
 	padding: 10px;
@@ -75,7 +75,16 @@ div#listArticle .list ul.btnList li.join button,div#listArticle .list ul.btnList
 	overflow: hidden;
 	vertical-align:top;
 }
+div#listArticle .list ul.btnList li.join button,div#listArticle .list ul.btnList li.update button {
+	display: inline-block;
+	text-align: center;
+	padding: 8px;
+	font-size: 4vw;
+	font-weight: bold;
+	overflow: hidden;
+	vertical-align:top;
 
+}
 
 div#listArticle .list ul.btnList li.detail a {
 	background-color:#FFFFFF;
