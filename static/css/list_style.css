@@ -78,7 +78,7 @@ div#listArticle .list ul.btnList li.detail a{
 div#listArticle .list ul.btnList li.join button,div#listArticle .list ul.btnList li.update button {
 	display: inline-block;
 	text-align: center;
-	padding: 8px;
+	padding: 7px;
 	font-size: 4vw;
 	font-weight: bold;
 	overflow: hidden;
