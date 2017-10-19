@@ -1,6 +1,9 @@
 {% extends 'common/base.html' %}
 {% block head %}
-      <title>{{ reference_user.surname}} {{ reference_user.name }}さんのプロフィール</title>
+        <link href="/static/css/user_style.css" rel="stylesheet">
+        <title>{{ reference_user.surname}} {{ reference_user.name }}さんのプロフィール</title>
+
+
 {% endblock %}
 
 {% block contents %}
@@ -34,16 +37,21 @@
 <li>{{ reference_user.mail_address}}</li>
 <li>{{ reference_user.self_introduction_text}}</li>
 -->
-
+<!--
 {% if reference_user.employee_number ==  login_user.employee_number%}
 　</ul>
 　<a href="{% url 'persol_users:user_modify' %}">編集</a>
 {% endif %}
+-->
 
 
+    <div class="contents">
 
-
-
-{% include 'persol_users/event_list.html' %}
+        <div class="contents__content contentJoin">
+            <div class="title_sankayotei">参加予定</div>
+            {% include 'persol_users/event_list.html' %}
+        </div>
+    </div>
+</div>
 
 {% endblock %}
