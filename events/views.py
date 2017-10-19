@@ -62,6 +62,10 @@ def event_index(request):
 
 @login_required 
 def event_create(request):
+    """
+    add new event.
+    the event author is auto added to event.members.
+    """
     if request.method == 'POST':
         form = CreateForm(request.POST)
         if form.is_valid(): # バリデーションを通った
@@ -109,24 +113,21 @@ def event_create(request):
 
 @login_required
 def event_detail(request, event_id):
-    event        = get_object_or_404(Event, pk=event_id)
-    members_list = event.members.all()
-    like_list    = event.like.all()
-    num_of_like  = event.like.count()
-    watcher_list = event.watch.all()
+    """
+    Generate event detail page.
+    """
+    event   = get_object_or_404(Event, pk=event_id)
     context = {
-        'event'       : event,
-        'memberslist' : members_list,
-        'like_list'   : like_list,
-        'watcher_list': watcher_list,
-        'num_of_like' : num_of_like
+        'event': event,
     }
-#    return render(request, 'events/detail.html', context)
     return render(request, 'events/new_detail.html', context)
-#    return render(request, 'events/Sample_detail.html', context)
 
 @login_required
 def event_edit(request, event_id):
+    """
+    Generate event update page.
+    Updating the event, then send to latest event infomations to members and watchers by e-mail.
+    """
     event = get_object_or_404(Event, pk=event_id)
     if request.user != event.author : raise PermissionDenied
     if request.method == 'POST':
@@ -145,25 +146,14 @@ def event_edit(request, event_id):
                 if old_image != '':
                     if old_image != os.getcwd() + '/media/event_image/default.png': #/home/ubuntu/workspace/media/event_image/default.png
                         os.remove(old_image)
-                """
-                send_mail(
-                    subject
-                    , message
-                    , from_email
-                    , recipient_list
-                    , fail_silently=False
-                    , auth_user=None
-                    , auth_password=None
-                    , connection=None
-                )"""
+                
 #                send_to=['psoul.brothers@gmail.com','psoul.brothers+test1@gmail.com','psoul.brothers+test2@gmail.com']
-                subject, send_to, send_from = u'イベント[{}]が更新されました。'.format(event.event_name), event.mailing_list(), 'from@example.com'
-                mail_template=get_template('events/mail_tmp.txt')
-                context = {
-                    "event": event,
-                }
-                mail_body=mail_template.render({"event": event})
-                send_mail(subject, mail_body, send_from, send_to, fail_silently=False)
+                subject, list_of_mail_to, send_from = u'イベント[{}]が更新されました。'.format(event.event_name), event.mailing_list(), 'from@example.com'
+                mail_template = get_template('events/mail_tmp.txt')
+                context = {"event": event,}
+                mail_body = mail_template.render({"event": event})
+#               send_mail(subject, message, from_email, recipient_list, fail_silently=False, auth_user=None, auth_password=None, connection=None)
+                send_mail(subject, mail_body, send_from, list_of_mail_to, fail_silently=False)
                 # アンケート変更
                 if not 'use_question_d' in request.POST:
                     event.question_delete('d')
@@ -193,12 +183,16 @@ def event_edit(request, event_id):
 
 @login_required
 def event_join(request, event_id):
+    """
+    add or remove login user to event.members.
+    if that user is event watchers, remove from watchers.
+    """
     target_event = get_object_or_404(Event, id=event_id)
     login_user = get_object_or_404(PersolUser, id=request.user.id)
     if request.POST['join'] == 'add':
         target_event.members.add(login_user)
         # ウォッチ中の場合は、ウォッチをはずす
-        watcher = target_event.watch.filter( id=request.user.id)
+        watcher = target_event.watch.filter(id=request.user.id)
         if login_user in watcher:
             target_event.watch.remove(login_user)
     elif request.POST['join'] == 'leave':
@@ -212,6 +206,9 @@ def event_join(request, event_id):
 
 @login_required    
 def event_like(request, event_id):
+    """
+    add or remove login user to event.like!
+    """
     target_event = get_object_or_404(Event, id=event_id)
     login_user   = get_object_or_404(PersolUser, id=request.user.id)
     if request.POST['like'] == 'leave' :
@@ -224,6 +221,9 @@ def event_like(request, event_id):
 
 @login_required
 def event_watch(request, event_id):
+    """
+    add or remove login user for event.wacth!
+    """
     target_event = get_object_or_404(Event, id=event_id)
     login_user   = get_object_or_404(PersolUser, id=request.user.id)
     if request.POST['watch'] == 'leave':
