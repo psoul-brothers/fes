@@ -31,45 +31,12 @@ def detail(request, user_id):
         'login_user' : login_user
     }
     return render(request, 'persol_users/detail.html', context=edit_context)
-    #return render(request, 'persol_users/detail.html', {'user': user})
 
 
 def user_add(request):
     f = user_add_Form()
     return render(request, 'persol_users/user_add.html', {'form1': f})
 
-
-#def user_add_operation(request):
-#    if request.method == 'POST':
-#        form = user_add_Form(request.POST)
-#        if form.is_valid():
-#            try:
-#                data_tmp = request.FILES['data']
-#                
-#            except:
-#                data_tmp = DEFAULT_USER_IMG
-#            
-#            finally:
-#                q = PersolUser(
-#                    employee_number = request.POST['employee_number']
-#                    , surname =  request.POST['surname']
-#                    , name =  request.POST['name']
-#                    , mail_address =  request.POST['mail_address']
-#                    , self_introduction_text =  request.POST['self_introduction_text']
-#                    , data =  data_tmp
-#                    )
-#                
-#                # for auth by tanaka
-#                q.set_password(request.POST['password'])
-#
-#                q.save()
-#
-#                return HttpResponseRedirect(reverse('portal'))
-#            
-#    else:
-#        form = user_add_Form()
-#        
-#    return render(request, 'persol_users/user_add.html', {'form1': form})
 
 
 def user_add_operation(request):
@@ -136,7 +103,8 @@ def user_modify(request):
                     if tmp != os.path.join(settings.MEDIA_ROOT, DEFAULT_USER_IMG):
                         os.remove(tmp)
                     
-                return HttpResponseRedirect(reverse('persol_users:index'))
+                #return HttpResponseRedirect(reverse('persol_users:detail'))
+                return HttpResponseRedirect(reverse('portal'))
 
     else:
         f = user_modify_Form(instance=user)
