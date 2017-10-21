@@ -92,11 +92,12 @@ header ul#menu-wrap li {
     vertical-align:middle
 }
 header ul#menu-wrap li.logo {
-    width: 63%;
+    width: 71%;
 
 }
 header ul#menu-wrap li.userImage {
-    width: 20%;
+    /*width: 20%;*/
+    margin-right: 10px;
 }
 
 header ul#menu-wrap li.userImage img {
@@ -106,7 +107,7 @@ header ul#menu-wrap li.userImage img {
 }
 
 header ul#menu-wrap li.hunMeny {
-    width: 7%;
+    /*width: 7%;*/
 }
 header ul#menu-wrap li.hunMeny span {
 	font-size: 150%;
@@ -197,7 +198,8 @@ header ul li.makeEvent a {
     font-weight: bold;
 }
 article {
-    width: 100%;
+    max-width: 400px;
+    margin: auto;
 }
 
 
