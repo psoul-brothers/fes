@@ -201,6 +201,13 @@ article {
     width: 100%;
 }
 
+ul.participantIcons>li{
+    display: inline-block;
+    vertical-align:middle
+}
+img.userImage{
+    border-radius: 20px;
+}
 
 .clearfix:after {
     content:" ";
