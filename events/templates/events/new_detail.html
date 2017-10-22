@@ -20,28 +20,31 @@
           {% else %}
             <p class="questions"><a href="">場所アンケートに参加する</a></p><!-- 値がセットされていなかったら表示する -->
           {% endif %}
-          <p class="description">イベント概要：{{ event.nobleak_overview }}</p>
-          <p class="Organizer">主催者<a href="/persol_users/{{ event.author.id }}/"><img src="{{ BASE_DIR }}/{{ event.author.data.url }}" width="50"/></a> {{ event.author.fullname }}</p>
+          <p class="description">イベント概要：{{ event.nobreak_overview }}</p>
+          <p class="Organizer">主催者
+            <a href="{% url 'persol_users:detail' event.author.id %}"><img class="userImage" src="/{{ event.author.data.url }}" width="50"/></a> {{ event.author.fullname }}
+            {% if event.author != user %}
+            <a href="mailto:{{ event.author.mail_address }}"><i class="fa fa-envelope" aria-hidden="true"></i> </a>
+            {% endif %}
+          </p>
           <p class="participant">参加者</p>
-          <ul class="participantIcon">
-          {% for members in event.members.all %}
-            <li><a href="/persol_users/{{ members.id }}/"><img src="{{ BASE_DIR }}/{{ members.data.url }}" width="50"/></a></li><!-- 参加者分の画像を表示 -->
-          {% endfor %}
+          <ul class="participantIcons"><!-- 参加者分の画像を表示 -->
+            {% for member in event.members.all %}
+              <li><a href="{% url 'persol_users:detail' member.id %}"><img class="userImage" src="/{{ member.data.url }}" width="50"/></a></li>
+            {% endfor %}
           </ul>
           {% if event.author == user %}<!-- 主催者のみ表示 -->
           検索用タグ:{{ event.search_tag }}<br>
           <a href="{% url 'events:event_edit' event.id %}"><button>イベント更新</button></a>
           {% else %}
-          <p class="questions"><a href="">主催者に問い合わせる</a></p>
           <ul class="btn">
             <li class="watch">
-            {% if user in event.members.all %}
-            ウォッチは表示しない
-            {% else %}
+            {% if user not in event.members.all %}
+              {# 参加していないときだけ表示 #}
               <form action="{% url 'events:event_watch' event.id %}" method="post">{% csrf_token %}
               {% if user in event.watch.all %}<!-- ログインユーザーがウォッチ中の場合-->
                 <button name="watch" value="leave"><i class="fa fa-star" aria-hidden="true"></i> ウォッチ中</button><!-- ウォッチ状態ではiタグのclass名が fa fa-star-o 変わります -->
-              {% elif user not in event.watch.all%}<!-- ログインユーザーがウォッチしていないの場合-->
+              {% else %}<!-- ログインユーザーがウォッチしていないの場合-->
                 <button name="watch" value="add"><i class="fa fa-star-o" aria-hidden="true"></i> ウォッチ</button><!-- ウォッチ状態ではiタグのclass名が fa fa-star-o 変わります -->
               {% endif %}
               </form>
