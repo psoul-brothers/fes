@@ -9,17 +9,32 @@
       <div id="article">
         <div class="event">
           <p class="title">{{ event.event_name }}</p>
+          <p class="date"><i class="fa fa-calendar" aria-hidden="true"></i>
           {% if event.event_datetime %}
-            <p class="date"><i class="fa fa-calendar" aria-hidden="true"></i> {{ event.event_date }}</p>
-          {% else %}
-            <p class="questions"><a href="">日時アンケートに参加する</a></p><!-- 値がセットされていなかったら表示する -->
-          {% endif %}
+             {{ event.event_date }}</p>
             <p class="dateHour"><i class="fa fa-clock-o" aria-hidden="true"></i> {{ event.event_starttime }}</p>
-          {% if event.event_datetime %}
-            <p class="place"><i class="fa fa-map-marker" aria-hidden="true"></i> {{ event.event_location }}</p>
           {% else %}
-            <p class="questions"><a href="">場所アンケートに参加する</a></p><!-- 値がセットされていなかったら表示する -->
+            {% if event.question_date %}
+              <a href="{% url 'questions:detail' event.question_date.id %}">開催日時アンケート中</a>
+            {% else %}
+              未定
+            {% endif %}
+            </p>
           {% endif %}
+          
+          <p class="place"><i class="fa fa-map-marker" aria-hidden="true"></i>
+          {% if event.event_datetime %}
+             {{ event.event_location }}</p>
+          {% else %}
+            {% if event.question_location %}
+            <a href="{% url 'questions:detail' event.question_location.id %}">開催場所アンケート中</a>
+            {% else %}
+              未定
+            {% endif %}
+            </p>
+          {% endif %}
+          
+          
           <p class="description">イベント概要：{{ event.nobreak_overview }}</p>
           <p class="Organizer">主催者
             <a href="{% url 'persol_users:detail' event.author.id %}"><img class="userImage" src="/{{ event.author.data.url }}" width="50"/></a> {{ event.author.fullname }}
@@ -64,12 +79,6 @@
         </div>
       </div>
     </article>
-    {% if event.question_date %}
-    <a href="{% url 'questions:detail' event.question_date.id %}">日時アンケートに答える</a>
-    {% endif %}
-    {% if event.question_location %}
-    <a href="{% url 'questions:detail' event.question_location.id %}">場所アンケートに答える</a><br/>
-    {% endif %}
     
     {% include 'comments/index.html' %}
 {% endblock %}
