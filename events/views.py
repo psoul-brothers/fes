@@ -108,7 +108,7 @@ def event_create(request):
         else:
             return render(request, 'events/create.html', {'form': form,})
     else:
-        form = CreateForm() # 非束縛フォーム
+        form = EventForm() # 非束縛フォーム
         return render(request, 'events/create.html', {'form': form,})
 
 @login_required
