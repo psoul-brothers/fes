@@ -134,13 +134,13 @@ margin-top:10px;
 
 }
 
-div#article .event .comment .comment-list .comment-block .comment-form textarea {
+div#article .event .comment textarea {
 display:inline-block;
 vertical-align:middle;
 width:80%;
 }
 
-div#article .event .comment .comment-list .comment-block .comment-form input {
+div#article .event .comment input {
 background-color:#666666;
 border-radius: 5px;
 padding:2px 5px;
