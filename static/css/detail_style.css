@@ -149,6 +149,10 @@ display:inline-block;
 vertical-align:middle;
 }
 
+.comment ul.comment-edit-buttons{
+	display:inline-block;
+	vertical-align: middle;
+}
 
 
 
