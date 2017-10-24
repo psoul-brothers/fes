@@ -16,10 +16,10 @@
           {% if not event.event_datetime %}
             {% if event.question_date %}
               <p class="questions"><a href="{% url 'questions:detail' event.question_date.id %}">開催日時アンケート中</a>
+              <p class="date"><i class="fa fa-calendar" aria-hidden="true"></i> アンケート中</p>
             {% else %}
-              未定
+              <p class="date"><i class="fa fa-calendar" aria-hidden="true"></i> 未定</p>
             {% endif %}
-            <p class="date"><i class="fa fa-calendar" aria-hidden="true"></i></p>
           {% else %}
             <p class="date"><i class="fa fa-calendar" aria-hidden="true"></i> {{ event.event_date }}</p>
             <p class="dateHour"><i class="fa fa-clock-o" aria-hidden="true"></i> {{ event.event_starttime }}</p>
@@ -28,16 +28,16 @@
           {% if not event.event_location %}
             {% if event.question_location %}
               <p class="questions"><a href="{% url 'questions:detail' event.question_location.id %}">開催場所アンケート中</a></p>
+              <p class="place"><i class="fa fa-map-marker" aria-hidden="true"></i> アンケート中</p>
             {% else %}
-              未定
+              <p class="place"><i class="fa fa-map-marker" aria-hidden="true"></i> 未定</p>
             {% endif %}
-              <p class="place"><i class="fa fa-map-marker" aria-hidden="true"></i></p>
           {% else %}
             <p class="place"><i class="fa fa-map-marker" aria-hidden="true"></i>{{ event.event_location }}</p>
           {% endif %}
           <p class="description">イベント概要：{{ event.nobreak_overview }}</p>
           {% if event.author != user %}
-            <p class="questions"><a href="mailto:{{ event.author.mail_address }}"><i class="fa fa-envelope" aria-hidden="true"></i>主催者に問い合わせる</a></p>
+            <p class="questions"><a href="mailto:{{ event.author.mail_address }}"><i class="fa fa-envelope" aria-hidden="true"></i> 問い合わせ</a></p>
           {% endif %}
           <p class="Organizer">主催者： {{ event.author.fullname }} 
             <a href="{% url 'persol_users:detail' event.author.id %}"><img class="userImage" src="/{{ event.author.data.url }}" width="50"/> </a>
@@ -67,9 +67,9 @@
             <li class="join">
               <form action="{% url 'events:event_join' event.id %}" method="post">{% csrf_token %}
               {% if user in event.members.all %}<!-- ログインユーザーがイベント参加予定の場合-->
-                <button name="join" value="leave"> イベントに参加予定</button>
+                <button name="join" value="leave"> イベントから抜ける</button>
               {% else %}<!-- ログインユーザーがイベント未参加の場合-->
-                <button name="join" value="add" class="participat"> イベントに参加する</button>
+                <button name="join" value="add" class="participat"> 　イベントに参加　</button>
               {% endif %}
               </form>
             </li>
