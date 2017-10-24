@@ -66,10 +66,14 @@ div#listArticle ul.btnList {
 	margin-top: 10px;
 }
 
+div#listArticle ul.btnList li {
+	vertical-align: middle;
+}
+
 div#listArticle .list ul.btnList li.detail a{
 	display: inline-block;
 	text-align: center;
-	padding: 10px;
+	padding: 6px 10px;
 	font-size: 4vw;
 	font-weight: bold;
 	overflow: hidden;
