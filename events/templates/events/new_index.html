@@ -41,7 +41,7 @@ http://weboook.blog22.fc2.com/blog-entry-412.html
                 <div class="date">{{ event.event_date }}</div>
                 <div class="place">{{ event.event_location }}</div>
               </div>
-              <p class="description">{{ event.nobreak_overview }}</p>
+              <p class="description">{{ event.overview | linebreaksbr }}</p>
                   <ul class="btnList">
                     <li class="detail">
                       <a href="{% url 'events:event_detail' event.id %}">詳細を見る</a>

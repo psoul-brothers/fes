@@ -9,19 +9,22 @@
       <div id="article">
         <div class="event">
           <p class="title">{{ event.event_name }}</p>
-          {% if event.event_datetime %}
             <p class="date"><i class="fa fa-calendar" aria-hidden="true"></i> {{ event.event_date }}</p>
+          {% if event.event_datetime %}
           {% else %}
             <p class="questions"><a href="">日時アンケートに参加する</a></p><!-- 値がセットされていなかったら表示する -->
           {% endif %}
             <p class="dateHour"><i class="fa fa-clock-o" aria-hidden="true"></i> {{ event.event_starttime }}</p>
-          {% if event.event_datetime %}
-            <p class="place"><i class="fa fa-map-marker" aria-hidden="true"></i> {{ event.event_location }}</p>
+          {% if event.event_location %}
           {% else %}
             <p class="questions"><a href="">場所アンケートに参加する</a></p><!-- 値がセットされていなかったら表示する -->
           {% endif %}
-          <p class="description">イベント概要：{{ event.nobleak_overview }}</p>
-          <p class="Organizer">主催者<a href="/persol_users/{{ event.author.id }}/"><img src="{{ BASE_DIR }}/{{ event.author.data.url }}" width="50"/></a> {{ event.author.fullname }}</p>
+            <p class="place"><i class="fa fa-map-marker" aria-hidden="true"></i> {{ event.event_location }}</p>
+          <p class="description">{{ event.overview | linebreaksbr }}</p>
+          {% if event.author != user %}
+          <p class="questions"><a href="">主催者に問い合わせる</a></p>
+          {% endif %}
+          <p class="organizer">主催者:{{ event.author.fullname }} <a href="/persol_users/{{ event.author.id }}/"><img src="{{ BASE_DIR }}/{{ event.author.data.url }}" width="50"/></a></p>
           <p class="participant">参加者</p>
           <ul class="participantIcon">
           {% for members in event.members.all %}
@@ -32,7 +35,6 @@
           検索用タグ:{{ event.search_tag }}<br>
           <a href="{% url 'events:event_edit' event.id %}"><button>イベント更新</button></a>
           {% else %}
-          <p class="questions"><a href="">主催者に問い合わせる</a></p>
           <ul class="btn">
             <li class="watch">
             {% if user in event.members.all %}
