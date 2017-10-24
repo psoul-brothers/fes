@@ -2,7 +2,7 @@
 
 div#listArticle h1{
 	font-size: 120%;
-	padding: 5px 0 10px 5px;
+	padding: 5px 0 10px 10px;
 }
 
 div#listArticle .select p, div#listArticle .select select {
