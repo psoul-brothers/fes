@@ -77,4 +77,6 @@ def answerRegistration(request, question_id):
         traceback.format_exc()
         return HttpResponse(response + traceback.format_exc())
     else:
-        return HttpResponseRedirect(reverse('questions:detail', args=(question.id,)))    
+        # return HttpResponseRedirect(reverse('questions:detail', args=(question.id,)))
+        # 元のイベントページに戻る
+        return HttpResponseRedirect(request.META['HTTP_REFERER'])
