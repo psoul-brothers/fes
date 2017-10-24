@@ -1,5 +1,6 @@
 <div class="comment">
     <p>コメント欄</p>
+    {% if event.comment_set.all %}
     <div class="comment-list">
     
     {% for cmt in event.comment_set.all %}
@@ -29,6 +30,7 @@
     </div>
     {% endfor %}
     </div>
+    {% endif %}
     
     <form action="{% url 'comments:create' event.id %}" method="POST">
         {% csrf_token %}
