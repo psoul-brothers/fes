@@ -16,10 +16,10 @@
           {% if not event.event_datetime %}
             {% if event.question_date %}
               <p class="questions"><a href="{% url 'questions:detail' event.question_date.id %}">開催日時アンケート中</a>
+              <p class="date"><i class="fa fa-calendar" aria-hidden="true"></i> アンケート中</p>
             {% else %}
-              未定
+              <p class="date"><i class="fa fa-calendar" aria-hidden="true"></i> 未定</p>
             {% endif %}
-            <p class="date"><i class="fa fa-calendar" aria-hidden="true"></i></p>
           {% else %}
             <p class="date"><i class="fa fa-calendar" aria-hidden="true"></i> {{ event.event_date }}</p>
             <p class="dateHour"><i class="fa fa-clock-o" aria-hidden="true"></i> {{ event.event_starttime }}</p>
@@ -28,10 +28,10 @@
           {% if not event.event_location %}
             {% if event.question_location %}
               <p class="questions"><a href="{% url 'questions:detail' event.question_location.id %}">開催場所アンケート中</a></p>
+              <p class="place"><i class="fa fa-map-marker" aria-hidden="true"></i> アンケート中</p>
             {% else %}
-              未定
+              <p class="place"><i class="fa fa-map-marker" aria-hidden="true"></i> 未定</p>
             {% endif %}
-              <p class="place"><i class="fa fa-map-marker" aria-hidden="true"></i></p>
           {% else %}
             <p class="place"><i class="fa fa-map-marker" aria-hidden="true"></i>{{ event.event_location }}</p>
           {% endif %}
