@@ -179,6 +179,13 @@ div#article ul.btn li a {
 	font-weight: bold;
 }
 
+ul.participantIcons>li{
+    display: inline-block;
+    vertical-align:middle
+}
+img.userImage{
+    border-radius: 20px;
+}
 
 div#article ul.btn li.watch button {
 	background-color:#ffffff;

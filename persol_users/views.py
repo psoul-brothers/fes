@@ -93,15 +93,18 @@ def user_modify(request):
                 data_tmp = request.FILES['data']
                 
             except:
-                data_tmp = DEFAULT_USER_IMG
+                #data_tmp = DEFAULT_USER_IMG
+                data_tmp = user.data
             
             finally:
+                data_tmp2 = user.data
                 user.data = data_tmp
                 user.save()
                 
                 if tmp:
                     if tmp != os.path.join(settings.MEDIA_ROOT, DEFAULT_USER_IMG):
-                        os.remove(tmp)
+                        if data_tmp != data_tmp2:
+                            os.remove(tmp)
                     
                 #return HttpResponseRedirect(reverse('persol_users:detail'))
                 return HttpResponseRedirect(reverse('portal'))
