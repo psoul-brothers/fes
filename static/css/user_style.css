@@ -1,4 +1,4 @@
-/* 一覧ページ用スタイルシート */
+/* ユーザーページ用スタイルシート */
 
 div#listArticle h1{
 	font-size: 120%;
@@ -66,7 +66,9 @@ div#listArticle ul.btnList {
 	margin-top: 10px;
 }
 
-div#listArticle .list ul.btnList li.join button,div#listArticle .list ul.btnList li.detail a{
+div#listArticle .list ul.btnList li.join button,
+div#listArticle .list ul.btnList li.detail a,
+div#listArticle .list ul.btnList li.update button{
 	display: inline-block;
 	text-align: center;
 	padding: 10px;
@@ -104,6 +106,20 @@ div#listArticle .list ul.btnList li.join button.participat {
 	border:3px solid #FF4000;
 	color:#FFFFFF;
 }
+
+/* 更新ボタン */
+div#listArticle .list ul.btnList li.update {
+	display:inline-block;
+	width: 53%;
+	margin: 0 2%;
+}
+div#listArticle .list ul.btnList li.update button {
+	background-color:#FFFFFF;
+	border-radius:15px 15px ;
+	border:3px solid #d965ed;
+	color:#d965ed;
+}
+
 
 /* プロフィール枠ここから */
 .profile_waku {
@@ -147,14 +163,13 @@ div#listArticle .list ul.btnList li.join button.participat {
 
 
 .contents__content.contentJoin {
-	border-top: 2px solid #4caf50;
+	border-top: 2px solid #57cc5c;
 	background: #f7c8d6;
-	background: -moz-linear-gradient( #4caf50 0%, #b0dbb2 20%, #c8e6c9 100%);
-	background: -webkit-gradient(linear, left top, left bottom, from(#4caf50), color-stop(50%, #b0dbb2)2 to(#c8e6c9));
-	background: -webkit-linear-gradient( #4caf50 0%, #b0dbb2 20%, #c8e6c9 100%);
-	background: -o-linear-gradient( #4caf50 0%, #b0dbb2 20%, #c8e6c9 100%);
-	background: linear-gradient( #4caf50 0%, #b0dbb2 20%, #c8e6c9 100%);
-
+	background: -moz-linear-gradient( #57cc5c 0%, #b0dbb2 20%, #c8e6c9 100%);
+	background: -webkit-gradient(linear, left top, left bottom, from(#57cc5c), color-stop(50%, #b0dbb2)2 to(#c8e6c9));
+	background: -webkit-linear-gradient( #57cc5c 0%, #b0dbb2 20%, #c8e6c9 100%);
+	background: -o-linear-gradient( #57cc5c 0%, #b0dbb2 20%, #c8e6c9 100%);
+	background: linear-gradient( #57cc5c 0%, #b0dbb2 20%, #c8e6c9 100%);
 
 }
 

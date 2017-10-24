@@ -6,15 +6,26 @@
 {% block contents %}
 <h3>イベント更新画面</h3>
 <form action="{% url 'events:event_edit' event.id %}" method="POST">
+    {{ form.non_field_errors }}
     {% csrf_token %}
     <ul>
-        {{ form.as_ul }}
-        
-        {# アンケート編集フォーム #}
-        <div>
+        <li>
+            {{ form.event_name.errors }}
+            {{ form.event_name.label_tag }}
+            {{ form.event_name }}
+        </li>
+        <li>
+            {{ form.event_image.errors }}
+            {{ form.event_image.label_tag }}
+            {{ form.event_image }}
+        </li>
+        <li>
+            {{ form.event_datetime.errors }}
+            {{ form.event_datetime.label_tag }}
+            {{ form.event_datetime }}
             <input type="checkbox" name="use_question_d" value='1' id="use_question_d"
                 {% if event.question_date %} checked="true" {% endif %} >
-            <label for="use_question_d">日時をアンケートする</label>
+            <label for="use_question_d">アンケートにする</label>
             {% if event.question_date %}
             <label id="edit_question_d" >アンケート編集</label>
             {% endif %}
@@ -22,11 +33,14 @@
                 {% include "questions/embeded_form_edit.html" with question_type="d" question=event.question_date_or_dummy %}
                 <i class="fa fa-times" aria-hidden="true" onclick="$('#question_form_d').hide()"></i>
             </div>
-        </div>
-        <div>
+        </li>
+        <li>
+            {{ form.event_location.errors }}
+            {{ form.event_location.label_tag }}
+            {{ form.event_location }}
             <input type="checkbox" name="use_question_l" value='1' id="use_question_l"
                 {% if event.question_location %} checked="true" {% endif %} >
-            <label for="use_question_l">場所をアンケートする</label>
+            <label for="use_question_l">アンケートにする</label>
             {% if event.question_location %}
             <label id="edit_question_l" >アンケート編集</label>
             {% endif %}
@@ -34,7 +48,32 @@
                 {% include "questions/embeded_form_edit.html" with question_type="l" question=event.question_location_or_dummy %}
                 <i class="fa fa-times" aria-hidden="true" onclick="$('#question_form_l').hide()"></i>
             </div>
-        </div>
+        </li>
+        <li>
+            {{ form.num_of_members.errors }}
+            {{ form.num_of_members.label_tag }}
+            {{ form.num_of_members }}
+        </li>
+        <li>
+            {{ form.dead_line.errors }}
+            {{ form.dead_line.label_tag }}
+            {{ form.dead_line }}
+        </li>
+        <li>
+            {{ form.overview.errors }}
+            {{ form.overview.label_tag }}
+            {{ form.overview }}
+        </li>
+        <li>
+            {{ form.search_tag.errors }}
+            {{ form.search_tag.label_tag }}
+            {{ form.search_tag }}
+        </li>
+        <li>
+            {{ form.event_status.errors }}
+            {{ form.event_status.label_tag }}
+            {{ form.event_status }}
+        </li>
     </ul>
     
 <input type="submit" value="Submit" />
