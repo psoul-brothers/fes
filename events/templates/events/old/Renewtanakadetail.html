@@ -9,44 +9,49 @@
       <div id="article">
         <div class="event">
           <p class="title">{{ event.event_name }}
-          {% if event.author == user %}<!-- 主催者のみ表示 -->
-          <a href="{% url 'events:event_edit' event.id %}"> [イベント更新]</a>
-          {% endif%}
+          {% if event.author == user %}
+          <a href="{% url 'events:event_edit' event.id %}">[イベント更新]</a>
+          {% endif %}
           </p>
-          {% if not event.event_datetime %}
+          {% if event.event_datetime !='' %}
             {% if event.question_date %}
               <p class="questions"><a href="{% url 'questions:detail' event.question_date.id %}">開催日時アンケート中</a>
             {% else %}
               未定
             {% endif %}
-            <p class="date"><i class="fa fa-calendar" aria-hidden="true"></i></p>
+            <p class="date"><i class="fa fa-calendar" aria-hidden="true"></i>
+            </p>
           {% else %}
-            <p class="date"><i class="fa fa-calendar" aria-hidden="true"></i> {{ event.event_date }}</p>
+            <p class="date"><i class="fa fa-calendar" aria-hidden="true"></i>
+             {{ event.event_date }}</p>
             <p class="dateHour"><i class="fa fa-clock-o" aria-hidden="true"></i> {{ event.event_starttime }}</p>
-          {% endif %}
 
-          {% if not event.event_location %}
+          {% endif %}
+          
+          {% if event.event_location != '' %}
             {% if event.question_location %}
-              <p class="questions"><a href="{% url 'questions:detail' event.question_location.id %}">開催場所アンケート中</a></p>
+            <a href="{% url 'questions:detail' event.question_location.id %}">開催場所アンケート中</a>
             {% else %}
               未定
             {% endif %}
-              <p class="place"><i class="fa fa-map-marker" aria-hidden="true"></i></p>
+            <p class="place"><i class="fa fa-map-marker" aria-hidden="true"></i></p>
           {% else %}
             <p class="place"><i class="fa fa-map-marker" aria-hidden="true"></i>{{ event.event_location }}</p>
           {% endif %}
+          
+          
           <p class="description">イベント概要：{{ event.nobreak_overview }}</p>
-          {% if event.author != user %}
-            <p class="questions"><a href="mailto:{{ event.author.mail_address }}"><i class="fa fa-envelope" aria-hidden="true"></i>主催者に問い合わせる</a></p>
-          {% endif %}
-          <p class="Organizer">主催者： {{ event.author.fullname }} 
-            <a href="{% url 'persol_users:detail' event.author.id %}"><img class="userImage" src="/{{ event.author.data.url }}" width="50"/> </a>
+          <p class="Organizer">主催者
+            <a href="{% url 'persol_users:detail' event.author.id %}"><img class="userImage" src="/{{ event.author.data.url }}" width="50"/></a> {{ event.author.fullname }}
+            {% if event.author != user %}
+            <a href="mailto:{{ event.author.mail_address }}"><i class="fa fa-envelope" aria-hidden="true"></i> </a>
+            {% endif %}
           </p>
           <p class="participant">参加者</p>
-          <ul class="participantIcon">
-          {% for members in event.members.all %}
-            <li><a href="/persol_users/{{ members.id }}/"><img src="{{ BASE_DIR }}/{{ members.data.url }}" width="50"/></a></li><!-- 参加者分の画像を表示 -->
-          {% endfor %}
+          <ul class="participantIcons"><!-- 参加者分の画像を表示 -->
+            {% for member in event.members.all %}
+              <li><a href="{% url 'persol_users:detail' member.id %}"><img class="userImage" src="/{{ member.data.url }}" width="50"/></a></li>
+            {% endfor %}
           </ul>
           {% if event.author == user %}<!-- 主催者のみ表示 -->
           検索用タグ:{{ event.search_tag }}<br>
@@ -75,11 +80,10 @@
             </li>
           </ul>
           {% endif %}
-        
-        {% include 'comments/index.html' %}
         </div>
+        {% include 'comments/index.html' %}
       </div>
     </article>
     
-
+    
 {% endblock %}
