@@ -18,9 +18,9 @@
                       {# 参加していないときだけ表示 #}
                       <form action="{% url 'events:event_watch' event.id %}" method="post">{% csrf_token %}
                       {% if user in event.watch.all %}<!-- ログインユーザーがウォッチ中の場合-->
-                      <button name="watch" value="leave"><i class="fa fa-star" aria-hidden="true"></i>　　ウォッチ中　　</button><!-- ウォッチ状態ではiタグのclass名が fa fa-star-o 変わります -->
+                      <button name="watch" value="leave"><i class="fa fa-star" aria-hidden="true"></i> ウォッチ中</button><!-- ウォッチ状態ではiタグのclass名が fa fa-star-o 変わります -->
                       {% else %}<!-- ログインユーザーがウォッチしていないの場合-->
-                      <button name="watch" value="add"><i class="fa fa-star-o" aria-hidden="true"></i> 　ウォッチ　</button><!-- ウォッチ状態ではiタグのclass名が fa fa-star-o 変わります -->
+                      <button name="watch" value="add"><i class="fa fa-star-o" aria-hidden="true"></i> ウォッチ</button><!-- ウォッチ状態ではiタグのclass名が fa fa-star-o 変わります -->
                       {% endif %}
                       </form>
                     {% endif %}
