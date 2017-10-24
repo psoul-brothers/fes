@@ -1,209 +1,207 @@
-/* スマホ用スタイルシート */
+/* 詳細ページ用スタイルシート */
 
-@charset "utf-8";
+div#article {
 
-/*----------------------------------------------------*/
-/* element reset
-------------------------------------------------------*/
-
-html, body, div, span, object, iframe, h1, h2, h3, h4, h5, h6, p, blockquote, pre, abbr, address, cite, code, del, dfn, em, img, ins, kbd, q, samp, small, strong, sub, sup, var, b, i, dl, dt, dd, ol, ul, li, fieldset, form, label, legend, table, caption, tbody, tfoot, thead, tr, th, td, article, aside, canvas, details, figcaption, figure, footer, header, hgroup, menu, nav, section, summary, time, mark, audio, video, a, input {
-    margin:0;
-    padding:0;
-    border:0;
-    outline:0;
-    background:transparent;
-}
-body { line-height:1; position:relative;}
-article, aside, details, figcaption, figure, footer, header, hgroup, menu, nav, section { display:block; }
-ul, ol, dl { list-style:none; }
-del { text-decoration: line-through; }
-table { border-collapse:collapse;   border-spacing:0;   empty-cells:show;   font-size:inherit;  font:100%;}
-th,td,img { border:0;}
-caption, th {   text-align:left;}
-img,a img{  background:transparent; vertical-align:top;}
-address {   font-style:normal;}
-hr { display:none;}
-input, select { vertical-align:middle; }
-input[type=text],input[type=submit]{
-    -webkit-appearance:none;
-}
-
-
-
-/*----------------------------------------------------*/
-/* link
------------------------------------------------------*/
-
-a:link {    color:#458CDD; text-decoration:none;}
-a:visited { color:#458CDD;  text-decoration:none;}
-a:hover {   color:#458CDD;  text-decoration:underline;}
-a:active {  color:#458CDD;  text-decoration:none;}
-
-#course-nav-sp a img:hover,.nbp_contents a img:hover {opacity: 0.8}
-
-/*----------------------------------------------------*/
-/* text
-------------------------------------------------------*/
-
-body {
-    background:#FFF;
-    color:#333;
-    font: 16px "メイリオ", "Hiragino Kaku Gothic ProN","ヒラギノ角ゴ ProN W3","ＭＳ Ｐゴシック",Helvetica,Arial,sans-serif;
-}
-
-p,dt,dd,li,th,td,address {
-    line-height:1.5;
-}
-
-p,dt,dd,li,th,td,input,textarea,address {
-    font-size:100%;
-}
-
-img {
-    vertical-align:bottom;
-}
-
-
-body {
-    padding: 0 ;
-}
-
-header {
-    margin:10px 0 ;
+	width: 94%;
+	padding: 1%;
+	margin: 0 auto;
 
 }
 
-header ul#menu-wrap{
-  background-color: #cccccc;
-  position: fixed;
-  z-index: 9999;
-  top: 0;
-  left: 0;
-  transition: .3s;
-  width: 90%;
-  padding-top:5px;
-  padding-bottom:5px;
-  padding-left:5%;
-  padding-right:5%;
 
-}
-header ul#menu-wrap li {
-    display: inline-block;
-    vertical-align:middle
-}
-header ul#menu-wrap li.logo {
-    width: 71%;
-
-}
-header ul#menu-wrap li.userImage {
-    /*width: 20%;*/
-    margin-right: 10px;
+div#article .event .title{
+	font-size: 120%;
+	font-weight: bold;
+	padding-bottom: 3px;
+	border-bottom: 2px solid #cccccc;
+	margin-bottom: 20px;
+	/*text-shadow: 2px 2px 0px #fff,-2px -2px 0px #fff,2px 2px 0px #fff,-2px -2px 0px #fff;
+	background-color:#333;*/
 }
 
-header ul#menu-wrap li.userImage img {
+div#article .event .date{
+	font-size: 90%;
+	margin-bottom:5px; 
+	/*display: inline-block;*/
+}
+div#article .event .dateHour{
+	font-size: 90%;
+	margin-bottom:5px;	
+	/*display: inline-block;*/
+}
+div#article .event .place{
+	font-size: 90%;
+	margin-bottom:5px;
+	padding-top: 5px;
+	/*display: inline-block;*/
+}
+div#article .event .questions{
+	float: right;
+}
+div#article .place + .questions{
+	margin-bottom:10px; : 
+	
+}
+
+div#article .event .questions a {
+	display: block;
+	padding: 3px;
+	color: #ffffff;
+	background-color: #0B610B;
+	font-size: 2.8vw;
+	border-radius: 3px;
+}
+
+div#article .event .description {
+	border-top:2px dotted #cccccc;
+	padding-top:5px;
+	font-size: 90%;
+	clear: both;
+	margin-bottom: 20px;
+}
+div#article .event .participant {
+	font-size: 90%
+}
+div#article .event ul.participantIcon {
+	margin-bottom:20px;
+}
+
+div#article .event ul.participantIcon li{
+	display: inline-block;
+}
+div#article .event ul.participantIcon li img {
   border-radius: 20px;
   height: 40px;
   width: 40px;
 }
 
-header ul#menu-wrap li.hunMeny {
-    /*width: 7%;*/
-}
-header ul#menu-wrap li.hunMeny span {
-	font-size: 150%;
+
+div#article .event .organizer {
+	font-size: 90%;
+	margin-bottom: 20px;
 }
 
-header ul#menu-wrap li ul.submenu {
-    position: fixed;
-    top:45px;
-    left: 50%;
- 
-}
-header ul#menu-wrap li ul.submenu.hub {
-    position: fixed;
-    top:45px;
-    left: 60%;
-    width: 38%;
-    background-color:#333333;
+div#article .event .organizer img {
+    border-radius: 20px;
+    width: 40px;
+    height: 40px;
+    margin-top:-10px;
 }
 
-header ul#menu-wrap li ul.submenu li{
-	background-color:#333333;
-    border-top: 1px solid #ffffff;
-    padding: 1px 0;
-}
-header ul#menu-wrap li ul.submenu li span {
-    color: #ffffff;
-    padding: 3px 6px;
-    font-size: 80%;
+div#article .event .comment {}
+
+div#article .event .comment p {
+font-size:90%;
 }
 
-header ul#menu-wrap li ul.submenu.hub li{
-    padding: 1px 0;
-    border: none;
-    color: #ffffff;
-    padding: 3px 0;
-    border-top:1px solid #ffffff;
-}
-header ul#menu-wrap li ul.submenu.hub li span {
-    font-size: 80%;
-    margin-bottom: 3px
-}
-header ul#menu-wrap li ul.submenu.hub input#searchKeyword {
-    width: 70%;
-    padding: 3px;
-    border:1px solid #a9a9a9;
-    color: #ffffff;
-    margin-left: 3px;
+div#article .event .comment .comment-list {
+border:1px solid #999999;
+border-radius: 5px;
+padding:5px;
+font-size:90%;
+margin-bottom:20px;
 }
 
+div#article .event .comment .comment-list .comment-block {
+border-bottom:1px solid #333333;
+padding:5px 0;
+}
+div#article .event .comment .comment-list .comment-block:last-child {
+border:none;
+} 
 
-header ul#menu-wrap li ul.submenu.hub input.searchBtn {
-    border:1px solid #a9a9a9;
-    background-color: #a9a9a9;
-    color:#ffffff;
-    margin: 6px;
+div#article .event .comment .comment-list .comment-block .comment-author,div#article .event .comment .comment-list .comment-block .comment-icon {
+display:inline-block;
+vertical-align:middle
 }
 
+div#article .event .comment .comment-list .comment-block .comment-author {
+margin-top:10px;}
 
-header ul li.search {
-    display: inline-block;
-    width: 65%;
-    font-size: 3vw;
+div#article .event .comment .comment-list .comment-block .comment-icon img{
+    border-radius: 20px;
+    width: 40px;
+    height: 40px;}
+
+div#article .event .comment .comment-list .comment-block .comment-body {
+border-top:1px dotted #999999;
+margin-top:5px;
+padding-top:5px;
 }
 
-header div.select {
-    width: 100%;
-    margin-top: 10px;
-}
-header div.select p {
-    font-size: 80%;
+div#article .event .comment .comment-list .comment-block .comment-form {
+margin-top:10px;
+
 }
 
-
-
-header ul li.makeEvent {
-    width: 30%;
-    display: inline-block;
-    font-size: 3vw;
+div#article .event .comment .comment-list .comment-block .comment-form textarea {
+display:inline-block;
+vertical-align:middle;
+width:80%;
 }
 
-header ul li.makeEvent a {
-    padding: 2px 0;
-    display: block;
-    background-color: #FF0000;
-    color: #ffffff;
-    border-radius: 2px;
-    text-align: center;
-    font-weight: bold;
-}
-article {
-    width: 100%;
+div#article .event .comment .comment-list .comment-block .comment-form input {
+background-color:#666666;
+border-radius: 5px;
+padding:2px 5px;
+color:#ffffff;
+display:inline-block;
+vertical-align:middle;
 }
 
 
-.clearfix:after {
-    content:" ";
-    display:block;
-    clear:both;
+
+
+
+div#article .event li.watch {
+	display: inline-block;
+	width: 48%;
+	margin: 0 2%;
+}
+
+
+div#article ul.btn li.join  {
+	display:inline-block;
+	width: 40%;
+}
+
+div#article ul.btn {
+	margin: 10px 0 20px;
+}
+
+div#article ul.btn li a {
+	display: block;
+	color: #ffffff;
+	text-align: center;
+	padding: 5px;
+	border-radius: 5px;
+	font-size: 3vw;
+	font-weight: bold;
+}
+
+
+div#article ul.btn li.watch button {
+	background-color:#ffffff;
+	display:inline-block;
+	border-radius: 15px;
+	padding: 5px 20px;
+	border:3px solid #ff8f00;
+	color: #ff8f00;
+	
+}
+
+div#article ul.btn li.join button{
+	border-radius: 15px;
+	padding: 5px;
+	width: 100%;
+	border: 3px solid #FF4000;
+	color: #FF4000;
+	background-color:#ffffff;
+}
+div#article ul.btn li.join button.participat{
+	border-radius: 15px;
+	padding: 5px;
+	width: 100%;
+	background-color:#FF4000;
+	color: #ffffff;
 }
