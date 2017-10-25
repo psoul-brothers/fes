@@ -140,7 +140,7 @@ def event_edit(request, event_id):
             try : image_tmp = request.FILES['event_image']
             except : image_tmp = 'event_image/default.png'
             finally:
-                print
+                print image_tmp
                 event.event_image = image_tmp
                 event.save()
                 if old_image != '':

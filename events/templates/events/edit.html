@@ -5,7 +5,7 @@
 {% endblock %}
 {% block contents %}
 <h3>イベント更新画面</h3>
-<form action="{% url 'events:event_edit' event.id %}" method="POST">
+<form enctype="multipart/form-data" action="{% url 'events:event_edit' event.id %}" method="POST">
     {{ form.non_field_errors }}
     {% csrf_token %}
     <ul>
@@ -15,6 +15,7 @@
             {{ form.event_name }}
         </li>
         <li>
+            <p><img class="EventImage" src="{{ BASE_DIR }}/{{ event.event_image.url }}" width="100"/></p>
             {{ form.event_image.errors }}
             {{ form.event_image.label_tag }}
             {{ form.event_image }}

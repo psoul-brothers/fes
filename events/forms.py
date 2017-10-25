@@ -11,10 +11,11 @@ class EventForm(ModelForm):
     class Meta:
         model = Event
         fields = [
-            'event_name', 'event_image', 'event_datetime', 
+            'event_name', 'event_datetime', 'event_image',
             'event_location', 'num_of_members', 'dead_line', 'overview', 
             'search_tag','event_status'
         ]
+#    event_image = forms.FileField(label='画像',required=False)
 
 
 class CreateForm(forms.Form):
