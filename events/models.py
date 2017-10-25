@@ -105,6 +105,7 @@ class Event(models.Model):
     def status(self):
         if self.event_status == "N": return "募集中"
         if self.event_status == "E": return "イベント終了"
+        else:return ""
 
 """
 python manage.py makemigrations
