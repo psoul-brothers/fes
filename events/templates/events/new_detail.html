@@ -51,6 +51,8 @@
           {% if event.author == user %}<!-- 主催者のみ表示 -->
           検索用タグ:{{ event.search_tag }}<br>
           {% else %}
+          {% if event.event_status == "E" %}
+          {% else %}
           <ul class="btn">
             <li class="watch">
             {% if user not in event.members.all %}
@@ -66,10 +68,11 @@
             </li>
             <li class="join">
               <form action="{% url 'events:event_join' event.id %}" method="post">{% csrf_token %}
-              {% if user in event.members.all %}<!-- ログインユーザーがイベント参加予定の場合-->
+                {% if user in event.members.all %}<!-- ログインユーザーがイベント参加予定の場合-->
                 <button name="join" value="leave"> イベントから抜ける</button>
-              {% else %}<!-- ログインユーザーがイベント未参加の場合-->
+                {% else %}<!-- ログインユーザーがイベント未参加の場合-->
                 <button name="join" value="add" class="participat"> イベントに参加</button>
+                {% endif %}
               {% endif %}
               </form>
             </li>

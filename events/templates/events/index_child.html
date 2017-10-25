@@ -14,15 +14,18 @@
               <p class="description">{{ event.overview | linebreaksbr }}</p>
                   <ul class="btnList">
                     <li class="join">
+                    {% if event.event_status == "E" %}
+                    {% else %}
                       {% if user not in event.members.all %}
                       {# 参加していないときだけ表示 #}
                       <form action="{% url 'events:event_watch' event.id %}" method="post">{% csrf_token %}
-                      {% if user in event.watch.all %}<!-- ログインユーザーがウォッチ中の場合-->
+                        {% if user in event.watch.all %}<!-- ログインユーザーがウォッチ中の場合-->
                       <button name="watch" value="leave"><i class="fa fa-star" aria-hidden="true"></i> ウォッチ中</button><!-- ウォッチ状態ではiタグのclass名が fa fa-star-o 変わります -->
-                      {% else %}<!-- ログインユーザーがウォッチしていないの場合-->
+                        {% else %}<!-- ログインユーザーがウォッチしていないの場合-->
                       <button name="watch" value="add"><i class="fa fa-star-o" aria-hidden="true"></i> ウォッチ</button><!-- ウォッチ状態ではiタグのclass名が fa fa-star-o 変わります -->
-                      {% endif %}
+                        {% endif %}
                       </form>
+                      {% endif %}
                     {% endif %}
                     </li>
                     <li class="detail"><a href="{% url 'events:event_detail' event.id %}"> 詳細</a></li>
