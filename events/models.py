@@ -101,6 +101,10 @@ class Event(models.Model):
         watcher_addr=[watcher.mail_address for watcher in self.watch.all()]
         ml=member_addr+watcher_addr
         return ml
+    
+    def status(self):
+        if self.event_status == "N": return "募集中"
+        if self.event_status == "E": return "イベント終了"
 
 """
 python manage.py makemigrations

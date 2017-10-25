@@ -10,7 +10,7 @@
         <div class="event">
           <p class="title">{{ event.event_name }}
           {% if event.author == user %}<!-- 主催者のみ表示 -->
-          <a href="{% url 'events:event_edit' event.id %}"><font size="1">[編集]</font></a>
+          <a href="{% url 'events:event_edit' event.id %}"><font size="1">{{event.status}}</font><font size="1"> [編集]</font></a>
           {% endif%}
           </p>
           {% if not event.event_datetime %}
