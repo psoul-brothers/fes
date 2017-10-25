@@ -20,9 +20,11 @@
                     <form action="{% url 'comments:update' event.id cmt.id %}" method="POST">
                         {% csrf_token %}
                         <textarea name="comment_text_update" maxlength=255>{{ cmt.comment_text }}</textarea>
-                        <input type="submit" value="変更" />
+                        <ul class="comment-edit-buttons">
+                            <li><input type="submit" value="変更" /></li>
+                            <li><i class="fa fa-times comment-edit-cancel" aria-hidden="true" comment-id="{{ cmt.id }}"></i></li>
+                        </ul>
                     </form>
-                    <i class="fa fa-times comment-edit-cancel" aria-hidden="true" comment-id="{{ cmt.id }}"></i>
                 </div>
                 {% endif %}
             </div>
@@ -38,7 +40,7 @@
         <input type="submit" value="投稿" />
     </form>
     
-    <script>
+    <script type="text/javascript">
     //<![CDATA[
         $(".comment-edit").click(function(){
             var comment_id = $(this).attr('comment-id');
@@ -50,6 +52,11 @@
             $('span.comment-text-' + comment_id).show()
             $('#comment-form-' + comment_id).hide();
         });
+        //ボタン連打防止
+        $('input[type="submit"]').click(function(){
+    		$(this).prop('disabled',true);//ボタンを無効化する
+    		$(this).closest('form').submit();//フォームを送信する
+	    });
     //]]>
     </script>
 </div>
