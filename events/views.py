@@ -239,8 +239,11 @@ def event_leave(request, event_id):
     pass
 
 def event_delete(request, event_id):
-    pass
-
+    event = get_object_or_404(Event, pk=event_id)
+    if request.user != event.author : raise PermissionDenied
+    event.delete()
+    return redirect('events:event_index') 
+    
 """
 def create_user(request):
     if request.method == 'POST':
