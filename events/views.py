@@ -41,9 +41,9 @@ def event_index(request):
     else:
         event_list = Event.objects.order_by('id').reverse()
 # get each event
-    latest_events    = event_list.exclude(
-        Q(members = request.user.id) |
-        Q(event_status = 'E')
+    latest_events    = event_list.exclude( #以下を除く
+        Q(members = request.user.id) | #自分がメンバーにいる または
+        Q(event_status = 'E')          #ステータスが終了
     )
     joing_events     = event_list.filter(Q(members = request.user.id))
     watching_events  = event_list.filter(Q(watch   = request.user.id))

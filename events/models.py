@@ -38,7 +38,7 @@ class Event(models.Model):
     watch          = models.ManyToManyField(PersolUser,verbose_name='ウォッチ', related_name='Watch')
     members        = models.ManyToManyField(PersolUser)
     search_tag     = models.TextField('検索用タグ', blank=True, null=True)
-    event_status   = models.CharField('イベントステータス', max_length=1, choices=STATUS_CHOICES, blank=True, null=True)
+    event_status   = models.CharField('イベントステータス', max_length=1, choices=STATUS_CHOICES, blank=False, null=False, default='N')
     
     # アンケート
     question_date  = models.OneToOneField(Question, related_name='event_date', blank=True, null=True)
