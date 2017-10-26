@@ -23,16 +23,16 @@ class Person(models.Model):
 class Event(models.Model):
     STATUS_CHOICES = (
         ("N","募集中"),
-        ("E","終了")
+        ("E","募集終了")
     )
     author         = models.ForeignKey(PersolUser, verbose_name='作成者', related_name='author')
     event_name     = models.CharField('イベント名', max_length=200)
     event_image    = models.ImageField('イメージ画像', upload_to='event_image', blank=True)
-    event_datetime = models.DateTimeField('日時',blank=True,null=True)
+    event_datetime = models.DateTimeField('開催日時',blank=True,null=True)
     event_location = models.CharField('開催場所', max_length=200, blank=True)
     num_of_members = models.IntegerField('募集人数')
-    dead_line      = models.DateField('募集締切日')
-    overview       = models.TextField('概要')
+    dead_line      = models.DateField('募集締切日',blank=True,null=True)
+    overview       = models.TextField('イベント概要')
 #    comment = models.ManyToManyField(Comment)
     like           = models.ManyToManyField(PersolUser,verbose_name='いいね', related_name='like')
     watch          = models.ManyToManyField(PersolUser,verbose_name='ウォッチ', related_name='Watch')

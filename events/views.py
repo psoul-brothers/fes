@@ -33,7 +33,11 @@ def event_index(request):
         elif request.POST['sort'] == 'watch':
             event_list = event_list.annotate(watch_num = Count('watch')).order_by('-watch_num')
         elif request.POST['sort'] == 'ascforday':
-            event_list = event_list.filter(Q(event_datetime__gte = datetime.now())).order_by('event_datetime')
+            event_list = event_list.filter(
+                Q(event_datetime__gte = datetime.now()) | #今日以降 または
+                Q(event_datetime__isnull = True)          #日付がNULL
+            ).order_by('event_datetime')
+#            event_list = event_list.order_by('event_datetime')
         """降順指定したい場合
         if request.POST['sort'] == "desc":
             event_list = event_list.reverse()
@@ -41,13 +45,15 @@ def event_index(request):
     else:
         event_list = Event.objects.order_by('id').reverse()
 # get each event
+    
     latest_events    = event_list.exclude( #以下を除く
         Q(members = request.user.id) | #自分がメンバーにいる または
         Q(event_status = 'E')          #ステータスが終了
     )
-    joing_events     = event_list.filter(Q(members = request.user.id))
+    joing_events     = event_list.filter(Q(members = request.user.id)).order_by('event_datetime').reverse() #日付昇順
     watching_events  = event_list.filter(Q(watch   = request.user.id))
     organized_events = event_list.filter(Q(author  = request.user.id))
+    old_events       = event_list.filter(Q(event_datetime__lt = datetime.now())).order_by('event_datetime')
     member_list      = PersolUser.objects.order_by('id')
     form = SelectUserForm()
     like_form = LikeUserForm()
@@ -58,7 +64,8 @@ def event_index(request):
         'latest_event_list': latest_events,
         'joing_events'     : joing_events,
         'watching_events'  : watching_events,
-        'organized_events' : organized_events
+        'organized_events' : organized_events,
+        'old_events'       : old_events
     }
 #    return render(request, 'events/index.html', context)
     return render(request, 'events/new_index.html', context)
