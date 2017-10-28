@@ -4,28 +4,61 @@
     <title>{% block title %}イベント作成{% endblock %}</title>
 {% endblock %}
 {% block contents %}
-<h3>イベント作成画面</h3>
+<div id="article">
+      <h1>イベント作成ページ</h1>
 <form enctype="multipart/form-data" action="{% url 'events:event_create' %}" method="POST">
   {% csrf_token %}
-  <ul>
-    {{ form.as_ul }}
-    
-    {# アンケート作成フォーム #}
-    <div>
-      <input type="checkbox" name="use_question_d" value='1' id="use_question_d">
-      <label for="use_question_d">日時をアンケートする</label>
-      <div id="question_form_d" style="display:none;">
-        {% include "questions/embeded_form_new.html" with question_type="d" %}
-      </div>
-    </div>
-    
-    <div>
-      <input type="checkbox" name="use_question_l" value='1' id="use_question_l">
-      <label for="use_question_l">場所をアンケートする</label>
-      <div id="question_form_l" style="display:none;">
-        {% include "questions/embeded_form_new.html" with question_type="l" %}
-      </div>
-    </div>
+  {{ form.non_field_errors }}
+        <div class="item">
+        {{ form.event_name.errors }}
+        {{ form.event_name.label_tag }}
+        {{ form.event_name }}
+        </div>
+      <li>
+        {{ form.event_image.errors }}
+        {{ form.event_image.label_tag }}
+        {{ form.event_image }}
+      </li>
+      <li>
+        {{ form.event_datetime.errors }}
+        {{ form.event_datetime.label_tag }}
+        {{ form.event_datetime }}
+        <input type="checkbox" name="use_question_d" value='1' id="use_question_d">
+        <label for="use_question_d">アンケートにする</label>
+        <div id="question_form_d" style="display:none;">
+          {% include "questions/embeded_form_new.html" with question_type="d" %}
+        </div>
+      </li>
+      <li>
+        {{ form.event_location.errors }}
+        {{ form.event_location.label_tag }}
+        {{ form.event_location }}
+        <input type="checkbox" name="use_question_l" value='1' id="use_question_l">
+        <label for="use_question_l">アンケートにする</label>
+        <div id="question_form_l" style="display:none;">
+          {% include "questions/embeded_form_new.html" with question_type="l" %}
+        </div>
+      </li>
+      <li>
+          {{ form.num_of_members.errors }}
+          {{ form.num_of_members.label_tag }}
+          {{ form.num_of_members }}
+      </li>
+      <li>
+          {{ form.dead_line.errors }}
+          {{ form.dead_line.label_tag }}
+          {{ form.dead_line }}
+      </li>
+      <li>
+          {{ form.overview.errors }}
+          {{ form.overview.label_tag }}
+          {{ form.overview }}
+      </li>
+      <li>
+          {{ form.search_tag.errors }}
+          {{ form.search_tag.label_tag }}
+          {{ form.search_tag }}
+      </li>
   </ul>
   
   <input type="submit" value="Submit">

@@ -6,13 +6,13 @@
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <title>詳細ページ</title>
     <!-- css -->
-    <link href="/static/css/sp_style.css" rel="stylesheet">
-    <link href="/static/css/detail_style.css" rel="stylesheet">
+    <link href="css/sp_style.css" rel="stylesheet">
+    <link href="css/detail_style.css" rel="stylesheet">
     <link rel="stylesheet" href="http://maxcdn.bootstrapcdn.com/font-awesome/4.3.0/css/font-awesome.min.css">    <!-- jQuery -->
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/2.2.4/jquery.min.js"></script>
     <!-- JS -->
-    <script src="/static/js/detail.js"></script>
-    <script src="/static/js/common.js"></script>
+    <script src="js/detail.js"></script>
+    <script src="js/common.js"></script>
 
     <!--[if lt IE 9]>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/html5shiv/3.7.3/html5shiv.js"></script>
@@ -49,21 +49,52 @@
           <p class="place"><i class="fa fa-map-marker" aria-hidden="true"></i> 墨田野球場　この項目は文字数が多くなる可能性がありますよね</p>
           <p class="questions"><a href="" >場所アンケートに参加する</a></p><!-- 値がセットされていなかったら表示する -->
           <p class="description">イベント概要；初心歓迎！テスト用に適当に文字を入れています。本当なら費用や持ち物、参加資格などをここでお知らせします。</p>
+          <p class="questions"><a href="" >主催者に問い合わせる</a></p>
+          <p class="organizer">主催者：小松原　謙　<a href=""><img src="images/dummy/person.jpg"></a></p>
+         <!-- <div class="organizer">
+          <p class="questions"><a href="" >主催者に問い合わせる</a></p>
+          <p>主催者：小松原　謙　<a href=""><img src="images/dummy/person.jpg"></a></p>
+          </div>-->
           <p class="participant">参加者</p>
           <ul class="participantIcon">
             <li><img src="images/dummy/user.png" width="50"></li>
             <li><img src="images/dummy/user.png" width="50"></li>
             <li><img src="images/dummy/user.png" width="50"></li>
             <li><img src="images/dummy/user.png" width="50"></li>
-
           </ul>
-          <p class="questions"><a href="" >主催者に問い合わせる</a></p>
-          <p class="Organizer">主催者名：小松原　謙</p>
+          
+
+
           <ul class="btn">
             <li class="watch"><button><i class="fa fa-star" aria-hidden="true"></i> ウォッチ</button></li><!-- ウォッチ状態ではiタグのclass名が fa fa-star-o 変わります -->
             <li class="join"><button>イベントに参加する</button></li>
             <!-- <li class="join"><button　class="participat">イベントに参加予定</button></li> イベントに参加するときの記述 -->
           </ul>
+          
+          <div class="comment">
+          <p>コメント欄
+          
+          	<div class="comment-list">
+
+          	<div class="comment-block"><!-- コメントの数だけ増える -->
+				<p class="comment-author">コメントした人の名前</p>
+          		<div class="comment-icon"><a href=""><img src="images/dummy/person.jpg" width="40px"></a></div>
+          		<div class="comment-body">
+          			<div class="comment-text" comment-id="xxx">コメント本文入ります。コメント本文入ります。コメント本文入ります。コメント本文入ります。
+
+          			
+          			</div><i class="fa fa-pencil comment-edit" aria-hidden="true" comment-id="{{ cmt.id }}"></i>
+          			<div class="comment-form" comment-id="xxx">
+                    <form action="ppppppppppp" method="POST">
+                        
+                        <textarea name="comment_text_update">編集用の投稿したテキスト</textarea>
+                        <input type="submit" value="変更" />
+                    </form>
+                    <i class="fa fa-times comment-edit-cancel" aria-hidden="true"></i>
+                    </div>
+          		</div>
+          	</div><!-- /.comment-block コメントの数だけ増える -->
+          </div>
         </div>
       </div>
     </article>

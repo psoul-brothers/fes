@@ -33,7 +33,11 @@ def event_index(request):
         elif request.POST['sort'] == 'watch':
             event_list = event_list.annotate(watch_num = Count('watch')).order_by('-watch_num')
         elif request.POST['sort'] == 'ascforday':
-            event_list = event_list.filter(Q(event_datetime__gte = datetime.now())).order_by('event_datetime')
+            event_list = event_list.filter(
+                Q(event_datetime__gte = datetime.now()) | #今日以降 または
+                Q(event_datetime__isnull = True)          #日付がNULL
+            ).order_by('event_datetime')
+#            event_list = event_list.order_by('event_datetime')
         """降順指定したい場合
         if request.POST['sort'] == "desc":
             event_list = event_list.reverse()
@@ -41,10 +45,20 @@ def event_index(request):
     else:
         event_list = Event.objects.order_by('id').reverse()
 # get each event
-    latest_events    = event_list
-    joing_events     = event_list.filter(Q(members = request.user.id))
-    watching_events  = event_list.filter(Q(watch   = request.user.id))
+    
+    latest_events    = event_list.exclude( #以下を除く
+        Q(author = request.user.id)           | #自分が主催者
+        Q(members = request.user.id)          | #or自分がメンバーにいる
+        Q(event_datetime__lt = datetime.now())| #or 開催日が今日以前
+        Q(dead_line__lt = datetime.now())      | #or 募集締め切り日が今日以前
+        Q(event_status = 'E')                   #or ステータスが募集終了
+    )
+    joing_events     = event_list.filter(Q(members = request.user.id)).order_by('event_datetime').reverse().exclude(
+        Q(event_datetime__lt = datetime.now())
+        ) #日付昇順
     organized_events = event_list.filter(Q(author  = request.user.id))
+    watching_events  = event_list.filter(Q(watch   = request.user.id))
+    old_events       = event_list.filter(Q(event_datetime__lt = datetime.now())).order_by('event_datetime')
     member_list      = PersolUser.objects.order_by('id')
     form = SelectUserForm()
     like_form = LikeUserForm()
@@ -55,7 +69,8 @@ def event_index(request):
         'latest_event_list': latest_events,
         'joing_events'     : joing_events,
         'watching_events'  : watching_events,
-        'organized_events' : organized_events
+        'organized_events' : organized_events,
+        'old_events'       : old_events
     }
 #    return render(request, 'events/index.html', context)
     return render(request, 'events/new_index.html', context)
@@ -108,7 +123,7 @@ def event_create(request):
         else:
             return render(request, 'events/create.html', {'form': form,})
     else:
-        form = CreateForm() # 非束縛フォーム
+        form = EventForm() # 非束縛フォーム
         return render(request, 'events/create.html', {'form': form,})
 
 @login_required
@@ -140,7 +155,7 @@ def event_edit(request, event_id):
             try : image_tmp = request.FILES['event_image']
             except : image_tmp = 'event_image/default.png'
             finally:
-                print
+                print image_tmp
                 event.event_image = image_tmp
                 event.save()
                 if old_image != '':
@@ -236,8 +251,11 @@ def event_leave(request, event_id):
     pass
 
 def event_delete(request, event_id):
-    pass
-
+    event = get_object_or_404(Event, pk=event_id)
+    if request.user != event.author : raise PermissionDenied
+    event.delete()
+    return redirect('events:event_index') 
+    
 """
 def create_user(request):
     if request.method == 'POST':

@@ -23,22 +23,22 @@ class Person(models.Model):
 class Event(models.Model):
     STATUS_CHOICES = (
         ("N","募集中"),
-        ("E","終了")
+        ("E","募集終了")
     )
     author         = models.ForeignKey(PersolUser, verbose_name='作成者', related_name='author')
-    event_name     = models.CharField('イベント名', max_length=200)
+    event_name     = models.CharField('イベントタイトル', max_length=200)
     event_image    = models.ImageField('イメージ画像', upload_to='event_image', blank=True)
-    event_datetime = models.DateTimeField('日時',blank=True,null=True)
+    event_datetime = models.DateTimeField('開催日時',blank=True,null=True)
     event_location = models.CharField('開催場所', max_length=200, blank=True)
     num_of_members = models.IntegerField('募集人数')
-    dead_line      = models.DateField('募集締切日')
-    overview       = models.TextField('概要')
+    dead_line      = models.DateField('募集締切日',blank=True, null=True)
+    overview       = models.TextField('イベント概要')
 #    comment = models.ManyToManyField(Comment)
     like           = models.ManyToManyField(PersolUser,verbose_name='いいね', related_name='like')
     watch          = models.ManyToManyField(PersolUser,verbose_name='ウォッチ', related_name='Watch')
     members        = models.ManyToManyField(PersolUser)
     search_tag     = models.TextField('検索用タグ', blank=True, null=True)
-    event_status   = models.CharField('イベントステータス', max_length=1, choices=STATUS_CHOICES, blank=True, null=True)
+    event_status   = models.CharField('イベントステータス', max_length=1, choices=STATUS_CHOICES, blank=False, null=False, default='N')
     
     # アンケート
     question_date  = models.OneToOneField(Question, related_name='event_date', blank=True, null=True)
@@ -101,6 +101,11 @@ class Event(models.Model):
         watcher_addr=[watcher.mail_address for watcher in self.watch.all()]
         ml=member_addr+watcher_addr
         return ml
+    
+    def status(self):
+        if self.event_status == "N": return "募集中"
+        if self.event_status == "E": return "イベント終了"
+        else:return ""
 
 """
 python manage.py makemigrations
