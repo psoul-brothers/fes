@@ -8,12 +8,43 @@
 <h1>ユーザー登録</h1>
   <form enctype="multipart/form-data" action="{% url 'persol_users:user_add_operation' %}" method="POST">
   {% csrf_token %}
-    <!--<table>-->
-      {{form1.as_p}}
-    <!--  <tr>-->
-    <!--    <td colspan='2'><input type="submit" value="Submit"></td>-->
-    <!--  </tr>-->
-    <!--</table>-->
+
+        <div class="item">
+          {{ form1.employee_number.errors }}
+          <p>社員番号　<span>※必須項目です</span></p>
+          {{ form1.employee_number }}
+        </div>
+        <div class="item">
+          {{ form1.password.errors }}
+          <p>パスワード　<span>※必須項目です</span></p>
+          {{ form1.password }}
+        </div>
+        <div class="item">
+          {{ form1.surname.errors }}
+          <p>姓</p>
+          {{ form1.surname }}
+        </div>
+        <div class="item">
+          {{ form1.name.errors }}
+          <p>名</p>
+          {{ form1.name }}
+        </div>
+        <div class="item">
+          {{ form1.mail_address.errors }}
+          <p>メールアドレス</p>
+          {{ form1.mail_address }}
+        </div>
+        <div class="item">
+          {{ form1.self_introduction_text.errors }}
+          <p>自己紹介メッセージ</p>
+          {{ form1.self_introduction_text }}
+        </div>        
+        <div class="item">
+          {{ form1.data.errors }}
+          <p>画像</p>
+          {{ form1.data }}
+        </div>
+
         <!--<div class="item">-->
         <!--<p>社員番号　<span>※必須項目です</span></p>-->
         <!--<input id="id_employee_number" name="employee_number" type="text">-->
