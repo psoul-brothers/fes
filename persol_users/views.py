@@ -38,7 +38,6 @@ def user_add(request):
     return render(request, 'persol_users/user_add.html', {'form1': f})
 
 
-
 def user_add_operation(request):
     if request.method == 'POST':
         form = user_add_Form(request.POST)
@@ -61,9 +60,7 @@ def user_add_operation(request):
                 
                 # for auth by tanaka
                 q.set_password(request.POST['password'])
-
                 q.save()
-
                 return HttpResponseRedirect(reverse('portal'))
             
     else:
@@ -114,5 +111,3 @@ def user_modify(request):
         
     edit_context = {'form1': f, 'user': user}
     return render(request, 'persol_users/user_modify.html', context=edit_context)
-
-

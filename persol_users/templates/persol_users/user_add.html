@@ -1,17 +1,54 @@
 {% extends 'common/base.html' %}
 {% block head %}
-     <title>ユーザー追加フォーム</title>
+    <link href="css/userRegist_style.css" rel="stylesheet">
+    <title>ユーザー登録ページ</title>
 {% endblock %}
 
 {% block contents %}
-<h1>ユーザー追加フォーム</h1>
+<h1>ユーザー登録</h1>
   <form enctype="multipart/form-data" action="{% url 'persol_users:user_add_operation' %}" method="POST">
   {% csrf_token %}
-    <table>
-      {{form1.as_table}}
-      <tr>
-        <td colspan='2'><input type="submit" value="Submit"></td>
-      </tr>
-    </table>
+    <!--<table>-->
+      {{form1.as_p}}
+    <!--  <tr>-->
+    <!--    <td colspan='2'><input type="submit" value="Submit"></td>-->
+    <!--  </tr>-->
+    <!--</table>-->
+        <!--<div class="item">-->
+        <!--<p>社員番号　<span>※必須項目です</span></p>-->
+        <!--<input id="id_employee_number" name="employee_number" type="text">-->
+        <!--</div>-->
+        <!--<div class="item">-->
+        <!--<p>パスワード　<span>※必須項目です</span></p>-->
+        <!--<input id="id_password" name="password" onfocus="type='Password'" type="text">-->
+        <!--</div>-->
+
+        <!--<div class="item">-->
+        <!--<p>性</p>-->
+        <!--<input id="id_surname" name="surname" type="text">-->
+        <!--</div>-->
+        <!--<div class="item">-->
+        <!--<p>名</p>-->
+        <!--<input id="id_name" name="name" type="text">-->
+        <!--</div>-->
+
+        <!--<div class="item">-->
+        <!--<p>メールアドレス</p>-->
+        <!--<input id="id_mail_address" name="mail_address" type="email">-->
+        <!--</div>-->
+
+        <!--<div class="item">-->
+        <!--    <p>自己紹介メッセージ</p>-->
+        <!--    <textarea cols="40" id="id_self_introduction_text" name="self_introduction_text" rows="10"></textarea>-->
+        <!--</div>-->
+
+        <!--<div class="item imgFile">-->
+        <!--    <p>画像</p>-->
+        <!--    <input id="id_data" name="data" type="file">-->
+        <!--</div>-->
+
+        <input value="ユーザー登録" type="submit" class="make">
+        
+
   </form>
 {% endblock %}
