@@ -18,10 +18,11 @@ http://weboook.blog22.fc2.com/blog-entry-412.html
     <div class="container">
         <div class="tabContainer">
             <div class="tab">
-                <div id="" class="tab__button tabNew active"><a href="#">新着</a></div>
-                <div class="tab__button tabJoin"><a href="#">参加予定</a></div>
+                <div id="" class="tab__button tabNew active"><a href="#">募集中</a></div>
+                <div class="tab__button tabJoin"><a href="#">参加</a></div>
                 <div class="tab__button tabWatch"><a href="#">ウォッチ</a></div>
-                <div class="tab__button tabMake"><a href="#">主催のイベント</a></div>
+                <div class="tab__button tabMake"><a href="#">主催</a></div>
+                <div class="tab__button tabMake"><a href="#">開催済み</a></div>
             </div>
         </div>
         <div class="contents">
@@ -61,6 +62,17 @@ http://weboook.blog22.fc2.com/blog-entry-412.html
             <div class="contents__content contentMake"><!-- 自分が主催者のイベント -->
             {% if organized_events %}
             {% for event in organized_events %}
+<!-- ▼このdivをイベントの数だけ複製▼ -->
+            {% include 'events/index_child.html' %} 
+<!-- ▲このdivをイベントの数だけ複製▲ -->
+            {% endfor %}
+            {% else %}
+            <p class="noevent">主催しているイベントはありません。</p>
+            {% endif %}
+            </div>
+            <div class="contents__content contentMake"><!-- 自分が主催者のイベント -->
+            {% if old_events %}
+            {% for event in old_events %}
 <!-- ▼このdivをイベントの数だけ複製▼ -->
             {% include 'events/index_child.html' %} 
 <!-- ▲このdivをイベントの数だけ複製▲ -->
