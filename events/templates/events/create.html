@@ -4,16 +4,16 @@
     <title>{% block title %}イベント作成{% endblock %}</title>
 {% endblock %}
 {% block contents %}
-<h3>イベント作成画面</h3>
+<div id="article">
+      <h1>イベント作成ページ</h1>
 <form enctype="multipart/form-data" action="{% url 'events:event_create' %}" method="POST">
   {% csrf_token %}
   {{ form.non_field_errors }}
-  <ul>
-      <li>
+        <div class="item">
         {{ form.event_name.errors }}
         {{ form.event_name.label_tag }}
         {{ form.event_name }}
-      </li>
+        </div>
       <li>
         {{ form.event_image.errors }}
         {{ form.event_image.label_tag }}

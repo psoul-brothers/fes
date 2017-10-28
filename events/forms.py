@@ -3,6 +3,7 @@ from django import forms
 from django.forms import ModelForm
 from . import models
 from persol_users import models as usermodels
+from django.forms.widgets import TextInput
 
 from .models import Event
 from persol_users.models import PersolUser
@@ -20,7 +21,7 @@ class EventForm(ModelForm):
 
 class CreateForm(forms.Form):
     #author = forms.CharField(max_length=200, label='作成者')
-    event_name     = forms.CharField(max_length=200, label='イベント名')
+    event_name     = forms.CharField(max_length=200, label='イベントタイトル')
     event_image    = forms.FileField(required=False, label='イメージ画像')
     event_datetime = forms.DateTimeField(required=False, label='開催日時')
     event_location = forms.CharField(required=False, max_length=200, label='開催場所')

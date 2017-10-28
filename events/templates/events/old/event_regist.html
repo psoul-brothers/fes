@@ -1,0 +1,134 @@
+<!DOCTYPE html>
+<html lang="ja">
+  <head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>イベント作成ページ</title>
+    <!-- css -->
+    <link href="css/sp_style.css" rel="stylesheet">
+    <link href="css/eventRegist_style.css" rel="stylesheet">
+    <!-- <link href="css/jquery.datetimepicker.css" rel="stylesheet"> -->
+    <!-- jQuery -->
+    <script src="js/jquery.js"></script>
+    <!-- <script src="js/jquery.datetimepicker.full.js"></script> -->
+    <!-- JS -->
+    <!-- <script src="js/regist.js"></script> -->
+    <script src="js/common.js"></script>
+
+    <!--[if lt IE 9]>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/html5shiv/3.7.3/html5shiv.js"></script>
+<![endif]-->
+    <link rel="stylesheet" href="http://maxcdn.bootstrapcdn.com/font-awesome/4.3.0/css/font-awesome.min.css">
+  </head>
+  <body>
+    <article>
+      <header>
+        <ul id="menu-wrap">
+        <li class="logo"><a href="">PUB</a></li>
+
+        <li class="userImage"><span class="trigger none-submenu"><img class="user" src="images/dummy/person.jpg" width="30px"></span>
+          <ul class="submenu">
+          <li><a href=""><span>ユーザー情報編集</span></a></li>
+          <li><a href=""><span>ログアウト</span></a></li>
+          </ul>
+        </li>
+
+        <li class="hunMeny"><span class="trigger none-submenu"><i class="fa fa-bars" aria-hidden="true"></i></span>
+          <ul class="submenu hub">
+          <li><a href=""><span>イベントを作る</span></a></li>
+          <li><input id="searchKeyword" type="text" name="search" value="search" onblur="if (this.value == '') this.value = 'search';" onfocus="if (this.value == 'search') this.value = '';"/> <a id="keywordSearchSubmit"  class="searchBtn" name="searchsubmit" ><i class="fa fa-search" aria-hidden="true"></i></a></li>
+          </ul>
+        </li>
+<!--           <li class="search"><input id="searchKeyword" type="text" name="search" value="search" onblur="if (this.value == '') this.value = 'search';" onfocus="if (this.value == 'search') this.value = '';"/> <input value="検索" id="keywordSearchSubmit" class="searchBtn" name="searchsubmit" type="button"></li>
+          <li class="makeEvent"><a href="">イベントを作る</a></li> -->
+        </ul><!-- /#menu-wrap -->
+      </header>
+
+
+      <div id="article">
+      <h1>イベント作成ページ</h1>
+        <form>
+        <div class="item">
+        <p>イベントタイトル　<span>※必須項目です</span></p>
+        <input id="id_event_name" maxlength="200" name="event_name" type="text">
+        </div>
+
+<!--         <div class="item">
+        <p>カテゴリ　<span>※必須項目です</span></p>
+              <select name="category">
+              <option value="選択肢1">業務外</option>
+              <option value="選択肢2">勉強会</option>
+              <option value="選択肢3">その他</option>
+              </select>
+        </div> -->
+
+        <div class="item imgFile">
+            <p>イメージ画像</p>
+            <input id="id_event_image" name="event_image" type="file">
+        </div>
+
+
+        <div class="item">
+        <p>開催日</p>
+        <!-- <input id="datepicker" type="text" name="eventDate" readonly="readonly"> -->
+        <input id="id_event_datetime" name="event_datetime" type="text">
+        
+        <p class="question">開催日のアンケートをとる　<input name="use_question_d" value="1" id="use_question_d" type="checkbox"></p>
+        </div>
+<!--         <div class="item">
+        <p>開催時間</p>
+        <input id="" type="time" name="eventTime">
+        </div> -->
+
+        <div class="item">
+        <p>開催場所</p>
+        <input id="id_event_location" maxlength="200" name="event_location" type="text">
+        <p class="question">開催場所のアンケートをとる　<input name="use_question_l" value="1" id="use_question_l" type="checkbox"></p>
+        </div>
+        <div class="item">
+            <p>募集人数</p>
+            <input id="id_num_of_members" name="num_of_members" type="number">
+        </div>
+        <div class="item">
+            <p>募集締切日</p>
+            <input id="id_dead_line" name="dead_line" type="text">
+        </div>
+        <div class="item">
+        <p>概要</p>
+        <textarea cols="40" id="id_overview" name="overview" rows="10"></textarea>
+        </div>
+        <div class="item">
+        <p>検索用タグ</p>
+        <textarea cols="40" id="id_search_tag" name="search_tag" rows="10"></textarea>
+        </div>
+
+<!--         <div class="item">
+        <p>主催メールアドレス</p>
+        <input type="text" name="eventOrganizerAddress">
+        </div>
+   
+        <div class="item">
+        <p>最少開催人数</p>
+        <input type="number" name="eventLeastNum">
+        </div>
+        <div class="item">
+        <p>最大開催人数</p>
+        <input type="number" name="eventMaxNum">
+        </div>
+        <div class="item">
+        <p>募集期間</p>
+        <input type="date" name="eventRecruitStartDate">
+        <input type="time" name="eventRecruitStartTime"><br>から<br>
+        <input type="date" name="eventRecruitEndDate">
+        <input type="time" name="eventRecruitEndTime">
+        </div> -->
+        <input value="イベントを作成する" type="submit" class="make">
+        
+        </form>
+      </div><!-- /#article -->
+
+    </article>
+    <script type="text/javascript" src="/static/js/question_form_toggler.js"></script>
+  </body>
+</html>
