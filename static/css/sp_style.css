@@ -13,7 +13,7 @@ html, body, div, span, object, iframe, h1, h2, h3, h4, h5, h6, p, blockquote, pr
     outline:0;
     background:transparent;
 }
-body { line-height:1; position:relative;}
+body { line-height:1; position:relative;-webkit-text-size-adjust:100%;}
 article, aside, details, figcaption, figure, footer, header, hgroup, menu, nav, section { display:block; }
 ul, ol, dl { list-style:none; }
 del { text-decoration: line-through; }
