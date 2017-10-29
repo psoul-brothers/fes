@@ -8,6 +8,16 @@ div#article {
 
 }
 
+div#article .event .noimgtitle{
+	font-size: 120%;
+	font-weight: bold;
+	padding-bottom: 3px;
+	border-bottom: 2px solid #cccccc;
+	margin-bottom: 20px;
+	/*text-shadow: 2px 2px 0px #fff,-2px -2px 0px #fff,2px 2px 0px #fff,-2px -2px 0px #fff;
+	background-color:#333;*/
+}
+
 .imageBox {
   position: relative;
   margin-bottom: 20px;
