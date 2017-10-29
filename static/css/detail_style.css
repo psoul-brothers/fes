@@ -8,16 +8,48 @@ div#article {
 
 }
 
+.imageBox {
+  position: relative;
+  margin-bottom: 20px;
+  }
 
-div#article .event .title{
-	font-size: 120%;
-	font-weight: bold;
+.imageBox p.title {
+  position: absolute;
+  color: white;
+  font-size: 120%;
+  font-weight: bold;
+  top: 20%;	
+  left: 50%;
+  -ms-transform: translate(-50%,-50%);
+  -webkit-transform: translate(-50%,-50%);
+  transform: translate(-50%,-50%);
+  margin:0;
+  padding:0;
+  width: 80%;
+text-shadow: 
+-2px -2px 0px #5c5c5c, 
+2px -2px 0px #5c5c5c, 
+2px 2px 0px #5c5c5c, 
+-2px 2px 0px #5c5c5c;
+  }
+
+.imageBox img {
+	  width: 100%;
+	  max-height: 200px;
+	  object-fit: cover;
+  }
+
+
+
+
+
+d/*iv#article .event .title{
 	padding-bottom: 3px;
 	border-bottom: 2px solid #cccccc;
 	margin-bottom: 20px;
-	/*text-shadow: 2px 2px 0px #fff,-2px -2px 0px #fff,2px 2px 0px #fff,-2px -2px 0px #fff;
-	background-color:#333;*/
-}
+	text-shadow: 2px 2px 0px #fff,-2px -2px 0px #fff,2px 2px 0px #fff,-2px -2px 0px #fff;
+	background-color:#333;
+}*/
 
 div#article .event .date{
 	font-size: 90%;
@@ -153,9 +185,6 @@ vertical-align:middle;
 	display:inline-block;
 	vertical-align: middle;
 }
-
-
-
 
 div#article .event li.watch {
 	display: inline-block;
