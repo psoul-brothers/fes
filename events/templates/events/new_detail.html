@@ -8,7 +8,14 @@
     <article>
       <div id="article">
         <div class="event">
+        <div class="imageBox">
+          {% if event.event_image = 'event_image/default.png' %}
+          <p class="noimgtitle">{{ event.event_name }} <font size="1">{{event.status}}</font>
+          {% else %}
+          <img src="{{ BASE_DIR }}/{{ event.event_image.url }}"/>
           <p class="title">{{ event.event_name }} <font size="1">{{event.status}}</font>
+          {% endif %}
+          </div>
           {% if event.author == user %}<!-- 主催者のみ表示 -->
           <a href="{% url 'events:event_edit' event.id %}"><font size="1"> [編集]</font></a>
           {% endif%}
