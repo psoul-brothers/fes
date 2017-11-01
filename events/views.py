@@ -54,10 +54,12 @@ def event_index(request):
         Q(event_status = 'E')                   #or ステータスが募集終了
     )
     joing_events     = event_list.filter(Q(members = request.user.id)).order_by('event_datetime').reverse().exclude(
-        Q(event_datetime__lt = datetime.now())
-        ) #日付昇順
+        Q(event_datetime__lt = datetime.now()) #開催日が今日以前を除く
+    ) #日付昇順
+    watching_events  = event_list.filter(
+        Q(watch   = request.user.id)).order_by('event_datetime').reverse().exclude(Q(event_datetime__lt = datetime.now()) #開催日が今日以前を除く
+    )
     organized_events = event_list.filter(Q(author  = request.user.id))
-    watching_events  = event_list.filter(Q(watch   = request.user.id))
     old_events       = event_list.filter(Q(event_datetime__lt = datetime.now())).order_by('event_datetime')
     member_list      = PersolUser.objects.order_by('id')
     form = SelectUserForm()
