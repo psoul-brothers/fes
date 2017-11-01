@@ -85,12 +85,17 @@ def user_modify(request):
             f = user_modify_Form(request.POST, instance = user)
             if f.is_valid():
                 f.save()
-                
+            
+    
+            #password_tmp = request.POST['password']
+            if request.POST['password'] :
+                user.set_password(request.POST['password'])
+                user.save()
+    
             try:
                 data_tmp = request.FILES['data']
                 
             except:
-                #data_tmp = DEFAULT_USER_IMG
                 data_tmp = user.data
             
             finally:
@@ -103,8 +108,7 @@ def user_modify(request):
                         if data_tmp != data_tmp2:
                             os.remove(tmp)
                     
-                #return HttpResponseRedirect(reverse('persol_users:detail'))
-                return HttpResponseRedirect(reverse('portal'))
+            return HttpResponseRedirect(reverse('portal'))
 
     else:
         f = user_modify_Form(instance=user)
