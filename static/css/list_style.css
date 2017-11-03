@@ -2,7 +2,7 @@
 
 div#listArticle h1{
 	font-size: 120%;
-	padding-bottom: 5px;
+	padding: 5px 0 10px 10px;
 }
 
 div#listArticle .select p, div#listArticle .select select {
@@ -58,24 +58,40 @@ div#listArticle .list .description {
 
 div#listArticle .list li.detail {
 	display: inline-block;
-	width: 33%;
+	width: 45%;
 	margin: 0 2%;
 }
 
 div#listArticle ul.btnList {
 	margin-top: 10px;
+	text-align: center;
 }
 
-div#listArticle .list ul.btnList li.join button,div#listArticle .list ul.btnList li.detail a{
+div#listArticle ul.btnList li {
+	vertical-align: middle;
+	width: 45%;
+}
+
+div#listArticle .list ul.btnList li.detail a{
 	display: inline-block;
 	text-align: center;
-	padding: 10px;
+	padding: 7px 10px;
 	font-size: 4vw;
 	font-weight: bold;
 	overflow: hidden;
 	vertical-align:top;
+	width: 45%;
 }
+div#listArticle .list ul.btnList li.join button,div#listArticle .list ul.btnList li.update button {
+	display: inline-block;
+	text-align: center;
+	padding: 7px;
+	font-size: 4vw;
+	font-weight: bold;
+	overflow: hidden;
+	vertical-align:top;
 
+}
 
 div#listArticle .list ul.btnList li.detail a {
 	background-color:#FFFFFF;
@@ -85,9 +101,9 @@ div#listArticle .list ul.btnList li.detail a {
 	border-radius:15px 15px ;
 }
 
-div#listArticle .list ul.btnList li.join {
+div#listArticle .list ul.btnList li.join,div#listArticle .list ul.btnList li.update {
 	display:inline-block;
-	width: 53%;
+	width: 45%;
 	margin: 0 2%;
 }
 
@@ -104,6 +120,16 @@ div#listArticle .list ul.btnList li.join button.participat {
 	border:3px solid #FF4000;
 	color:#FFFFFF;
 }
+/* 更新ボタン */
+div#listArticle .list ul.btnList li.update button {
+	background-color:#FFFFFF;
+	border-radius:15px 15px ;
+	border:3px solid #d965ed;
+	color:#d965ed;
+}
+
+
+
 
 
 /* スワイプタブ用記述 */
@@ -128,49 +154,58 @@ div#listArticle .list ul.btnList li.join button.participat {
 .tab{
     display: table;
 }
+/* 新着タブの色迷走中
+#bd0303
+ */
 .tab__button.tabNew {
-	border-top:1px solid #bd0303;
-	border-right:1px solid #bd0303;
-	border-left:1px solid #bd0303;
+	border-top:1px solid #ea7e7e;
+	border-right:1px solid #ea7e7e;
+	border-left:1px solid #ea7e7e;
 }
 .tab__button.tabNew a {
-	color:#bd0303;}
+	color:#ea7e7e;}
 .tab__button.tabNew.active {
-	background-color: #bd0303;
+	background-color: #ea7e7e;
 }
 
 .tab__button.tabJoin {
-	border-top:1px solid #4caf50;
-	border-right:1px solid #4caf50;
-	border-left:1px solid #4caf50;
+	border-top:1px solid #57cc5c;
+	border-right:1px solid #57cc5c;
+	border-left:1px solid #57cc5c;
 }
 .tab__button.tabJoin a {
-	color:#4caf50;}
+	color:#57cc5c;}
 .tab__button.tabJoin.active {
-	background-color: #4caf50;
+	background-color: #57cc5c;
 }
-
+/*
+ウォッチタブの色迷走中
+#ff8f00;
+*/
 .tab__button.tabWatch {
-	border-top:1px solid #ff8f00;
-	border-right:1px solid #ff8f00;
-	border-left:1px solid #ff8f00;
+	border-top:1px solid #ffaa00;
+	border-right:1px solid #ffaa00;
+	border-left:1px solid #ffaa00;
 }
 .tab__button.tabWatch a {
-	color:#ff8f00;}
+	color:#ffaa00;}
 .tab__button.tabWatch.active {
-	background-color: #ff8f00;
+	background-color: #ffaa00;
 }
 
-
+/*
+主催イベントタブの色迷走中
+#9c27b0;
+*/
 .tab__button.tabMake {
-	border-top:1px solid #9c27b0;
-	border-right:1px solid #9c27b0;
-	border-left:1px solid #9c27b0;
+	border-top:1px solid #dc6eef;
+	border-right:1px solid #dc6eef;
+	border-left:1px solid #dc6eef;
 }
 .tab__button.tabMake a {
-	color:#9c27b0;}
+	color:#dc6eef;}
 .tab__button.tabMake.active {
-	background-color: #9c27b0;
+	background-color: #dc6eef;
 }
 
 
@@ -198,46 +233,59 @@ div#listArticle .list ul.btnList li.join button.participat {
 	color: #fff;
 }
 
-
+/*
+新着タブの色迷走中
+#bd0303 0%, #ef9a9a 20%, #f7c8d6 100%
+*/
 .contents__content.contentNew {
-	border-top: 2px solid #bd0303;
-	background: #f7c8d6;
-	background: -moz-linear-gradient( #bd0303 0%, #ef9a9a 20%, #f7c8d6 100%);
-	background: -webkit-gradient(linear, left top, left bottom, from(#bd0303), color-stop(50%, #ef9a9a)2 to(#f7c8d6));
-	background: -webkit-linear-gradient( #bd0303 0%, #ef9a9a 20%, #f7c8d6 100%);
-	background: -o-linear-gradient( #bd0303 0%, #ef9a9a 20%, #f7c8d6 100%);
-	background: linear-gradient( #bd0303 0%, #ef9a9a 20%, #f7c8d6 100%);
+	border-top: 2px solid #ea7e7e;
+	background: #f9e0e0;
+	background: -moz-linear-gradient( #ea7e7e 0%, #f7a5a5 20%, #f9e0e0 100%);
+background: -webkit-gradient(linear, left top, left bottom, from(#ea7e7e), color-stop(50%, #f7a5a5)2 to(#f9e0e0));
+	background: -webkit-linear-gradient( #ea7e7e 0%, #f7a5a5 20%, #f9e0e0 100%);
+	background: -o-linear-gradient( #ea7e7e 0%, #f7a5a5 20%, #f9e0e0 100%);
+	background: linear-gradient( #ea7e7e 0%, #f7a5a5 20%, #f9e0e0 100%);
 	
 }
+/*
+参加予定タブの色迷走中
+#4caf50 0%, #b0dbb2 20%, #c8e6c9 100%
+*/
+
 .contents__content.contentJoin {
-	border-top: 2px solid #4caf50;
+	border-top: 2px solid #57cc5c;
 	background: #f7c8d6;
-	background: -moz-linear-gradient( #4caf50 0%, #b0dbb2 20%, #c8e6c9 100%);
-	background: -webkit-gradient(linear, left top, left bottom, from(#4caf50), color-stop(50%, #b0dbb2)2 to(#c8e6c9));
-	background: -webkit-linear-gradient( #4caf50 0%, #b0dbb2 20%, #c8e6c9 100%);
-	background: -o-linear-gradient( #4caf50 0%, #b0dbb2 20%, #c8e6c9 100%);
-	background: linear-gradient( #4caf50 0%, #b0dbb2 20%, #c8e6c9 100%);
-
-
+	background: -moz-linear-gradient( #57cc5c 0%, #b0dbb2 20%, #c8e6c9 100%);
+	background: -webkit-gradient(linear, left top, left bottom, from(#57cc5c), color-stop(50%, #b0dbb2)2 to(#c8e6c9));
+	background: -webkit-linear-gradient( #57cc5c 0%, #b0dbb2 20%, #c8e6c9 100%);
+	background: -o-linear-gradient( #57cc5c 0%, #b0dbb2 20%, #c8e6c9 100%);
+	background: linear-gradient( #57cc5c 0%, #b0dbb2 20%, #c8e6c9 100%);
 }
+/*
+ウォッチタブの色迷走中
+#ffaa00 0%, #ffd8a0 20%, #fddeb1 100%
+*/
 .contents__content.contentWatch {
-	border-top: 2px solid #ff8f00;
+	border-top: 2px solid #ffaa00;
 	background: #f7c8d6;
-	background: -moz-linear-gradient( #ff8f00 0%, #ffd8a0 20%, #fddeb1 100%);
-	background: -webkit-gradient(linear, left top, left bottom, from(#ff8f00), color-stop(50%, #ffd8a0)2 to(#fddeb1));
-	background: -webkit-linear-gradient( #ff8f00 0%, #ffd8a0 20%, #fddeb1 100%);
-	background: -o-linear-gradient( #ff8f00 0%, #ffd8a0 20%, #fddeb1 100%);
-	background: linear-gradient( #ff8f00 0%, #ffd8a0 20%, #fddeb1 100%);
+	background: -moz-linear-gradient( #ffaa00 0%, #ffd8a0 20%, #fddeb1 100%);
+	background: -webkit-gradient(linear, left top, left bottom, from(#ffaa00), color-stop(50%, #ffd8a0)2 to(#fddeb1));
+	background: -webkit-linear-gradient( #ffaa00 0%, #ffd8a0 20%, #fddeb1 100%);
+	background: -o-linear-gradient( #ffaa00 0%, #ffd8a0 20%, #fddeb1 100%);
+	background: linear-gradient( #ffaa00 0%, #ffd8a0 20%, #fddeb1 100%);
 }
-
+/*
+主催イベントタブの色迷走中
+#9c27b0 0%, #dbb1e2 20%, #e1bee7 100%
+*/
 .contents__content.contentMake {
-	border-top: 2px solid #9c27b0;
+	border-top: 2px solid #dc6eef;
 	background: #f7c8d6;
-	background: -moz-linear-gradient( #9c27b0 0%, #dbb1e2 20%, #e1bee7 100%);
-	background: -webkit-gradient(linear, left top, left bottom, from(#9c27b0), color-stop(50%, #dbb1e2)2 to(#e1bee7));
-	background: -webkit-linear-gradient( #9c27b0 0%, #dbb1e2 20%, #e1bee7 100%);
-	background: -o-linear-gradient( #9c27b0 0%, #dbb1e2 20%, #e1bee7 100%);
-	background: linear-gradient( #9c27b0 0%, #dbb1e2 20%, #e1bee7 100%);
+	background: -moz-linear-gradient( #dc6eef 0%, #dbb1e2 20%, #e1bee7 100%);
+	background: -webkit-gradient(linear, left top, left bottom, from(#dc6eef), color-stop(50%, #dbb1e2)2 to(#e1bee7));
+	background: -webkit-linear-gradient( #dc6eef 0%, #dbb1e2 20%, #e1bee7 100%);
+	background: -o-linear-gradient( #dc6eef 0%, #dbb1e2 20%, #e1bee7 100%);
+	background: linear-gradient( #dc6eef 0%, #dbb1e2 20%, #e1bee7 100%);
 
 }
 

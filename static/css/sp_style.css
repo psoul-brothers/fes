@@ -9,11 +9,11 @@
 html, body, div, span, object, iframe, h1, h2, h3, h4, h5, h6, p, blockquote, pre, abbr, address, cite, code, del, dfn, em, img, ins, kbd, q, samp, small, strong, sub, sup, var, b, i, dl, dt, dd, ol, ul, li, fieldset, form, label, legend, table, caption, tbody, tfoot, thead, tr, th, td, article, aside, canvas, details, figcaption, figure, footer, header, hgroup, menu, nav, section, summary, time, mark, audio, video, a, input {
     margin:0;
     padding:0;
-    border:0;
+    /*border:0;*/
     outline:0;
     background:transparent;
 }
-body { line-height:1; position:relative;}
+body { line-height:1; position:relative;-webkit-text-size-adjust:100%;}
 article, aside, details, figcaption, figure, footer, header, hgroup, menu, nav, section { display:block; }
 ul, ol, dl { list-style:none; }
 del { text-decoration: line-through; }
@@ -76,26 +76,28 @@ header {
 header ul#menu-wrap{
   background-color: #cccccc;
   position: fixed;
-  z-index: 9999;
+  z-index: 300;
   top: 0;
   left: 0;
   transition: .3s;
-  width: 100%;
-  padding-top:2px;
-  padding-bottom:2px;
+  width: 90%;
+  padding-top:5px;
+  padding-bottom:5px;
   padding-left:5%;
   padding-right:5%;
 
 }
 header ul#menu-wrap li {
     display: inline-block;
+    vertical-align:middle
 }
 header ul#menu-wrap li.logo {
-    width: 50%;
+    width: 71%;
 
 }
 header ul#menu-wrap li.userImage {
-    width: 30%;
+    /*width: 20%;*/
+    margin-right: 10px;
 }
 
 header ul#menu-wrap li.userImage img {
@@ -105,7 +107,7 @@ header ul#menu-wrap li.userImage img {
 }
 
 header ul#menu-wrap li.hunMeny {
-    width: 10%;
+    /*width: 7%;*/
 }
 header ul#menu-wrap li.hunMeny span {
 	font-size: 150%;
@@ -196,7 +198,8 @@ header ul li.makeEvent a {
     font-weight: bold;
 }
 article {
-    width: 100%;
+    max-width: 400px;
+    margin: auto;
 }
 
 

@@ -10,4 +10,5 @@ from persol_users.models import PersolUser
 class Comment(models.Model):
     author = models.ForeignKey(settings.AUTH_USER_MODEL, on_delete=models.CASCADE)
     event = models.ForeignKey(Event, on_delete=models.CASCADE)
-    comment_text = models.TextField()
+    comment_text = models.TextField(max_length=255)
+

@@ -1,27 +1,52 @@
 {% extends 'common/base.html' %}
 {% block head %}
-     <title>ユーザー情報</title>
+        <link href="/static/css/user_style.css" rel="stylesheet">
+        <link href="/static/css/list_style.css" rel="stylesheet">
+        <title>{{ reference_user.surname}} {{ reference_user.name }}さんのプロフィール</title>
+
+
 {% endblock %}
 
 {% block contents %}
-<img src="/{{ reference_user.data.url }}" width="100" height="100" </img>
-<h1>{{ reference_user.name }}</h1>
-<ul>
 
-<li>{{ reference_user.employee_number}}</li>
-<li>{{ reference_user.surname}}</li>
-<li>{{ reference_user.mail_address}}</li>
-<li>{{ reference_user.self_introduction_text}}</li>
+<div id="listArticle">
+<h1> {{ reference_user.surname}} {{ reference_user.name }} さんのプロフィール</h1>
+    <div class="container">
+        <div class="profile_waku">
+            <div class="profile_photo">
+                <img src="/{{ reference_user.data.url }}">
+            </div>
+            
+            <div class="profile_namae">
+                {{ reference_user.surname}} {{ reference_user.name }}
+                {% if reference_user.employee_number ==  login_user.employee_number%}
+                　<a href="{% url 'persol_users:user_modify' %}">[編集]</a>
+                {% endif %}
+            </div>
+            
+            <div class="profile_maile">
+                <i class="fa fa-envelope-o fa-fw"></i><a href="mailto:{{ reference_user.mail_address}} ">{{ reference_user.mail_address}}</a>
+            </div>
+            
+            <div class="selfintroduction">
+                {{ reference_user.self_introduction_text|linebreaksbr }}
+            </div>
+            
+        </div>
+    </div>
 
-{% if reference_user.employee_number ==  login_user.employee_number%}
-　</ul>
-　<a href="{% url 'persol_users:user_modify' %}">編集</a>
-{% endif %}
 
 
 
 
 
-{% include 'persol_users/event_list.html' %}
+    <div class="contents">
+
+        <div class="contents__content contentJoin">
+            <div class="title_sankayotei">参加予定のイベント</div>
+            {% include 'persol_users/event_list.html' %}
+        </div>
+    </div>
+</div>
 
 {% endblock %}

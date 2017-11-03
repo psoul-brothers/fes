@@ -1,0 +1,89 @@
+{% extends 'common/base.html' %}
+{% block head %}
+    <link href="/static/css/detail_style.css" rel="stylesheet">
+    <script src="/static/js/detail.js"></script>
+    <title>{{ event.event_name }}:詳細ページ</title>
+{% endblock %}
+{% block contents %}
+    <article>
+      <div id="article">
+        <div class="event">
+          <p class="title">{{ event.event_name }}
+          {% if event.author == user %}
+          <a href="{% url 'events:event_edit' event.id %}">[イベント更新]</a>
+          {% endif %}
+          </p>
+          {% if event.event_datetime !='' %}
+            {% if event.question_date %}
+              <p class="questions"><a href="{% url 'questions:detail' event.question_date.id %}">開催日時アンケート中</a>
+            {% else %}
+              未定
+            {% endif %}
+            <p class="date"><i class="fa fa-calendar" aria-hidden="true"></i>
+            </p>
+          {% else %}
+            <p class="date"><i class="fa fa-calendar" aria-hidden="true"></i>
+             {{ event.event_date }}</p>
+            <p class="dateHour"><i class="fa fa-clock-o" aria-hidden="true"></i> {{ event.event_starttime }}</p>
+
+          {% endif %}
+          
+          {% if event.event_location != '' %}
+            {% if event.question_location %}
+            <a href="{% url 'questions:detail' event.question_location.id %}">開催場所アンケート中</a>
+            {% else %}
+              未定
+            {% endif %}
+            <p class="place"><i class="fa fa-map-marker" aria-hidden="true"></i></p>
+          {% else %}
+            <p class="place"><i class="fa fa-map-marker" aria-hidden="true"></i>{{ event.event_location }}</p>
+          {% endif %}
+          
+          
+          <p class="description">イベント概要：{{ event.nobreak_overview }}</p>
+          <p class="Organizer">主催者
+            <a href="{% url 'persol_users:detail' event.author.id %}"><img class="userImage" src="/{{ event.author.data.url }}" width="50"/></a> {{ event.author.fullname }}
+            {% if event.author != user %}
+            <a href="mailto:{{ event.author.mail_address }}"><i class="fa fa-envelope" aria-hidden="true"></i> </a>
+            {% endif %}
+          </p>
+          <p class="participant">参加者</p>
+          <ul class="participantIcons"><!-- 参加者分の画像を表示 -->
+            {% for member in event.members.all %}
+              <li><a href="{% url 'persol_users:detail' member.id %}"><img class="userImage" src="/{{ member.data.url }}" width="50"/></a></li>
+            {% endfor %}
+          </ul>
+          {% if event.author == user %}<!-- 主催者のみ表示 -->
+          検索用タグ:{{ event.search_tag }}<br>
+          {% else %}
+          <ul class="btn">
+            <li class="watch">
+            {% if user not in event.members.all %}
+              {# 参加していないときだけ表示 #}
+              <form action="{% url 'events:event_watch' event.id %}" method="post">{% csrf_token %}
+              {% if user in event.watch.all %}<!-- ログインユーザーがウォッチ中の場合-->
+                <button name="watch" value="leave"><i class="fa fa-star" aria-hidden="true"></i> ウォッチ中</button><!-- ウォッチ状態ではiタグのclass名が fa fa-star-o 変わります -->
+              {% else %}<!-- ログインユーザーがウォッチしていないの場合-->
+                <button name="watch" value="add"><i class="fa fa-star-o" aria-hidden="true"></i> ウォッチ</button><!-- ウォッチ状態ではiタグのclass名が fa fa-star-o 変わります -->
+              {% endif %}
+              </form>
+            {% endif %}
+            </li>
+            <li class="join">
+              <form action="{% url 'events:event_join' event.id %}" method="post">{% csrf_token %}
+              {% if user in event.members.all %}<!-- ログインユーザーがイベント参加予定の場合-->
+                <button name="join" value="leave"> イベントに参加予定</button>
+              {% else %}<!-- ログインユーザーがイベント未参加の場合-->
+                <button name="join" value="add" class="participat"> イベントに参加する</button>
+              {% endif %}
+              </form>
+            </li>
+          </ul>
+          {% endif %}
+        </div>
+        {% include 'comments/index.html' %}
+      </div>
+    </article>
+    
+    
+{% endblock %}

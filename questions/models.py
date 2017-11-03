@@ -73,7 +73,19 @@ class Question(models.Model):
         self.question_text = posted_params['question_text_'+type]
         self.save()
         self.set_choices(posted_params['question_choices_'+type])
+    
+    # タイプ別のデフォルトテキストをセットしたオブジェクトを作成
+    @classmethod
+    def get_default_question(cls, type):
+        if type == 'd':
+            title = '日時アンケート'
+            text = 'いつがいいですか？'
+        elif type == 'l':
+            title = '場所アンケート'
+            text = 'どこがいいですか？'
         
+        return cls(questionnaire_title=title, question_text=text)
+
         
                 
 class Choice(models.Model):

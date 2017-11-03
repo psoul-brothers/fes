@@ -1,0 +1,61 @@
+/* イベント作成ページ用スタイルシート（ユーザー登録ページとほぼ同じ） */
+
+div#article {
+	padding: 0 2%;
+}
+div#article h1 {
+	font-size: 120%;
+	font-weight: bold;
+}
+
+div#article form {
+	padding-top: 20px;
+}
+
+article .item {
+	margin-bottom: 20px;
+}
+
+article .item p {
+	font-weight: bold;
+
+}
+article .item p.question {
+	font-weight:normal;
+	font-size: 80%;
+
+}
+
+article .item p span {
+	font-size: 70%;
+	color: #f00000;
+	font-weight: normal;
+}
+
+article .item input {
+	border:1px solid #a9a9a9;
+	background-color: #ffffff;
+	font-size: 90%;
+	padding: 2px;
+}
+article .item.imgFile input {
+	border:none;
+}
+
+article .item select {
+	display:block;
+}
+article .item textarea {
+	width: 96%;
+}
+
+article form input.make {
+	background-color: #ffaa00;
+	border-radius: 5px;
+	color: #ffffff;
+	padding: 5px;
+	text-align: center;
+	margin: 30px auto;
+	display: block;
+	width: 60%;
+}

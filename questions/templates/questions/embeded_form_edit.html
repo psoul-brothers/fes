@@ -1,7 +1,7 @@
 <ul>
     <input type ="hidden" name="question_type" value="{{ question_type }}" />
     <label>{{ question.questionnaire_title }}</label>
-    <input type="hidden" name="questionnaire_title_{{ question_type }}" value='{{ question.questionnaire_title }}<'/>
+    <input type="hidden" name="questionnaire_title_{{ question_type }}" value='{{ question.questionnaire_title }} '/>
     <li>
         <label for="question_text_{{ question_type }}">質問文:</label>
         <input type="text" name="question_text_{{ question_type }}" id="question_text_{{ question_type }}" 

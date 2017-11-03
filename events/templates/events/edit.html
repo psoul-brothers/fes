@@ -1,25 +1,114 @@
 {% extends 'common/base.html' %}
+
+
 {% block head %}
-    <link rel="stylesheet" href="style.css" />
-    <title>{% block title %}イベント作成{% endblock %}</title>
+    <!--<link href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous">-->
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js" integrity="sha384-Tc5IQib027qvyjSMfHjOMaLkfuWVxZxUPnCJA7l2mCWNIpG9mGCD8wGNIcPD7Txa" crossorigin="anonymous"></script>
+
+    <link rel="stylesheet" href="/static/css/event_style.css" />
+    <title>{% block title %}{{event.event_name}}：編集ページ{% endblock %}</title>
 {% endblock %}
 {% block contents %}
-<h3>イベント更新画面</h3>
-<form action="{% url 'events:event_edit' event.id %}" method="POST">
+<link href="/static/css/eventRegist_style.css" rel="stylesheet">
+    <article>
+      <div id="article">
+      <h1>イベント更新ページ</h1>
+<form enctype="multipart/form-data" action="{% url 'events:event_edit' event.id %}" method="POST">
+    {{ form.non_field_errors }}
     {% csrf_token %}
-    <ul>
-        {{ form.as_ul }}
+        <div class="item">
+        <p>イベントタイトル　<span>※必須項目です</span></p>{{ form.event_name.errors }}
+        {{ form.event_name }}
+        </div>
+        <div class="item imgFile">
+          <p>イメージ画像</p>{{ form.event_image.errors }}
+          <p><img class="EventImage" src="{{ BASE_DIR }}/{{ event.event_image.url }}" width="90"/></p>
+          {{ form.event_image }}
+        </div>
+        <div class="item">
+        <p>開催日</p>{{ form.event_datetime.errors }}
+        {{ form.event_datetime }}
+        <p class="question">
+            開催日のアンケートをとる　
+            <input type="checkbox" name="use_question_d" value='1' id="use_question_d"
+                {% if event.question_date %} checked="true" {% endif %} >
+        </p>
+        </div>
+            {% if event.question_date %}
+            <label id="edit_question_d" >アンケート編集</label>
+            {% endif %}
+            <div id="question_form_d" style="display:none;">
+                {% include "questions/embeded_form_edit.html" with question_type="d" question=event.question_date_or_dummy %}
+                <i class="fa fa-times" aria-hidden="true" onclick="$('#question_form_d').hide()"></i>
+            </div>
+
+        <div class="item">
+        <p>開催場所</p>{{ form.event_location.errors }}
+        {{ form.event_location }}
+        <p class="question">
+            開催場所のアンケートをとる　
+            <input type="checkbox" name="use_question_l" value='1' id="use_question_l"
+                {% if event.question_location %} checked="true" {% endif %} >
+        </p>
+        </div>
+            {% if event.question_location %}
+            <label id="edit_question_l" >アンケート編集</label>
+            {% endif %}
+            <div id="question_form_l" style="display:none;">
+                {% include "questions/embeded_form_edit.html" with question_type="l" question=event.question_location_or_dummy %}
+                <i class="fa fa-times" aria-hidden="true" onclick="$('#question_form_l').hide()"></i>
+            </div>
+      　<div class="item">
+            <p>募集人数</p>{{ form.num_of_members.errors }}
+            {{ form.num_of_members }}
+        </div>
+        <div class="item">
+            <p>募集締切日</p>{{ form.dead_line.errors }}
+            {{ form.dead_line }}
+        </div>
+        <div class="item">
+        <p>概要</p>{{ form.overview.errors }}
+        {{ form.overview }}
+        </div>
+        <div class="item">
+        <p>検索用タグ</p>{{ form.search_tag.errors }}
+        {{ form.search_tag }}
+        </div>
+        <div class="item">
+        <p>イベントステータス</p>{{ form.event_status.errors }}
+            {{ form.event_status }}
+        </div>
+
+        <input value="イベントを更新する" type="submit" class="make"/>
         
-        {# アンケート編集フォーム #}
-        {% include "questions/embeded_form_edit.html" with question_type="d" question=event.question_date %}
-        {% include "questions/embeded_form_edit.html" with question_type="l" question=event.question_location %}
-    </ul>
-    
-<input type="submit" value="Submit" />
-</form>
+        </form>
+      </div><!-- /#article -->
+    </article>
 
-<form action="{% url 'events:event_index' %}">
-<input type="submit" value="Back" />
-</form>
+<!-- モーダルウィンドウを呼び出すボタン -->
+<button class="btn btn-default btn-sm del_confirm" data-toggle="modal" data-target="#deleteModal" >削除</button><br>
 
+<a href="{% url 'events:event_index' %}">[Back]</a>
+
+<!-- モーダルウィンドウの中身 -->
+<div class="modal fade" id="deleteModal" tabindex="1" role="dialog" aria-labelledby="deleteModalLabel" aria-hidden="true">
+  <div class="modal-dialog modalcenter">
+    <div class="modal-content">
+      <div class="modal-header">
+        <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+        <h4 class="modal-title" id="deleteModalLabel">確認</h4>
+      </div>
+      <div class="modal-body">
+        <p>このイベント[{{event.event_name}}]を削除しますか？</p>
+      </div>
+      <div class="modal-footer">
+        <a href="{% url 'events:event_delete' event.id %}" class="btn btn-primary" id="del_url">OK</a>
+        <button type="button" class="btn btn-default" data-dismiss="modal">Cancel</button>
+      </div>
+    </div>
+  </div>
+</div>
+
+
+<script type="text/javascript" src="/static/js/question_form_toggler.js"></script>
 {% endblock %}

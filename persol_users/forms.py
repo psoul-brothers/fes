@@ -44,6 +44,13 @@ class user_modify_Form(ModelForm):
     class Meta:
         model = PersolUser
         fields = ['surname', 'name', 'mail_address', 'self_introduction_text']
+
+    password = forms.CharField(label='パスワード',widget=PasswordInput(attrs={
+        'placeholder':'表示されません',
+         'type':"text",
+         'onfocus':"if (this.value == 'Password') this.value = '';",
+         'onfocus':"type='Password'",
+    }))
     data = forms.FileField(label='画像',required=False)    
 
     

@@ -1,10 +1,10 @@
 $(document).ready(function(){
 
     /******************************************
-    事前準備
-    *******************************************/
+     事前準備
+     *******************************************/
 
-    //タブボタンの数を取得
+        //タブボタンの数を取得
     var tabQuantity = $('.tab__button').length;
 
     //タブの長さとボディの長さの差分を取得
@@ -12,40 +12,22 @@ $(document).ready(function(){
 
 
     /******************************************
-    スクロール中かどうかの判定
-    *******************************************/
-    var isScrolling = 0 ;
-    var timeoutId ;
-    window.addEventListener( "scroll", function () {
-        isScrolling = 1 ;
-
-        // スクロールを停止して500ms後に終了とする
-        clearTimeout( timeoutId ) ;
-
-        timeoutId = setTimeout( function () {
-            isScrolling = 0 ;
-        }, 500 ) ;
-    } ) ;
-
-
-    /******************************************
-    スライダー発動
-    *******************************************/
-    if(isScrolling == 0){
+     スライダー発動
+     *******************************************/
     var slider = $('.contents').bxSlider({
         pager:false,
         controls:false,
+        oneToOneTouch:false,
+        swipeThreshold: 50,
         onSlideBefore: function($slideElement, oldIndex, newIndex){
             //スライドする時に関数を呼び出す。newIndexはスライダーの現在地。
             slideChange(newIndex);
         }
     });
-    };
 
     /******************************************
-    スライドする時に発動する関数。タブの表示調整を行う。
-    *******************************************/
-    if(isScrolling == 0){   
+     スライドする時に発動する関数。タブの表示調整を行う。
+     *******************************************/
     function slideChange(newIndex){
 
         //クラスを調整
@@ -58,11 +40,10 @@ $(document).ready(function(){
         //スクロール位置を調整
         $('.tabContainer').animate({ scrollLeft: scrollDestination }, 'slow');
 
-    }
     };
     /******************************************
-    タブボタンクリックで発動する関数
-    *******************************************/
+     タブボタンクリックで発動する関数
+     *******************************************/
 
     $('.tab__button').on('click',function(e){
 

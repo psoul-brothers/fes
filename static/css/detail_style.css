@@ -8,14 +8,58 @@ div#article {
 
 }
 
-
-div#article .event .title{
+div#article .event .noimgtitle{
 	font-size: 120%;
 	font-weight: bold;
 	padding-bottom: 3px;
 	border-bottom: 2px solid #cccccc;
 	margin-bottom: 20px;
+	/*text-shadow: 2px 2px 0px #fff,-2px -2px 0px #fff,2px 2px 0px #fff,-2px -2px 0px #fff;
+	background-color:#333;*/
 }
+
+.imageBox {
+  position: relative;
+  margin-bottom: 20px;
+  }
+
+.imageBox p.title {
+  position: absolute;
+  color: white;
+  font-size: 120%;
+  font-weight: bold;
+  top: 20%;	
+  left: 50%;
+  -ms-transform: translate(-50%,-50%);
+  -webkit-transform: translate(-50%,-50%);
+  transform: translate(-50%,-50%);
+  margin:0;
+  padding:0;
+  width: 80%;
+text-shadow: 
+-2px -2px 0px #5c5c5c, 
+2px -2px 0px #5c5c5c, 
+2px 2px 0px #5c5c5c, 
+-2px 2px 0px #5c5c5c;
+  }
+
+.imageBox img {
+	  width: 100%;
+	  max-height: 200px;
+	  object-fit: cover;
+  }
+
+
+
+
+
+d/*iv#article .event .title{
+	padding-bottom: 3px;
+	border-bottom: 2px solid #cccccc;
+	margin-bottom: 20px;
+	text-shadow: 2px 2px 0px #fff,-2px -2px 0px #fff,2px 2px 0px #fff,-2px -2px 0px #fff;
+	background-color:#333;
+}*/
 
 div#article .event .date{
 	font-size: 90%;
@@ -38,6 +82,7 @@ div#article .event .questions{
 }
 div#article .place + .questions{
 	margin-bottom:10px; : 
+	
 }
 
 div#article .event .questions a {
@@ -46,7 +91,7 @@ div#article .event .questions a {
 	color: #ffffff;
 	background-color: #0B610B;
 	font-size: 2.8vw;
-	border-radius: 2px;
+	border-radius: 3px;
 }
 
 div#article .event .description {
@@ -73,12 +118,83 @@ div#article .event ul.participantIcon li img {
 }
 
 
-div#article .event .Organizer {
+div#article .event .organizer {
 	font-size: 90%;
 	margin-bottom: 20px;
 }
 
+div#article .event .organizer img {
+    border-radius: 20px;
+    width: 40px;
+    height: 40px;
+    margin-top:-10px;
+}
 
+div#article .event .comment {}
+
+div#article .event .comment p {
+font-size:90%;
+}
+
+div#article .event .comment .comment-list {
+border:1px solid #999999;
+border-radius: 5px;
+padding:5px;
+font-size:90%;
+margin-bottom:20px;
+}
+
+div#article .event .comment .comment-list .comment-block {
+border-bottom:1px solid #333333;
+padding:5px 0;
+}
+div#article .event .comment .comment-list .comment-block:last-child {
+border:none;
+} 
+
+div#article .event .comment .comment-list .comment-block .comment-author,div#article .event .comment .comment-list .comment-block .comment-icon {
+display:inline-block;
+vertical-align:middle
+}
+
+div#article .event .comment .comment-list .comment-block .comment-author {
+margin-top:10px;}
+
+div#article .event .comment .comment-list .comment-block .comment-icon img{
+    border-radius: 20px;
+    width: 40px;
+    height: 40px;}
+
+div#article .event .comment .comment-list .comment-block .comment-body {
+border-top:1px dotted #999999;
+margin-top:5px;
+padding-top:5px;
+}
+
+div#article .event .comment .comment-list .comment-block .comment-form {
+margin-top:10px;
+
+}
+
+div#article .event .comment textarea {
+display:inline-block;
+vertical-align:middle;
+width:80%;
+}
+
+div#article .event .comment input {
+background-color:#666666;
+border-radius: 5px;
+padding:2px 5px;
+color:#ffffff;
+display:inline-block;
+vertical-align:middle;
+}
+
+.comment ul.comment-edit-buttons{
+	display:inline-block;
+	vertical-align: middle;
+}
 
 div#article .event li.watch {
 	display: inline-block;
@@ -86,13 +202,14 @@ div#article .event li.watch {
 	margin: 0 2%;
 }
 
+
 div#article ul.btn li.join  {
 	display:inline-block;
 	width: 40%;
 }
 
 div#article ul.btn {
-	margin-top: 10px;
+	margin: 10px 0 20px;
 }
 
 div#article ul.btn li a {
@@ -105,14 +222,22 @@ div#article ul.btn li a {
 	font-weight: bold;
 }
 
+ul.participantIcons>li{
+    display: inline-block;
+    vertical-align:middle
+}
+img.userImage{
+    border-radius: 20px;
+}
 
 div#article ul.btn li.watch button {
-	/*background-color:#ffca28;*/
+	background-color:#ffffff;
 	display:inline-block;
 	border-radius: 15px;
 	padding: 5px 20px;
 	border:3px solid #ff8f00;
 	color: #ff8f00;
+	
 }
 
 div#article ul.btn li.join button{
@@ -121,6 +246,7 @@ div#article ul.btn li.join button{
 	width: 100%;
 	border: 3px solid #FF4000;
 	color: #FF4000;
+	background-color:#ffffff;
 }
 div#article ul.btn li.join button.participat{
 	border-radius: 15px;
