@@ -15,7 +15,7 @@ class Question(models.Model):
 
     def get_sorted_choices(self):
         choices = []
-        for choice in self.choice_set.all().order_by('id'):
+        for choice in self.choice_set.all().order_by('choice_index'):
             choices.append(choice.choice_text)
         return choices
 
@@ -50,15 +50,21 @@ class Question(models.Model):
         for ch in self.choice_set.all():
             if ch.choice_text not in choices_text.splitlines():
                 ch.delete()
-        
+        # 今回の文字列にある選択肢は回答を保存、choiceに紐付くレコードを削除、再登録を行う
+        # 選択肢に入力順序を持たせ、その順序でソートする
         # 今回の文字列で選択し追加･更新
+        cnt = 0
         for text in choices_text.splitlines():
+            print text
+            print cnt
             c = self.choice_set.filter(choice_text=text).first()
             if c is None:
-                self.choice_set.create(choice_text=text)
+                self.choice_set.create(choice_text=text,choice_index = cnt)
             else:
                 c.choice_text = text
+                c.choice_index = cnt;
                 c.save()
+            cnt+=1
     
     
     # イベントのviewから使う、作成と変更のメソッド
@@ -73,6 +79,7 @@ class Question(models.Model):
 class Choice(models.Model):
     question = models.ForeignKey(Question, on_delete=models.CASCADE)
     choice_text = models.CharField(max_length=200)
+    choice_index = models.IntegerField()
 
 
 class Answer(models.Model):
