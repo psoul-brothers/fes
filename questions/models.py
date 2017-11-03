@@ -14,10 +14,7 @@ class Question(models.Model):
         return PersolUser.objects.filter(id__in = persol_user_ids)
 
     def get_sorted_choices(self):
-        choices = []
-        for choice in self.choice_set.all().order_by('choice_index'):
-            choices.append(choice.choice_text)
-        return choices
+        return self.choice_set.all().order_by('choice_index')
 
     def get_answer(self,u_id,c_id):
         answerCount = Answer.objects.filter(question = self,persol_user = u_id,choice = c_id).count()
@@ -28,7 +25,7 @@ class Question(models.Model):
     def get_user_answers(self):
         user_answers_dict = {}
         choice_answer_dict = {}
-        choices = self.choice_set.all()
+        choices = self.get_sorted_choices()
         for persol_user in self.get_users():
             print "models"
             print choices
@@ -42,7 +39,7 @@ class Question(models.Model):
     
     # 
     def get_choices_text(self):
-        return '\n'.join(self.choice_set.values_list('choice_text', flat=True))
+        return '\n'.join(self.get_sorted_choices().values_list('choice_text', flat=True))
         
     # 選択肢を設定
     def set_choices(self, choices_text):
@@ -93,6 +90,11 @@ class Choice(models.Model):
     choice_text = models.CharField(max_length=200)
     choice_index = models.IntegerField()
 
+    def get_answer(self,u_id):
+        answerCount = Answer.objects.filter(choice = self,persol_user = u_id).count()
+        if answerCount == 0:
+            return "-"
+        return Answer.objects.filter(choice = self,persol_user = u_id)[0].answer_text
 
 class Answer(models.Model):
     persol_user = models.ForeignKey(PersolUser, on_delete=models.CASCADE)
