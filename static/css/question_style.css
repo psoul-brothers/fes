@@ -1,0 +1,52 @@
+/* ラジオボタンの見た目 */
+.question_input input[type="radio"] {
+    display:none;
+}
+.question_input label {
+    display:block;
+    width:2em;
+    /*height:2em;*/
+    text-align: center;
+    border-radius: 1em;
+    background-color: #a1b91d;
+    color: #fff;
+}
+.question_input input[type="radio"]:checked + label{
+    background-color: #FF0000;
+    color: #fff;
+}
+
+
+
+
+/* テーブルの見た目 */
+table.question {
+    border-collapse: collapse;
+    width:100%;
+    white-space: nowrap;　/*tableのセル内にある文字の折り返しを禁止*/
+}
+table.question th {
+    padding: 10px;
+    font-weight: bold;
+    vertical-align: top;
+    border: 1px solid #ccc;
+}
+table.question td {
+    padding: 10px;
+    vertical-align: top;
+    border: 1px solid #ccc;
+}
+
+/* 部分的な横スクロール */
+.scroll{
+    overflow: auto;
+}
+.scroll::-webkit-scrollbar{　　/*tableにスクロールバーを追加*/
+ height: 5px;
+}
+.scroll::-webkit-scrollbar-track{　　/*tableにスクロールバーを追加*/
+ background: #F1F1F1;
+}
+.scroll::-webkit-scrollbar-thumb {　　/*tableにスクロールバーを追加*/
+ background: #BCBCBC;
+}
