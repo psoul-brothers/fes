@@ -107,6 +107,24 @@ class Event(models.Model):
         if self.event_status == "E": return "イベント終了"
         else:return ""
 
+    def datetimeForIndex(self):
+        if self.event_datetime:
+            return self.event_datetime
+        
+        if not self.question_date:
+            return "未定"
+        else:
+            return "アンケート中"
+
+    def locationForIndex(self):
+        if self.event_location:
+            return self.event_location
+        
+        if not self.question_location:
+            return "未定"
+        else:
+            return "アンケート中"
+
 """
 python manage.py makemigrations
 python manage.py migrate
