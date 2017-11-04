@@ -207,6 +207,21 @@ div#listArticle .list ul.btnList li.update button {
 .tab__button.tabMake.active {
 	background-color: #dc6eef;
 }
+/*
+開催済みイベントタブの色
+*/
+.tab__button.tabEnd {
+	border-top:1px solid #999999;
+	border-right:1px solid #999999;
+	border-left:1px solid #999999;
+}
+.tab__button.tabEnd a {
+	color:#999999;}
+.tab__button.tabEnd.active {
+	background-color: #999999;
+}
+
+
 
 
 .tab__button{
@@ -288,6 +303,20 @@ background: -webkit-gradient(linear, left top, left bottom, from(#ea7e7e), color
 	background: linear-gradient( #dc6eef 0%, #dbb1e2 20%, #e1bee7 100%);
 
 }
+
+/*開催済みイベントタブ*/
+.contents__content.contentMake {
+	border-top: 2px solid #999999;
+	background: #888888;
+	background: -moz-linear-gradient( #999999 0%, #777777 20%, #555555 100%);
+	background: -webkit-gradient(linear, left top, left bottom, from(#999999), color-stop(50%, #777777)2 to(#555555));
+	background: -webkit-linear-gradient( #999999 0%, #777777 20%, #555555 100%);
+	background: -o-linear-gradient( #999999 0%, #777777 20%, #555555 100%);
+	background: linear-gradient( #999999 0%, #777777 20%, #555555 100%);
+
+}
+
+
 
 .contents__content{
     padding-top:15px;
