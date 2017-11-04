@@ -8,8 +8,8 @@
                 </i> {{ event.event_name }}
               </p>
               <div class="box">
-                <div class="date">{{ event.event_date }}</div>
-                <div class="place">{{ event.event_location }}</div>
+                <div class="date">{{ event.datetimeForIndex }}</div>
+                <div class="place">{{ event.locationForIndex }}</div>
               </div>
               <p class="description">{{ event.overview | linebreaksbr }}</p>
                   <ul class="btnList">

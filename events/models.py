@@ -31,7 +31,7 @@ class Event(models.Model):
     event_datetime = models.DateTimeField('開催日時', null=True)
     event_location = models.CharField('開催場所', max_length=200, blank=True)
     num_of_members = models.IntegerField('募集人数')
-    dead_line      = models.DateField('募集締切日', blank=True)
+    dead_line      = models.DateField('募集締切日', blank=True,null=True)
     overview       = models.TextField('イベント概要')
 #    comment = models.ManyToManyField(Comment)
     like           = models.ManyToManyField(PersolUser,verbose_name='いいね', related_name='like')
@@ -106,6 +106,24 @@ class Event(models.Model):
         if self.event_status == "N": return "募集中"
         if self.event_status == "E": return "イベント終了"
         else:return ""
+
+    def datetimeForIndex(self):
+        if self.event_datetime:
+            return self.event_datetime
+        
+        if not self.question_date:
+            return "未定"
+        else:
+            return "アンケート中"
+
+    def locationForIndex(self):
+        if self.event_location:
+            return self.event_location
+        
+        if not self.question_location:
+            return "未定"
+        else:
+            return "アンケート中"
 
 """
 python manage.py makemigrations
