@@ -18,13 +18,13 @@
     width: 75%
 }
 #topLogin li.id input{
-    font-size:60%;
+    font-size:100%;
     padding:5px 2px;
 }
 
 #topLogin li.pw input{
     width: 90%;
-    font-size:60%;
+    font-size:100%;
     padding:5px 2px;
 }
 #topLogin li.btn{

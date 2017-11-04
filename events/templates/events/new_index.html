@@ -15,6 +15,17 @@ http://weboook.blog22.fc2.com/blog-entry-412.html
 <article>
   <div id="listArticle">
   <h1>イベント一覧</h1>
+  <form action="{% url 'events:event_index' %}" method="POST">{% csrf_token %}
+  <!--<input type="text" name='word' value={{search_word}} onblur="if (this.value == '') this.value = 'search';" onfocus="if (this.value == 'search') this.value = '';"/>-->
+　<input type="text" name='word' value={{search_word}}>
+    <select id="sort_id" name="sort">
+    <option value="" selected="selected">-並び替え-</option>
+    <option value="like">いいね数</option>
+    <option value="watch">ウォッチ数</option>
+    <option value="ascforday">開催日が近い順</option>
+  </select>
+  <input type="submit" value="検索">
+　</form>
     <div class="container">
         <div class="tabContainer">
             <div class="tab">
@@ -22,7 +33,7 @@ http://weboook.blog22.fc2.com/blog-entry-412.html
                 <div class="tab__button tabJoin"><a href="#">参加</a></div>
                 <div class="tab__button tabWatch"><a href="#">ウォッチ</a></div>
                 <div class="tab__button tabMake"><a href="#">主催</a></div>
-                <div class="tab__button tabMake"><a href="#">開催済み</a></div>
+                <div class="tab__button tabEnd"><a href="#">開催済み</a></div>
             </div>
         </div>
         <div class="contents">
@@ -70,7 +81,7 @@ http://weboook.blog22.fc2.com/blog-entry-412.html
             <p class="noevent">主催しているイベントはありません。</p>
             {% endif %}
             </div>
-            <div class="contents__content contentMake"><!-- 開催日が過去のイベント -->
+            <div class="contents__content contentEnd"><!-- 開催日が過去のイベント -->
             {% if old_events %}
             {% for event in old_events %}
 <!-- ▼このdivをイベントの数だけ複製▼ -->
