@@ -3,17 +3,20 @@
     display:none;
 }
 .question_input label {
-    display:block;
-    width:2em;
-    /*height:2em;*/
+    display: table-cell;
     text-align: center;
+    vertical-align: middle;
+    
+    width:2em;
+    height:2em;
     border-radius: 1em;
-    background-color: #a1b91d;
+    
+    background-color: lightgrey;
     color: #fff;
 }
 .question_input input[type="radio"]:checked + label{
-    background-color: #FF0000;
-    color: #fff;
+    background-color: #57cc5c;
+    /*color: #fff;*/
 }
 
 
@@ -33,7 +36,8 @@ table.question th {
 }
 table.question td {
     padding: 10px;
-    vertical-align: top;
+    text-align: center;
+    vertical-align: middle;
     border: 1px solid #ccc;
 }
 
