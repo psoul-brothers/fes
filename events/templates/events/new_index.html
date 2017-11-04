@@ -70,7 +70,7 @@ http://weboook.blog22.fc2.com/blog-entry-412.html
             <p class="noevent">主催しているイベントはありません。</p>
             {% endif %}
             </div>
-            <div class="contents__content contentMake"><!-- 自分が主催者のイベント -->
+            <div class="contents__content contentMake"><!-- 開催日が過去のイベント -->
             {% if old_events %}
             {% for event in old_events %}
 <!-- ▼このdivをイベントの数だけ複製▼ -->
@@ -78,7 +78,7 @@ http://weboook.blog22.fc2.com/blog-entry-412.html
 <!-- ▲このdivをイベントの数だけ複製▲ -->
             {% endfor %}
             {% else %}
-            <p class="noevent">主催しているイベントはありません。</p>
+            <p class="noevent">開催済みのイベントはありません。</p>
             {% endif %}
             </div>
         </div>

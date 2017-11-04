@@ -1,4 +1,5 @@
-#coding: utf-8
+#!/usr/bin/python
+# -*- coding: utf-8 -*- 
 from django.shortcuts import get_list_or_404,get_object_or_404, render
 from django.shortcuts import render
 from django.http import HttpResponseRedirect, HttpResponse
@@ -8,7 +9,11 @@ from django.core.urlresolvers import reverse
 from django.utils import timezone
 from django.contrib.auth.decorators import login_required
 
+import sys, codecs
 import traceback
+reload(sys)
+sys.setdefaultencoding("utf-8")
+sys.stdout = codecs.getwriter("utf-8")(sys.stdout)
 
 @login_required
 def create(request):
@@ -30,7 +35,7 @@ def registration(request):
     else:
         return HttpResponseRedirect(reverse('questions:index'))
 
-@login_required        
+@login_required
 def detail(request, question_id):
     question = get_object_or_404(Question, pk=question_id)
     choices = []
@@ -39,10 +44,12 @@ def detail(request, question_id):
     
     # 検証用(実装後削除)
     print "view user_answers_dict 長さ:%d" % len(user_answers_dict)
-    for choice_answer in user_answers_dict.values(): 
-        print choice_answer
+    for choice_answer in user_answers_dict.values():
+        # print choice_answer
         for answer in choice_answer.values():
             print answer
+    for ch in choices:
+        print ch.choice_text
     return render(request, 'questions/detail.html', {'question': question, 'choices': choices, 'user_answers_dict':user_answers_dict})
 
 def index(request):
