@@ -43,6 +43,7 @@ def event_index(request):
             event_list = event_list.reverse()
         """
     else:
+        search_word = ""
         event_list = Event.objects.order_by('id').reverse()
 # get each event
     
@@ -72,7 +73,8 @@ def event_index(request):
         'joing_events'     : joing_events,
         'watching_events'  : watching_events,
         'organized_events' : organized_events,
-        'old_events'       : old_events
+        'old_events'       : old_events,
+        'search_word'      : search_word
     }
 #    return render(request, 'events/index.html', context)
     return render(request, 'events/new_index.html', context)
@@ -155,14 +157,15 @@ def event_edit(request, event_id):
             if form.is_valid():
                 form.save()     # image以外をデータコミット
             try : image_tmp = request.FILES['event_image']
-            except : image_tmp = 'event_image/default.png'
+            except :
+                image_tmp = event.event_image
             finally:
-                print image_tmp
                 event.event_image = image_tmp
                 event.save()
                 if old_image != '':
-                    if old_image != os.getcwd() + '/media/event_image/default.png': #/home/ubuntu/workspace/media/event_image/default.png
-                        os.remove(old_image)
+                    if old_image != event.event_image.path:
+                        if old_image != os.getcwd() + '/media/event_image/default.png': #/home/ubuntu/workspace/media/event_image/default.png
+                            os.remove(old_image)
                 
 #                send_to=['psoul.brothers@gmail.com','psoul.brothers+test1@gmail.com','psoul.brothers+test2@gmail.com']
                 subject, list_of_mail_to, send_from = u'イベント[{}]が更新されました。'.format(event.event_name), event.mailing_list(), 'from@example.com'

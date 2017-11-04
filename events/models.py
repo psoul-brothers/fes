@@ -27,7 +27,7 @@ class Event(models.Model):
     )
     author         = models.ForeignKey(PersolUser, verbose_name='作成者', related_name='author')
     event_name     = models.CharField('イベントタイトル', max_length=200)
-    event_image    = models.ImageField('イメージ画像', upload_to='event_image', blank=True)
+    event_image    = models.ImageField('イメージ画像', upload_to='event_image', blank=True, null=True)
     event_datetime = models.DateTimeField('開催日時',blank=True,null=True)
     event_location = models.CharField('開催場所', max_length=200, blank=True)
     num_of_members = models.IntegerField('募集人数')

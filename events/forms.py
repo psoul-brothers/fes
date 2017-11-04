@@ -12,11 +12,11 @@ class EventForm(ModelForm):
     class Meta:
         model = Event
         fields = [
-            'event_name', 'event_datetime', 'event_image',
+            'event_name', 'event_datetime',
             'event_location', 'num_of_members', 'dead_line', 'overview', 
             'search_tag','event_status'
         ]
-#    event_image = forms.FileField(label='画像',required=False)
+    event_image = forms.FileField(label='画像',required=False)
 
 
 class CreateForm(forms.Form):
@@ -26,7 +26,7 @@ class CreateForm(forms.Form):
     event_datetime = forms.DateTimeField(required=False, label='開催日時')
     event_location = forms.CharField(required=False, max_length=200, label='開催場所')
     num_of_members = forms.CharField(max_length=200, label='募集人数', widget=NumberInput)
-    dead_line      = forms.DateField(label='募集締切日')
+    dead_line      = forms.DateField(label='募集締切日', required=False)
     overview       = forms.CharField(max_length=2000, label='概要',widget=forms.Textarea)
     search_tag     = forms.CharField(required=False,max_length=2000, label='検索用タグ',widget=forms.Textarea)
 
