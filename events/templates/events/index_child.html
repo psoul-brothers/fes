@@ -8,8 +8,8 @@
                 </i> {{ event.event_name }}
               </p>
               <div class="box">
-                <div class="date">{{ event.datetimeForIndex }}</div>
-                <div class="place">{{ event.locationForIndex }}</div>
+                <div class="date"><i class="fa fa-calendar" aria-hidden="true"></i> {{ event.datetimeForIndex }}</div>
+                <div class="place"><i class="fa fa-map-marker" aria-hidden="true"></i> {{ event.locationForIndex }}</div>
               </div>
               <p class="description">{{ event.overview | linebreaksbr }}</p>
                   <ul class="btnList">
