@@ -20,9 +20,14 @@
           <a href="{% url 'events:event_edit' event.id %}"><font size="1"> [編集]</font></a>
           {% endif%}
           </p>
+          
+          <!--　アンケート (日時)-->
           {% if not event.event_datetime %}
             {% if event.question_date %}
-              <p class="questions"><a href="{% url 'questions:detail' event.question_date.id %}">アンケートに答える</a>
+              {# 回答できるのはウォッチャと参加者だけ #}
+              {% if user in event.members.all or user in event.watch.all %}
+                <p class="questions"><a href="{% url 'questions:detail' event.question_date.id %}">アンケートに答える</a>
+              {% endif %}
               <p class="date"><i class="fa fa-calendar" aria-hidden="true"></i> アンケート中</p>
             {% else %}
               <p class="date"><i class="fa fa-calendar" aria-hidden="true"></i> 未定</p>
@@ -31,10 +36,14 @@
             <p class="date"><i class="fa fa-calendar" aria-hidden="true"></i> {{ event.event_date }}</p>
             <p class="dateHour"><i class="fa fa-clock-o" aria-hidden="true"></i> {{ event.event_starttime }}</p>
           {% endif %}
-
+          
+          <!--　アンケート (場所)-->
           {% if not event.event_location %}
             {% if event.question_location %}
-              <p class="questions"><a href="{% url 'questions:detail' event.question_location.id %}">アンケートに答える</a></p>
+            {# 回答できるのはウォッチャと参加者だけ #}
+              {% if user in event.members.all or user in event.watch.all %}
+                <p class="questions"><a href="{% url 'questions:detail' event.question_location.id %}">アンケートに答える</a></p>
+              {% endif %}
               <p class="place"><i class="fa fa-map-marker" aria-hidden="true"></i> アンケート中</p>
             {% else %}
               <p class="place"><i class="fa fa-map-marker" aria-hidden="true"></i> 未定</p>
@@ -42,6 +51,8 @@
           {% else %}
             <p class="place"><i class="fa fa-map-marker" aria-hidden="true"></i>{{ event.event_location }}</p>
           {% endif %}
+          
+          
           <p class="description">イベント概要：{{ event.nobreak_overview }}</p>
           {% if event.author != user %}
             <p class="questions"><a href="mailto:{{ event.author.mail_address }}"><i class="fa fa-envelope" aria-hidden="true"></i> 問い合わせ</a></p>

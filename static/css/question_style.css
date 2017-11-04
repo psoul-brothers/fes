@@ -29,18 +29,25 @@ input.post_answer {
     background-color: #57cc5c;
     /*color: #fff;*/
 }
+.question_input li {
+    display:inline-block;
+}
 
 
 /* テーブルの見た目 */
 table.question {
     border-collapse: collapse;
-    width:100%;
-    white-space: nowrap;　/*tableのセル内にある文字の折り返しを禁止*/
+    table-layout:fixed;
+    width: 100%;
+    
+    font-weight: normal;
+    font-size: 80%;
+    word-wrap:break-word;
 }
 table.question th {
     background-color: #eee;
     text-align: center;
-    width: 3em;
+    width: 3.5em;
     padding: 5px;
     border: 1px solid #ddd;
 }
@@ -51,12 +58,15 @@ table.question td {
     border: 1px solid #ddd;
 }
 
-th.weak {
-    font-weight: normal;
-}
-td.user_name {
+table.question .user_name {
     background-color: #eee;
-    font-weight: bold;
+}
+table.question .total{
+    background-color: #eef7f7;
+}
+
+.unit_string{
+    font-size:30%;
 }
 
 

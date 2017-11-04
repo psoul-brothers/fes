@@ -5,11 +5,12 @@
     <title>アンケート回答ページ</title>
 {% endblock %}
 {% block contents %}
-<h1>{{ question.question_text }}</h1>
+<h3>{{ question.question_text }}</h3>
 
 {% if error_message %}<p><strong>{{ error_message }}</strong></p>{% endif %}
+<form action="{% url 'questions:answerRegistration' question.id %}" method="post">
+{% csrf_token %}
 
-{% if question.get_users %}
 <div class="scroll">
 <table border="1" class="question">
   <thead>
@@ -28,68 +29,46 @@
         {% for answer in choice_answer.values %}
           <td>{{ answer }}</td>
         {% endfor %}
-        <!--  https://qiita.com/tell-k/items/710c79ae9ab47f7a4f7c 
-              Choice.objects.values('question').distinct()
-              # answer.values("user").filter(question = id).distinct() とか？
-              Answer.objects.values("user").filter(question = id).distinct() こんな？
-        -->
       </tr>
       {% endfor %}
-    {% else %}
-    {% endif %}
-  </tbody>
-    <!--<input type="radio" name="choice" id="choice{{ forloop.counter }}" value="{{ choice.id }}" />-->
-    <!--<label for="choice{{ forloop.counter }}">{{ choice.choice_text }}</label><br />-->
-</table>
-</div>
-{% else %}
-<p>まだだれも回答していません</p>
-{% endif %}
-
-<form action="{% url 'questions:answerRegistration' question.id %}" method="post">
-{% csrf_token %}
-<div class="scroll">
-<table border="1" class="question question_input">
-      <thead>
-        <tr>
-　        <th></th>
-        {% for choice in choices %}
-          <th>{{ choice.choice_text }}</th>
-        {% endfor %}
+      
+      {% for opt in answer_options %}
+        <tr class="total">
+          <td>{{ opt }}</td>
+          {% for choice in choices %}
+            <td class="total">{{ choice|answer_count:opt }}<span class="unit_string">人</span></td>
+          {% endfor %}
         </tr>
-      </thead>
-      <tbody>
-          <tr>
-            <td class="user_name">
-              {{ request.user.surname  }}
-            </td>
-            {% for choice in question.get_sorted_choices %}
-            <td>
-              <input type="hidden" name="choiceId" value="{{choice.id}}"/>
-              <ul>
-                <!--<label for="answer_text">回答:</label>-->
-                <!--{{ form.select_answer.label }}：-->
-                <!--{{ form.select_answer }}-->
-                <!--{% for radio in form.select_answer  %}-->
-                <!--  {{ radio.tag }}-->
-                <!--  <label for="answer_text_{{ radio.index }}">{{ radio.choice_label }}</label>-->
-                <!--{% endfor %}-->
-                <li><input type="radio" name="answer_text_{{choice.id}}" id="answer_text_ok_for_{{choice.id}}" value="○" {{choice|get_answer:request.user.id|is_checked:"○"}}/><label for="answer_text_ok_for_{{choice.id}}">○</label></li>
-                <li><input type="radio" name="answer_text_{{choice.id}}" id="answer_text_soso_for_{{choice.id}}" value="△" {{choice|get_answer:request.user.id|is_checked:"△"}}/><label for="answer_text_soso_for_{{choice.id}}">△</label></li>
-                <li><input type="radio" name="answer_text_{{choice.id}}" id="answer_text_ng_for_{{choice.id}}" value="×" {{choice|get_answer:request.user.id|is_checked:"×"}}/><label for="answer_text_ng_for_{{choice.id}}">×</label></li>
-                <script type="text/javascript">
-                  // 回答が無いときは○を選択
-                  if($("input[name=answer_text_{{choice.id}}]:checked").length == 0){
-                    $("#answer_text_ok_for_{{choice.id}}").prop("checked", true);
-                  }
-                </script>
-              </ul>
-            </td>
-            {% endfor %}
-          </tr>
-      </tbody>
+      {% endfor %}
+    {% else %}
+      <td></td><td colspan={{ question.choice_set.all.count }}>まだ誰も回答していません</td>
+    {% endif %}
+    <!-- 回答欄 -->
+    <tr class ="question_input">
+      <td class="user_name">
+        {{ request.user.surname  }}
+      </td>
+      {% for choice in question.get_sorted_choices %}
+      <td>
+        <input type="hidden" name="choiceId" value="{{choice.id}}"/>
+        <ul>
+          <li><input type="radio" name="answer_text_{{choice.id}}" id="answer_text_ok_for_{{choice.id}}" value="○" {{choice|get_answer:request.user.id|is_checked:"○"}}/><label for="answer_text_ok_for_{{choice.id}}">○</label></li>
+          <li><input type="radio" name="answer_text_{{choice.id}}" id="answer_text_soso_for_{{choice.id}}" value="△" {{choice|get_answer:request.user.id|is_checked:"△"}}/><label for="answer_text_soso_for_{{choice.id}}">△</label></li>
+          <li><input type="radio" name="answer_text_{{choice.id}}" id="answer_text_ng_for_{{choice.id}}" value="×" {{choice|get_answer:request.user.id|is_checked:"×"}}/><label for="answer_text_ng_for_{{choice.id}}">×</label></li>
+          <script type="text/javascript">
+            // 回答が無いときは○を選択
+            if($("input[name=answer_text_{{choice.id}}]:checked").length == 0){
+              $("#answer_text_ng_for_{{choice.id}}").prop("checked", true);
+            }
+          </script>
+        </ul>
+      </td>
+      {% endfor %}
+    </tr>
+  </tbody>
 </table>
 </div>
+
 <input type="submit" value="回答を送信" class="post_answer" />
 </form>
 
