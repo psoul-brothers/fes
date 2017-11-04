@@ -19,10 +19,12 @@ DEFAULT_EVENT_IMG = 'event_image/default.png'
 @login_required
 def event_index(request):
     selectedNew = "selected=\"selected\""
+    selectedOld = ""
     selectedWatch = ""
     selectedMostmember = ""
     selectedLeastmember = ""
     selectedAscforday = ""
+    selectedDescforday = ""
     selectedDeadline = ""
 
     if request.method == 'POST':
@@ -36,31 +38,33 @@ def event_index(request):
         )
         event_list = search_results
     # Sort order definition
-        if request.POST['sort'] == 'watch':
-            event_list = event_list.annotate(watch_num = Count('watch')).order_by('-watch_num')
-            selectedWatch = "selected=\"selected\""    
+        if request.POST['sort'] == '2':
+            event_list = Event.objects.order_by('id')
+            selectedOld = "selected=\"selected\""
 
-        elif request.POST['sort'] == 'mostmember':
+        elif request.POST['sort'] == '3':
+            event_list = event_list.annotate(watch_num = Count('watch')).order_by('-watch_num')
+            selectedWatch = "selected=\"selected\""
+
+        elif request.POST['sort'] == '4':
+            event_list = event_list.annotate(member_num = Count('members')).order_by('-member_num')
             selectedMostmember = "selected=\"selected\""
 
-        elif request.POST['sort'] == 'leastmember':
+        elif request.POST['sort'] == '5':
+            event_list = event_list.annotate(member_num = Count('members')).order_by('-member_num').reverse()
             selectedLeastmember = "selected=\"selected\""
 
-        elif request.POST['sort'] == 'ascforday':
+        elif request.POST['sort'] == '6':
             selectedAscforday = "selected=\"selected\""
-            event_list = event_list.filter(
-                Q(event_datetime__gte = datetime.now()) | #今日以降 または
-                Q(event_datetime__isnull = True)          #日付がNULL
-            ).order_by('event_datetime')
-        
-        elif request.POST['sort'] == 'deadline':
-            selectedDeadline = "selected=\"selected\""
+            event_list = event_list.order_by('event_datetime')
 
-#            event_list = event_list.order_by('event_datetime')
-        """降順指定したい場合
-        if request.POST['sort'] == "desc":
-            event_list = event_list.reverse()
-        """
+        elif request.POST['sort'] == '7':
+            selectedDescforday = "selected=\"selected\""
+            event_list = event_list.order_by('event_datetime').reverse()
+
+        elif request.POST['sort'] == '8':
+            selectedDeadline = "selected=\"selected\""
+            event_list = event_list.order_by('dead_line').reverse()
     else:
         search_value = "value=\"\""
         event_list = Event.objects.order_by('id').reverse()
@@ -70,7 +74,7 @@ def event_index(request):
         Q(author = request.user.id)           | #自分が主催者
         Q(members = request.user.id)          | #or自分がメンバーにいる
         Q(event_datetime__lt = datetime.now())| #or 開催日が今日以前
-        Q(dead_line__lt = datetime.now())      | #or 募集締め切り日が今日以前
+        Q(dead_line__lt = datetime.now())     | #or 募集締め切り日が今日以前
         Q(event_status = 'E')                   #or ステータスが募集終了
     )
     joing_events     = event_list.filter(Q(members = request.user.id)).order_by('event_datetime').reverse().exclude(
@@ -93,13 +97,15 @@ def event_index(request):
         'watching_events'  : watching_events,
         'organized_events' : organized_events,
         'old_events'       : old_events,
-        'search_value'      : search_value,
-        'selectedN':selectedNew,
-        'selectedW':selectedWatch,
-        'selectedM':selectedMostmember,
-        'selectedL':selectedLeastmember,
-        'selectedA':selectedAscforday,
-        'selectedD':selectedDeadline,
+        'search_value'     : search_value,
+        'selected1':selectedNew,
+        'selected2':selectedOld,
+        'selected3':selectedWatch,
+        'selected4':selectedMostmember,
+        'selected5':selectedLeastmember,
+        'selected6':selectedAscforday,
+        'selected7':selectedDescforday,
+        'selected8':selectedDeadline,
     }
 #    return render(request, 'events/index.html', context)
     return render(request, 'events/new_index.html', context)

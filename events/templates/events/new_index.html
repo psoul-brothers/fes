@@ -24,12 +24,14 @@ function kakunin(){
   <form name="search" action="{% url 'events:event_index' %}" method="POST">{% csrf_token %}
   <!--<input type="text" name='word' value={{search_word}} onblur="if (this.value == '') this.value = 'search';" onfocus="if (this.value == 'search') this.value = '';"/>-->
   <select id="sort_id" name="sort" onChange="kakunin()">
-    <option value="new" {{selectedN|safe}}>作成順</option>
-    <option value="watch" {{selectedW|safe}}>注目度が高い！</option>
-    <option value="mostmember" {{selectedM|safe}}>人がいっぱい！</option>
-    <option value="leastmember" {{selectedL|safe}}>少数精鋭！</option>
-    <option value="ascforday" {{selectedA|safe}}>開催まであと少し！</option>
-    <option value="deadline" {{selectedD|safe}}>期日が近い順</option>
+    <option value="1" {{selected1|safe}}>作成日が新しい</option>
+    <option value="2" {{selected2|safe}}>作成日が古い</option>
+    <option value="3" {{selected3|safe}}>ウォッチ数が多い</option>
+    <option value="4" {{selected4|safe}}>参加者が多い</option>
+    <option value="5" {{selected5|safe}}>参加者が少ない</option>
+    <option value="6" {{selected6|safe}}>開催日が新しい</option>
+    <option value="7" {{selected7|safe}}>開催日が古い</option>
+    <option value="8" {{selected8|safe}}>期日降順</option>
   </select>
   <br>
 　<input type="text" name='word' {{search_value|safe}}>
