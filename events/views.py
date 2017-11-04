@@ -257,6 +257,9 @@ def event_join(request, event_id):
             target_event.watch.remove(login_user)
     elif request.POST['join'] == 'leave':
         target_event.members.remove(login_user)
+        # アンケート回答を削除
+        if target_event.question_date: target_event.question_date.delete_answer_of(login_user) 
+        if target_event.question_location: target_event.question_location.delete_answer_of(login_user)
 #あとで消すテスト用
     elif  request.POST['join'] == 'new_member':
         target_event.members.add(login_user)
@@ -288,8 +291,12 @@ def event_watch(request, event_id):
     login_user   = get_object_or_404(PersolUser, id=request.user.id)
     if request.POST['watch'] == 'leave':
         target_event.watch.remove(login_user)
+        # アンケート回答を削除
+        if target_event.question_date: target_event.question_date.delete_answer_of(login_user) 
+        if target_event.question_location: target_event.question_location.delete_answer_of(login_user)
     else:
         target_event.watch.add(login_user)
+        
     return HttpResponseRedirect(request.META['HTTP_REFERER']) # リクエスト先にリダイレクト
 
 def event_leave(request, event_id):

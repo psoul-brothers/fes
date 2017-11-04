@@ -2,7 +2,7 @@
 {% load is_checked %}
 {% block head %}
     <link href="/static/css/question_style.css" rel="stylesheet">
-    <title>アンケート回答ページ</title>
+    <title>{{ question.event.event_name }}：アンケート回答ページ</title>
 {% endblock %}
 {% block contents %}
 <h3>{{ question.question_text }}</h3>
