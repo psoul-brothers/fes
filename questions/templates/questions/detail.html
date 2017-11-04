@@ -58,7 +58,7 @@
           <script type="text/javascript">
             // 回答が無いときは○を選択
             if($("input[name=answer_text_{{choice.id}}]:checked").length == 0){
-              $("#answer_text_ok_for_{{choice.id}}").prop("checked", true);
+              $("#answer_text_ng_for_{{choice.id}}").prop("checked", true);
             }
           </script>
         </ul>
