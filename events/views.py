@@ -38,7 +38,11 @@ def event_index(request):
         )
         event_list = search_results
     # Sort order definition
-        if request.POST['sort'] == '2':
+        if request.POST['sort'] == '1':
+            event_list = Event.objects.order_by('id').reverse()
+            selectedNew = "selected=\"selected\""
+
+        elif  request.POST['sort'] == '2':
             event_list = Event.objects.order_by('id')
             selectedOld = "selected=\"selected\""
 
@@ -47,20 +51,20 @@ def event_index(request):
             selectedWatch = "selected=\"selected\""
 
         elif request.POST['sort'] == '4':
-            event_list = event_list.annotate(member_num = Count('members')).order_by('-member_num')
+            event_list = event_list.annotate(member_num = Count('members')).order_by('-member_num').reverse()
             selectedMostmember = "selected=\"selected\""
 
         elif request.POST['sort'] == '5':
-            event_list = event_list.annotate(member_num = Count('members')).order_by('-member_num').reverse()
+            event_list = event_list.annotate(member_num = Count('members')).order_by('-member_num')
             selectedLeastmember = "selected=\"selected\""
 
         elif request.POST['sort'] == '6':
             selectedAscforday = "selected=\"selected\""
-            event_list = event_list.order_by('event_datetime')
+            event_list = event_list.order_by('event_datetime').reverse()
 
         elif request.POST['sort'] == '7':
             selectedDescforday = "selected=\"selected\""
-            event_list = event_list.order_by('event_datetime').reverse()
+            event_list = event_list.order_by('event_datetime')
 
         elif request.POST['sort'] == '8':
             selectedDeadline = "selected=\"selected\""

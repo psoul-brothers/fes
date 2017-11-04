@@ -53,7 +53,7 @@
           {% endif %}
           
           
-          <p class="description">イベント概要：{{ event.nobreak_overview }}</p>
+          <p class="description">イベント概要：{{ event.overview|linebreaksbr }}</p>
           {% if event.author != user %}
             <p class="questions"><a href="mailto:{{ event.author.mail_address }}"><i class="fa fa-envelope" aria-hidden="true"></i> 問い合わせ</a></p>
           {% endif %}
