@@ -18,8 +18,17 @@ DEFAULT_EVENT_IMG = 'event_image/default.png'
 
 @login_required
 def event_index(request):
+    selectedNew = "selected=\"selected\""
+    selectedWatch = ""
+    selectedMostmember = ""
+    selectedLeastmember = ""
+    selectedAscforday = ""
+    selectedDeadline = ""
+
     if request.method == 'POST':
+        selectedNew = ""
         search_word = request.POST['word'] # 検索の値が空白でも大丈夫
+        search_value = "value=\"{0}\"".format(search_word)
         search_results = Event.objects.filter(
             Q(event_name__contains = search_word) | 
             Q(overview__contains   = search_word) |
@@ -27,22 +36,33 @@ def event_index(request):
         )
         event_list = search_results
     # Sort order definition
-        if request.POST['sort'] == 'like':
-            event_list = event_list.annotate(like_num = Count('like')).order_by('-like_num')
-        elif request.POST['sort'] == 'watch':
+        if request.POST['sort'] == 'watch':
             event_list = event_list.annotate(watch_num = Count('watch')).order_by('-watch_num')
+            selectedWatch = "selected=\"selected\""    
+
+        elif request.POST['sort'] == 'mostmember':
+            selectedMostmember = "selected=\"selected\""
+
+        elif request.POST['sort'] == 'leastmember':
+            selectedLeastmember = "selected=\"selected\""
+
         elif request.POST['sort'] == 'ascforday':
+            selectedAscforday = "selected=\"selected\""
             event_list = event_list.filter(
                 Q(event_datetime__gte = datetime.now()) | #今日以降 または
                 Q(event_datetime__isnull = True)          #日付がNULL
             ).order_by('event_datetime')
+        
+        elif request.POST['sort'] == 'deadline':
+            selectedDeadline = "selected=\"selected\""
+
 #            event_list = event_list.order_by('event_datetime')
         """降順指定したい場合
         if request.POST['sort'] == "desc":
             event_list = event_list.reverse()
         """
     else:
-        search_word = ""
+        search_value = "value=\"\""
         event_list = Event.objects.order_by('id').reverse()
 # get each event
     
@@ -73,7 +93,13 @@ def event_index(request):
         'watching_events'  : watching_events,
         'organized_events' : organized_events,
         'old_events'       : old_events,
-        'search_word'      : search_word
+        'search_value'      : search_value,
+        'selectedN':selectedNew,
+        'selectedW':selectedWatch,
+        'selectedM':selectedMostmember,
+        'selectedL':selectedLeastmember,
+        'selectedA':selectedAscforday,
+        'selectedD':selectedDeadline,
     }
 #    return render(request, 'events/index.html', context)
     return render(request, 'events/new_index.html', context)
