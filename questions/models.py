@@ -75,6 +75,14 @@ class Question(models.Model):
     def event(self):
         return self.event_date if hasattr(self, 'event_date') else self.event_location
     
+    
+    # 指定のユーザーの回答を削除する
+    def delete_answer_of(self, user):
+        for ans in self.answer_set.filter(persol_user=user):
+            ans.delete()
+        
+        return
+    
     # タイプ別のデフォルトテキストをセットしたオブジェクトを作成
     @classmethod
     def get_default_question(cls, type):
