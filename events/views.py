@@ -12,10 +12,9 @@ from questions.models import Question
 from .models import Event
 from .forms import CreateForm, CreateUserForm, EventForm, SelectUserForm, LikeUserForm, EventsSearchForm
 from django.template.loader import get_template
-
 from datetime import datetime
 import os
-
+DEFAULT_EVENT_IMG = 'event_image/default.png'
 
 @login_required
 def event_index(request):
@@ -91,7 +90,7 @@ def event_create(request):
             # form.cleaned_data を処理
             login_user = get_object_or_404(PersolUser, id=request.user.id)
             try : image = request.FILES['event_image']
-            except : image = 'event_image/default.png'
+            except : image = DEFAULT_EVENT_IMG
             finally :
                 new_event = Event(
                     author         = login_user,
@@ -99,22 +98,31 @@ def event_create(request):
                     event_image    = image, 
                     event_location = request.POST['event_location'], 
                     num_of_members = request.POST['num_of_members'], 
-                    dead_line      = request.POST['dead_line'],
                     overview       = request.POST['overview'],
                     search_tag     = request.POST['search_tag'],
                     # アンケート
                     question_date = None,
                     question_location = None,
                 )
+                
+                """
+                datatime.fields or date.fieldsにNull or "" を入れる場合、
+                djangoのSQL生成には、含めないようにしないといけない。
+                なぜなら、SQL生成項目に定義してすると、
+                定義していないVaidedが掛り、エラーとなってしまうため。
+                """
                 if len(request.POST['event_datetime']) > 0:
                     new_event.event_datetime = request.POST['event_datetime']
-    
+
+                if len(request.POST['dead_line']) > 0:
+                    new_event.dead_line = request.POST['dead_line']
+
                 # アンケート作成
                 if 'use_question_d' in request.POST:
                     qd = Question()
                     qd.update_from_posted_params('d', request.POST)
                     new_event.question_date = qd
-                
+     
                 if 'use_question_l' in request.POST:
                     ql = Question()
                     ql.update_from_posted_params('l', request.POST)
@@ -125,10 +133,10 @@ def event_create(request):
              
                 return redirect('events:event_detail', event_id=new_event.id)
         else:
-            return render(request, 'events/create.html', {'form': form,})
+            return render(request, 'events/create.html', {'form': form})
     else:
         form = EventForm() # 非束縛フォーム
-        return render(request, 'events/create.html', {'form': form,})
+        return render(request, 'events/create.html', {'form': form})
 
 @login_required
 def event_detail(request, event_id):
