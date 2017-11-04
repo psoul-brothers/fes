@@ -14,7 +14,7 @@
 <table border="1" class="question">
   <thead>
     <tr>
-　    <th></th>
+　    <th class="weak">回答者</th>
       {% for choice in choices %}
         <th>{{ choice.choice_text }}</th>
       {% endfor %}
@@ -24,7 +24,7 @@
     {% if user_answers_dict %}
       {% for user, choice_answer in user_answers_dict.iteritems %}
       <tr>
-        <td>{{ user.surname }}</td>
+        <td class="user_name">{{ user.surname }}</td>
         {% for answer in choice_answer.values %}
           <td>{{ answer }}</td>
         {% endfor %}
@@ -60,7 +60,7 @@
       </thead>
       <tbody>
           <tr>
-            <td>
+            <td class="user_name">
               {{ request.user.surname  }}
             </td>
             {% for choice in question.get_sorted_choices %}
@@ -77,6 +77,12 @@
                 <li><input type="radio" name="answer_text_{{choice.id}}" id="answer_text_ok_for_{{choice.id}}" value="○" {{choice|get_answer:request.user.id|is_checked:"○"}}/><label for="answer_text_ok_for_{{choice.id}}">○</label></li>
                 <li><input type="radio" name="answer_text_{{choice.id}}" id="answer_text_soso_for_{{choice.id}}" value="△" {{choice|get_answer:request.user.id|is_checked:"△"}}/><label for="answer_text_soso_for_{{choice.id}}">△</label></li>
                 <li><input type="radio" name="answer_text_{{choice.id}}" id="answer_text_ng_for_{{choice.id}}" value="×" {{choice|get_answer:request.user.id|is_checked:"×"}}/><label for="answer_text_ng_for_{{choice.id}}">×</label></li>
+                <script type="text/javascript">
+                  // 回答が無いときは○を選択
+                  if($("input[name=answer_text_{{choice.id}}]:checked").length == 0){
+                    $("#answer_text_ok_for_{{choice.id}}").prop("checked", true);
+                  }
+                </script>
               </ul>
             </td>
             {% endfor %}
@@ -84,6 +90,8 @@
       </tbody>
 </table>
 </div>
-<input type="submit" value="送信" />
+<input type="submit" value="回答を送信" class="post_answer" />
 </form>
+
+<a href="{% url 'events:event_detail' question.event.id %}">キャンセル</a>
 {% endblock %}

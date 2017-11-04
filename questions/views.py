@@ -1,7 +1,7 @@
 #!/usr/bin/python
 # -*- coding: utf-8 -*- 
 from django.shortcuts import get_list_or_404,get_object_or_404, render
-from django.shortcuts import render
+from django.shortcuts import render, redirect
 from django.http import HttpResponseRedirect, HttpResponse
 from .models import Question,Choice,Answer
 from persol_users.models import PersolUser
@@ -84,6 +84,5 @@ def answerRegistration(request, question_id):
         traceback.format_exc()
         return HttpResponse(response + traceback.format_exc())
     else:
-        # return HttpResponseRedirect(reverse('questions:detail', args=(question.id,)))
         # 元のイベントページに戻る
-        return HttpResponseRedirect(request.META['HTTP_REFERER'])
+        return redirect('events:event_detail', event_id=question.event().id )

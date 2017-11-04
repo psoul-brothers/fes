@@ -70,6 +70,10 @@ class Question(models.Model):
         self.question_text = posted_params['question_text_'+type]
         self.save()
         self.set_choices(posted_params['question_choices_'+type])
+        
+    # 紐づいているイベント
+    def event(self):
+        return self.event_date if hasattr(self, 'event_date') else self.event_location
     
     # タイプ別のデフォルトテキストをセットしたオブジェクトを作成
     @classmethod
