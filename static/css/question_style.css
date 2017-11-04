@@ -1,10 +1,21 @@
+/* 回答送信ボタン */
+input.post_answer {
+	background-color: #ffaa00;
+	border-radius: 5px;
+	color: #ffffff;
+	padding: 5px;
+	text-align: center;
+	margin: 30px auto;
+	display: block;
+	width: 60%;
+}
+
 /* ラジオボタンの見た目 */
 .question_input input[type="radio"] {
     display:none;
 }
 .question_input label {
     display: table-cell;
-    text-align: center;
     vertical-align: middle;
     
     width:2em;
@@ -20,8 +31,6 @@
 }
 
 
-
-
 /* テーブルの見た目 */
 table.question {
     border-collapse: collapse;
@@ -29,17 +38,28 @@ table.question {
     white-space: nowrap;　/*tableのセル内にある文字の折り返しを禁止*/
 }
 table.question th {
-    padding: 10px;
-    font-weight: bold;
-    vertical-align: top;
-    border: 1px solid #ccc;
+    background-color: #eee;
+    text-align: center;
+    width: 3em;
+    padding: 5px;
+    border: 1px solid #ddd;
 }
 table.question td {
-    padding: 10px;
+    padding: 5px;
     text-align: center;
     vertical-align: middle;
-    border: 1px solid #ccc;
+    border: 1px solid #ddd;
 }
+
+th.weak {
+    font-weight: normal;
+}
+td.user_name {
+    background-color: #eee;
+    font-weight: bold;
+}
+
+
 
 /* 部分的な横スクロール */
 .scroll{
