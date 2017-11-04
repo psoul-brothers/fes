@@ -58,9 +58,15 @@ table.question td {
     border: 1px solid #ddd;
 }
 
-
-td.user_name {
+table.question .user_name {
     background-color: #eee;
+}
+table.question .total{
+    background-color: #eef7f7;
+}
+
+.unit_string{
+    font-size:30%;
 }
 
 

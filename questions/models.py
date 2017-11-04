@@ -101,6 +101,8 @@ class Choice(models.Model):
         return Answer.objects.filter(choice = self,persol_user = u_id)[0].answer_text
 
 class Answer(models.Model):
+    ANSWER_OPTIONS =['○','△','×']
+    
     persol_user = models.ForeignKey(PersolUser, on_delete=models.CASCADE)
     question = models.ForeignKey(Question, on_delete=models.CASCADE)
     choice = models.ForeignKey(Choice, on_delete=models.CASCADE)

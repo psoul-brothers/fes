@@ -38,19 +38,21 @@ def registration(request):
 @login_required
 def detail(request, question_id):
     question = get_object_or_404(Question, pk=question_id)
-    choices = []
+    # choices = []
     choices = question.get_sorted_choices()
     user_answers_dict = question.get_user_answers()
     
+    answer_options = Answer.ANSWER_OPTIONS
+    
     # 検証用(実装後削除)
-    print "view user_answers_dict 長さ:%d" % len(user_answers_dict)
-    for choice_answer in user_answers_dict.values():
-        # print choice_answer
-        for answer in choice_answer.values():
-            print answer
-    for ch in choices:
-        print ch.choice_text
-    return render(request, 'questions/detail.html', {'question': question, 'choices': choices, 'user_answers_dict':user_answers_dict})
+    # print "view user_answers_dict 長さ:%d" % len(user_answers_dict)
+    # for choice_answer in user_answers_dict.values():
+    #     # print choice_answer
+    #     for answer in choice_answer.values():
+    #         print answer
+    # for ch in choices:
+    #     print ch.choice_text
+    return render(request, 'questions/detail.html', {'question': question, 'choices': choices, 'user_answers_dict':user_answers_dict, 'answer_options':answer_options})
 
 def index(request):
     latest_question_list = Question.objects.order_by('id')
