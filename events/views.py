@@ -12,15 +12,25 @@ from questions.models import Question
 from .models import Event
 from .forms import CreateForm, CreateUserForm, EventForm, SelectUserForm, LikeUserForm, EventsSearchForm
 from django.template.loader import get_template
-
 from datetime import datetime
 import os
-
+DEFAULT_EVENT_IMG = 'event_image/default.png'
 
 @login_required
 def event_index(request):
+    selectedNew = "selected=\"selected\""
+    selectedOld = ""
+    selectedWatch = ""
+    selectedMostmember = ""
+    selectedLeastmember = ""
+    selectedAscforday = ""
+    selectedDescforday = ""
+    selectedDeadline = ""
+
     if request.method == 'POST':
+        selectedNew = ""
         search_word = request.POST['word'] # 検索の値が空白でも大丈夫
+        search_value = "value=\"{0}\"".format(search_word)
         search_results = Event.objects.filter(
             Q(event_name__contains = search_word) | 
             Q(overview__contains   = search_word) |
@@ -28,22 +38,39 @@ def event_index(request):
         )
         event_list = search_results
     # Sort order definition
-        if request.POST['sort'] == 'like':
-            event_list = event_list.annotate(like_num = Count('like')).order_by('-like_num')
-        elif request.POST['sort'] == 'watch':
+        if request.POST['sort'] == '1':
+            event_list = Event.objects.order_by('id').reverse()
+            selectedNew = "selected=\"selected\""
+
+        elif  request.POST['sort'] == '2':
+            event_list = Event.objects.order_by('id')
+            selectedOld = "selected=\"selected\""
+
+        elif request.POST['sort'] == '3':
             event_list = event_list.annotate(watch_num = Count('watch')).order_by('-watch_num')
-        elif request.POST['sort'] == 'ascforday':
-            event_list = event_list.filter(
-                Q(event_datetime__gte = datetime.now()) | #今日以降 または
-                Q(event_datetime__isnull = True)          #日付がNULL
-            ).order_by('event_datetime')
-#            event_list = event_list.order_by('event_datetime')
-        """降順指定したい場合
-        if request.POST['sort'] == "desc":
-            event_list = event_list.reverse()
-        """
+            selectedWatch = "selected=\"selected\""
+
+        elif request.POST['sort'] == '4':
+            event_list = event_list.annotate(member_num = Count('members')).order_by('-member_num').reverse()
+            selectedMostmember = "selected=\"selected\""
+
+        elif request.POST['sort'] == '5':
+            event_list = event_list.annotate(member_num = Count('members')).order_by('-member_num')
+            selectedLeastmember = "selected=\"selected\""
+
+        elif request.POST['sort'] == '6':
+            selectedAscforday = "selected=\"selected\""
+            event_list = event_list.order_by('event_datetime').reverse()
+
+        elif request.POST['sort'] == '7':
+            selectedDescforday = "selected=\"selected\""
+            event_list = event_list.order_by('event_datetime')
+
+        elif request.POST['sort'] == '8':
+            selectedDeadline = "selected=\"selected\""
+            event_list = event_list.order_by('dead_line').reverse()
     else:
-        search_word = ""
+        search_value = "value=\"\""
         event_list = Event.objects.order_by('id').reverse()
 # get each event
     
@@ -51,7 +78,7 @@ def event_index(request):
         Q(author = request.user.id)           | #自分が主催者
         Q(members = request.user.id)          | #or自分がメンバーにいる
         Q(event_datetime__lt = datetime.now())| #or 開催日が今日以前
-        Q(dead_line__lt = datetime.now())      | #or 募集締め切り日が今日以前
+        Q(dead_line__lt = datetime.now())     | #or 募集締め切り日が今日以前
         Q(event_status = 'E')                   #or ステータスが募集終了
     )
     joing_events     = event_list.filter(Q(members = request.user.id)).order_by('event_datetime').reverse().exclude(
@@ -74,7 +101,15 @@ def event_index(request):
         'watching_events'  : watching_events,
         'organized_events' : organized_events,
         'old_events'       : old_events,
-        'search_word'      : search_word
+        'search_value'     : search_value,
+        'selected1':selectedNew,
+        'selected2':selectedOld,
+        'selected3':selectedWatch,
+        'selected4':selectedMostmember,
+        'selected5':selectedLeastmember,
+        'selected6':selectedAscforday,
+        'selected7':selectedDescforday,
+        'selected8':selectedDeadline,
     }
 #    return render(request, 'events/index.html', context)
     return render(request, 'events/new_index.html', context)
@@ -91,7 +126,7 @@ def event_create(request):
             # form.cleaned_data を処理
             login_user = get_object_or_404(PersolUser, id=request.user.id)
             try : image = request.FILES['event_image']
-            except : image = 'event_image/default.png'
+            except : image = DEFAULT_EVENT_IMG
             finally :
                 new_event = Event(
                     author         = login_user,
@@ -99,22 +134,31 @@ def event_create(request):
                     event_image    = image, 
                     event_location = request.POST['event_location'], 
                     num_of_members = request.POST['num_of_members'], 
-                    dead_line      = request.POST['dead_line'],
                     overview       = request.POST['overview'],
                     search_tag     = request.POST['search_tag'],
                     # アンケート
                     question_date = None,
                     question_location = None,
                 )
+                
+                """
+                datatime.fields or date.fieldsにNull or "" を入れる場合、
+                djangoのSQL生成には、含めないようにしないといけない。
+                なぜなら、SQL生成項目に定義してすると、
+                定義していないVaidedが掛り、エラーとなってしまうため。
+                """
                 if len(request.POST['event_datetime']) > 0:
                     new_event.event_datetime = request.POST['event_datetime']
-    
+
+                if len(request.POST['dead_line']) > 0:
+                    new_event.dead_line = request.POST['dead_line']
+
                 # アンケート作成
                 if 'use_question_d' in request.POST:
                     qd = Question()
                     qd.update_from_posted_params('d', request.POST)
                     new_event.question_date = qd
-                
+     
                 if 'use_question_l' in request.POST:
                     ql = Question()
                     ql.update_from_posted_params('l', request.POST)
@@ -125,10 +169,10 @@ def event_create(request):
              
                 return redirect('events:event_detail', event_id=new_event.id)
         else:
-            return render(request, 'events/create.html', {'form': form,})
+            return render(request, 'events/create.html', {'form': form})
     else:
         form = EventForm() # 非束縛フォーム
-        return render(request, 'events/create.html', {'form': form,})
+        return render(request, 'events/create.html', {'form': form})
 
 @login_required
 def event_detail(request, event_id):
@@ -217,6 +261,9 @@ def event_join(request, event_id):
             target_event.watch.remove(login_user)
     elif request.POST['join'] == 'leave':
         target_event.members.remove(login_user)
+        # アンケート回答を削除
+        if target_event.question_date: target_event.question_date.delete_answer_of(login_user) 
+        if target_event.question_location: target_event.question_location.delete_answer_of(login_user)
 #あとで消すテスト用
     elif  request.POST['join'] == 'new_member':
         target_event.members.add(login_user)
@@ -248,8 +295,12 @@ def event_watch(request, event_id):
     login_user   = get_object_or_404(PersolUser, id=request.user.id)
     if request.POST['watch'] == 'leave':
         target_event.watch.remove(login_user)
+        # アンケート回答を削除
+        if target_event.question_date: target_event.question_date.delete_answer_of(login_user) 
+        if target_event.question_location: target_event.question_location.delete_answer_of(login_user)
     else:
         target_event.watch.add(login_user)
+        
     return HttpResponseRedirect(request.META['HTTP_REFERER']) # リクエスト先にリダイレクト
 
 def event_leave(request, event_id):

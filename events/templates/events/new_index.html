@@ -1,6 +1,6 @@
 {% extends 'common/base.html' %}
 {% block head %}
-<title>一覧ページ</title>
+<title>イベント一覧</title>
 <!-- css -->
 <link href="/static/css/list_style.css" rel="stylesheet">
 <!-- JS -->
@@ -10,20 +10,31 @@ https://www.tam-tam.co.jp/tipsnote/html_css/post9210.html
 スクロール参照サイト
 http://weboook.blog22.fc2.com/blog-entry-412.html
  -->
+<script type="text/javascript">
+function kakunin(){
+  document.forms[1].submit();
+}
+</script>
+ 
 {% endblock %}
 {% block contents %}
 <article>
   <div id="listArticle">
   <h1>イベント一覧</h1>
-  <form action="{% url 'events:event_index' %}" method="POST">{% csrf_token %}
+  <form name="search" action="{% url 'events:event_index' %}" method="POST">{% csrf_token %}
   <!--<input type="text" name='word' value={{search_word}} onblur="if (this.value == '') this.value = 'search';" onfocus="if (this.value == 'search') this.value = '';"/>-->
-　<input type="text" name='word' value={{search_word}}>
-    <select id="sort_id" name="sort">
-    <option value="" selected="selected">-並び替え-</option>
-    <option value="like">いいね数</option>
-    <option value="watch">ウォッチ数</option>
-    <option value="ascforday">開催日が近い順</option>
+  <select id="sort_id" name="sort" onChange="kakunin()">
+    <option value="1" {{selected1|safe}}>作成日が新しい</option>
+    <option value="2" {{selected2|safe}}>作成日が古い</option>
+    <option value="3" {{selected3|safe}}>ウォッチ数が多い</option>
+    <option value="4" {{selected4|safe}}>参加者が多い</option>
+    <option value="5" {{selected5|safe}}>参加者が少ない</option>
+    <option value="6" {{selected6|safe}}>開催日が新しい</option>
+    <option value="7" {{selected7|safe}}>開催日が古い</option>
+    <option value="8" {{selected8|safe}}>期日降順</option>
   </select>
+  <br>
+　<input type="text" name='word' {{search_value|safe}}>
   <input type="submit" value="検索">
 　</form>
     <div class="container">

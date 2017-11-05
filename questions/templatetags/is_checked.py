@@ -15,3 +15,7 @@ def is_checked(value, arg):
 		return 'checked="checked"'
 	else:
 		return ""
+
+@register.filter
+def answer_count(choice, answer):
+	return choice.answer_set.filter(answer_text=answer).count()

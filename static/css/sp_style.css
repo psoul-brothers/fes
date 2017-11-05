@@ -139,6 +139,7 @@ header ul#menu-wrap li ul.submenu li span {
 }
 
 header ul#menu-wrap li ul.submenu.hub li{
+    display: block;
     padding: 1px 0;
     border: none;
     color: #ffffff;

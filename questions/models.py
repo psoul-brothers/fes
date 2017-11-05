@@ -75,6 +75,14 @@ class Question(models.Model):
     def event(self):
         return self.event_date if hasattr(self, 'event_date') else self.event_location
     
+    
+    # 指定のユーザーの回答を削除する
+    def delete_answer_of(self, user):
+        for ans in self.answer_set.filter(persol_user=user):
+            ans.delete()
+        
+        return
+    
     # タイプ別のデフォルトテキストをセットしたオブジェクトを作成
     @classmethod
     def get_default_question(cls, type):
@@ -101,6 +109,8 @@ class Choice(models.Model):
         return Answer.objects.filter(choice = self,persol_user = u_id)[0].answer_text
 
 class Answer(models.Model):
+    ANSWER_OPTIONS =['○','△','×']
+    
     persol_user = models.ForeignKey(PersolUser, on_delete=models.CASCADE)
     question = models.ForeignKey(Question, on_delete=models.CASCADE)
     choice = models.ForeignKey(Choice, on_delete=models.CASCADE)
