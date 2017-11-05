@@ -4,6 +4,12 @@ div#listArticle h1{
 	font-size: 120%;
 	padding: 5px 0 10px 10px;
 }
+div#listArticle p.searchWord{
+	font-size: 100%;
+	padding-left:10px;
+}
+
+
 
 div#listArticle .select p, div#listArticle .select select {
 	display: inline-block;
@@ -334,22 +340,9 @@ background: -webkit-gradient(linear, left top, left bottom, from(#ea7e7e), color
     clear: left;
 }
 
-/*
-.contents__content div a{
-    display: table;
-    width: 100%;
-    text-decoration: none;
-    padding: 10px;
-    border-bottom:1px solid #999;
-    color:#222;
-    text-align: left;
-    line-height: 1.5em;
-    font-size: 14px;
+article #listArticle input {
+    border: 1px solid #a9a9a9;
+    background-color: #ffffff;
+    font-size: 90%;
+    padding: 2px;
 }
-
-.contents__content div a span{
-    display: table-cell;
-    padding-left: 10px;
-    padding-right: 10px;
-}
-*/
