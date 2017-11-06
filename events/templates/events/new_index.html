@@ -21,8 +21,11 @@ function kakunin(){
 <article>
   <div id="listArticle">
   <h1>イベント一覧</h1>
+  <p class="searchWord">{{search_word}}</p>
   <form name="search" action="{% url 'events:event_index' %}" method="POST">{% csrf_token %}
   <!--<input type="text" name='word' value={{search_word}} onblur="if (this.value == '') this.value = 'search';" onfocus="if (this.value == 'search') this.value = '';"/>-->
+　<input type="text" name='word' {{search_value|safe}}>
+  <input type="submit" value="検索">
   <select id="sort_id" name="sort" onChange="kakunin()">
     <option value="1" {{selected1|safe}}>作成日が新しい</option>
     <option value="2" {{selected2|safe}}>作成日が古い</option>
@@ -34,8 +37,6 @@ function kakunin(){
     <option value="8" {{selected8|safe}}>期日降順</option>
   </select>
   <br>
-　<input type="text" name='word' {{search_value|safe}}>
-  <input type="submit" value="検索">
 　</form>
     <div class="container">
         <div class="tabContainer">

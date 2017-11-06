@@ -26,6 +26,7 @@ def event_index(request):
     selectedAscforday = ""
     selectedDescforday = ""
     selectedDeadline = ""
+    search_word = ""
 
     if request.method == 'POST':
         selectedNew = ""
@@ -102,6 +103,7 @@ def event_index(request):
         'organized_events' : organized_events,
         'old_events'       : old_events,
         'search_value'     : search_value,
+        'search_word':search_word,
         'selected1':selectedNew,
         'selected2':selectedOld,
         'selected3':selectedWatch,
