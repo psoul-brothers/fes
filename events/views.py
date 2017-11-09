@@ -123,7 +123,9 @@ def event_create(request):
     the event author is auto added to event.members.
     """
     if request.method == 'POST':
+        request.POST['event_datetime'] = request.POST['event_datetime'].replace("T"," ")
         form = CreateForm(request.POST)
+        
         if form.is_valid(): # バリデーションを通った
             # form.cleaned_data を処理
             login_user = get_object_or_404(PersolUser, id=request.user.id)
@@ -196,9 +198,11 @@ def event_edit(request, event_id):
     event = get_object_or_404(Event, pk=event_id)
     if request.user != event.author : raise PermissionDenied
     if request.method == 'POST':
+        print "koko" + request.POST['event_datetime']
         try : old_image = event.event_image.path
         except : old_image = ''
         finally:
+            request.POST['event_datetime'] = request.POST['event_datetime'].replace("T"," ")
             form = EventForm(request.POST, instance=event)
             if form.is_valid():
                 form.save()     # image以外をデータコミット
@@ -207,6 +211,10 @@ def event_edit(request, event_id):
                 image_tmp = event.event_image
             finally:
                 event.event_image = image_tmp
+                if request.POST['event_datetime']:
+                    event.event_datetime = request.POST['event_datetime'].replace("T"," ")
+                else:
+                    event.event_datetime = None
                 event.save()
                 if old_image != '':
                     if old_image != event.event_image.path:
@@ -243,7 +251,10 @@ def event_edit(request, event_id):
 
                 return redirect('events:event_detail', event_id=event_id) # POST 後のリダイレクト
     else:
-        form = EventForm(instance=event) # 非束縛フォーム
+        if event.event_datetime:
+            form = EventForm(instance=event, initial={'event_datetime': event.event_datetime.strftime("%Y-%m-%dT%H:%M")}) # 非束縛フォーム
+        else:
+            form = EventForm(instance=event,) # 非束縛フォーム
         edit_context = {'form' : form, 'event' : event}
         return render(request, 'events/edit.html', context=edit_context)
 

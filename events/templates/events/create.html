@@ -22,8 +22,7 @@
         <div class="item">
         <p>開催日</p>{{ form.event_datetime.errors }}
         {{ form.event_datetime }}
-        <input id="id_event_datetime" name="event_datetime" type="datetime-local">
-          
+
         <p class="question">
         開催日のアンケートをとる　<input name="use_question_d" value="1" id="use_question_d" type="checkbox"></p>
         </div>
@@ -46,7 +45,6 @@
         <div class="item">
             <p>募集締切日</p>{{ form.dead_line.errors }}
             {{ form.dead_line }}
-            <input id="id_dead_line" name="dead_line" type="date">
         </div>
         <div class="item">
         <p>概要</p>{{ form.overview.errors }}
