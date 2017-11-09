@@ -2,6 +2,7 @@
 
 div#article {
 	padding: 0 2%;
+	margin-bottom:20px;
 }
 div#article h1 {
 	font-size: 120%;
@@ -58,4 +59,13 @@ article form input.make {
 	margin: 30px auto;
 	display: block;
 	width: 60%;
+}
+
+article button.delete {
+	background-color:#999999;
+	color:#ffffff;
+	width:30%;
+	margin:0 auto;
+	border-radius:3px;
+	display:block;
 }
