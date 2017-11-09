@@ -346,3 +346,11 @@ article #listArticle input {
     font-size: 90%;
     padding: 2px;
 }
+article #listArticle input.search_word {}
+
+article #listArticle input.search_button {
+	border-radius:3px;
+	background-color:#c1741b;
+	padding:4px;
+
+}
