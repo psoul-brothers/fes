@@ -8,25 +8,31 @@ from django.forms.widgets import TextInput, NumberInput, DateTimeInput, DateInpu
 from .models import Event
 from persol_users.models import PersolUser
 
+forms.DateTimeInput.input_type = "datetime-local"
+forms.DateInput.input_type = "date"
+
 class EventForm(ModelForm):
     class Meta:
         model = Event
         fields = [
-            'event_name', 'event_datetime',
+            'event_name',
             'event_location', 'num_of_members', 'dead_line', 'overview', 
             'search_tag','event_status'
         ]
+#        widgets = {'event_datetime': DateTimeInput(),}
     event_image = forms.FileField(label='画像',required=False)
-
+    event_datetime = forms.DateTimeField(required=False, label='開催日時', widget=forms.DateTimeInput, input_formats=['%Y-%m-%d %H:%M'])
 
 class CreateForm(forms.Form):
     #author = forms.CharField(max_length=200, label='作成者')
     event_name     = forms.CharField(max_length=200, label='イベントタイトル')
     event_image    = forms.FileField(required=False, label='イメージ画像')
-    event_datetime = forms.DateTimeField(required=False, label='開催日時', widget=forms.DateInput(attrs={"input_type":"datetime-local"}))
+    event_datetime = forms.DateTimeField(required=False, label='開催日時', widget=forms.DateTimeInput, input_formats=['%Y-%m-%d %H:%M'])
+#    event_datetime = forms.DateTimeField(required=False, label='開催日時')
     event_location = forms.CharField(required=False, max_length=200, label='開催場所')
     num_of_members = forms.CharField(max_length=200, label='募集人数', widget=NumberInput)
-    dead_line      = forms.DateField(required=False, label='募集締切日', widget=forms.DateInput(attrs={"input_type":"date"}))
+    dead_line      = forms.DateField(required=False, label='募集締切日', widget=forms.DateInput)
+#    dead_line      = forms.DateField(required=False, label='募集締切日')
     overview       = forms.CharField(max_length=2000, label='概要', widget=forms.Textarea)
     search_tag     = forms.CharField(required=False,max_length=2000, label='検索用タグ',widget=forms.Textarea)
 
