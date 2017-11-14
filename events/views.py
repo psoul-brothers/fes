@@ -40,11 +40,11 @@ def event_index(request):
         event_list = search_results
     # Sort order definition
         if request.POST['sort'] == '1':
-            event_list = Event.objects.order_by('id').reverse()
+            event_list = event_list.order_by('id').reverse()
             selectedNew = "selected=\"selected\""
 
         elif  request.POST['sort'] == '2':
-            event_list = Event.objects.order_by('id')
+            event_list = event_list.order_by('id')
             selectedOld = "selected=\"selected\""
 
         elif request.POST['sort'] == '3':
@@ -123,9 +123,8 @@ def event_create(request):
     the event author is auto added to event.members.
     """
     if request.method == 'POST':
-        request.POST['event_datetime'] = request.POST['event_datetime'].replace("T"," ")
+        request.POST['event_datetime'] = request.POST['event_datetime'][:16].replace("T"," ")
         form = CreateForm(request.POST)
-        
         if form.is_valid(): # バリデーションを通った
             # form.cleaned_data を処理
             login_user = get_object_or_404(PersolUser, id=request.user.id)

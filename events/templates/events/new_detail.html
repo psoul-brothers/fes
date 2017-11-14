@@ -70,6 +70,7 @@
           検索用タグ:{{ event.search_tag }}<br>
           {% else %}
           {% if event.event_status == "E" %}
+          {% elif event.oldstatus == "old" %}
           {% else %}
           <ul class="btn">
             <li class="watch">
