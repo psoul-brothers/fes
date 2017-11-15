@@ -372,6 +372,7 @@ width:10%;
 display:inline-block;
 border-radius: 0;
 border:1px solid #cccccc;
+padding 2px;
 }
 
 .sort_method {
