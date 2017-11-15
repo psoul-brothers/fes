@@ -1,13 +1,15 @@
 {% extends 'common/base.html' %}
 {% block head %}
     <title>{% block title %}イベント作成ページ{% endblock %}</title>
+<script src="/static/js/dateformat.js"></script>
 {% endblock %}
 {% block contents %}
+
 <link href="/static/css/eventRegist_style.css" rel="stylesheet">
     <article>
       <div id="article">
       <h1>イベント作成ページ</h1>
-        <form enctype="multipart/form-data" action="{% url 'events:event_create' %}" method="POST">{% csrf_token %}
+        <form enctype="multipart/form-data" action="{% url 'events:event_create' %}" method="POST" novalidate id="event">{% csrf_token %}
         {{ form.non_field_errors }}
         <div class="item">
         <p>イベントタイトル　<span>※必須項目です</span></p>{{ form.event_name.errors }}
@@ -17,7 +19,6 @@
           <p>イメージ画像</p>{{ form.event_image.errors }}
           {{ form.event_image }}
         </div>
-        
         
         <div class="item">
         <p>開催日</p>{{ form.event_datetime.errors }}
@@ -55,7 +56,7 @@
         {{ form.search_tag }}
         </div>
         
-        <input value="イベントを作成する" type="submit" class="make"/>
+        <input value="イベントを作成する" type="submit" class="make" onClick="make()"/>
         
         </form>
       </div><!-- /#article -->

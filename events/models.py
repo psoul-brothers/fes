@@ -124,6 +124,12 @@ class Event(models.Model):
             return "未定"
         else:
             return "アンケート中"
+    
+    def oldstatus(self):
+        if self.event_datetime < datetime.now():
+            return 'old'
+        else:
+            return ''
 
 """
 python manage.py makemigrations

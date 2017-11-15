@@ -15,6 +15,7 @@
                   <ul class="btnList">
                     <li class="join">
                     {% if event.event_status == "E" %}
+                    {% elif event.oldstatus == "old" %}
                     {% else %}
                       {% if user not in event.members.all %}
                       {# 参加していないときだけ表示 #}
