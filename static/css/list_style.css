@@ -370,6 +370,8 @@ border:none;
 background-color:#cccccc;
 width:10%;
 display:inline-block;
+border-radius: 0;
+border:1px solid #cccccc;
 }
 
 .sort_method {
