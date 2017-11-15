@@ -362,6 +362,7 @@ width:40%;
 border-top:1px solid #cccccc;
 border-left:1px solid #cccccc;
 border-bottom:1px solid #cccccc;
+border-radius: 0;
 }
 
 article #listArticle input.search_button {
