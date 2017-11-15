@@ -1,7 +1,14 @@
+{% extends 'common/base.html' %}
+{% block head %}
+    <title>ユーザー一覧</title>
+{% endblock %}
+
+{% block contents %}
+
 {% if user_list %}
     <ul>
     {% for user in user_list %}
-        <li><a href="/persol_users/{{ user.id }}/">{{ user.name }}</a></li>
+        <li><a href="/persol_users/{{ user.id }}/">{{ user.name }}</a> : <a href="{% url 'persol_users:reset_password' user.id %}">パスワードリセット</a></li>
     {% endfor %}
     </ul>
 {% else %}
@@ -16,3 +23,4 @@
      {% csrf_token %}
     <input type="submit" value="修正">
 </form>
+{% endblock %}
