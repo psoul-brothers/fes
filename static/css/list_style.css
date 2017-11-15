@@ -368,11 +368,11 @@ border-radius: 0;
 article #listArticle input.search_button {
 border:none;
 background-color:#cccccc;
-width:10%;
+width:12%;
 display:inline-block;
 border-radius: 0;
 border:1px solid #cccccc;
-padding:0 2px;
+
 }
 
 .sort_method {
