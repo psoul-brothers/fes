@@ -115,3 +115,11 @@ def user_modify(request):
         
     edit_context = {'form1': f, 'user': user}
     return render(request, 'persol_users/user_modify.html', context=edit_context)
+    
+    
+@login_required
+def reset_password(request, user_id):
+    reference_user = get_object_or_404(PersolUser, pk=user_id)
+    reference_user.set_password('password')
+    reference_user.save()
+    return HttpResponse("%s's password has been initialized." % reference_user.fullname())
