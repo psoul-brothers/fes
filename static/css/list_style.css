@@ -346,13 +346,19 @@ article #listArticle input {
     font-size: 90%;
     padding: 2px;
 }
+
+article #listArticle div.search_box {
+	width: 96%;
+	margin: 0 2%;
+}
+
 article #listArticle input.search_word {
 	display:inline-block;
 border:1px solid #ffffff;
 background-color:#ffffff;
 font-size:90%;
 padding:3px;
-width:66%;
+width:40%;
 border-top:1px solid #cccccc;
 border-left:1px solid #cccccc;
 border-bottom:1px solid #cccccc;
@@ -360,11 +366,11 @@ border-bottom:1px solid #cccccc;
 
 article #listArticle input.search_button {
 border:none;
-background-color:#ccccccc;
-width:30%;
+background-color:#cccccc;
+width:10%;
 display:inline-block;
 }
 
 .sort_method {
-margin-left:5p%;
+margin-left:5px;
 }
