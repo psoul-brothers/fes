@@ -78,6 +78,7 @@ def event_index(request):
     latest_events    = event_list.exclude( #以下を除く
         Q(author = request.user.id)           | #自分が主催者
         Q(members = request.user.id)          | #or自分がメンバーにいる
+        Q(watch   = request.user.id)          | #or自分がウォッチしている
         Q(event_datetime__lt = datetime.now())| #or 開催日が今日以前
         Q(dead_line__lt = datetime.now())     | #or 募集締め切り日が今日以前
         Q(event_status = 'E')                   #or ステータスが募集終了
