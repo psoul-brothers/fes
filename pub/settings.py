@@ -78,13 +78,20 @@ WSGI_APPLICATION = 'pub.wsgi.application'
 
 # Database
 # https://docs.djangoproject.com/en/1.9/ref/settings/#databases
+import dj_database_url
 
-DATABASES = {
-    'default': {
-        'ENGINE': 'django.db.backends.sqlite3',
-        'NAME': os.path.join(BASE_DIR, 'db.sqlite3'),
+DATABASES = {'default': dj_database_url.config(default='postgres://jkkrppjzuvxngv:602c1279ff47d2a49be3623098aead68006226dea5838690a90a326e55075281@ec2-54-163-230-219.compute-1.amazonaws.com:5432/d16j5vka7o1v98')}
+if bool(os.environ.get('LOCAL_DEV', False)):
+    DATABASES = {
+        'default': {
+            'ENGINE': 'django.db.backends.sqlite3', 
+            'NAME': os.path.join(BASE_DIR, 'db.sqlite3'),
+            'USER': '',                      
+            'PASSWORD': '',             
+            'HOST': '',                     
+            'PORT': '',                     
+        }
     }
-}
 
 
 # Password validation
